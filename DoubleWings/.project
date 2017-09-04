@@ -16,9 +16,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>jplay</name>
+			<name>jplay_lib</name>
 			<type>2</type>
-			<location>/Users/lucas/Documents/Eclipse/Jplay/build/classes/jplay</location>
+			<location>/Users/lucasaraujo/projects/SpaceShooter/DoubleWings/jplay</location>
 		</link>
 	</linkedResources>
 </projectDescription>
