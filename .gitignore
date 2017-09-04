@@ -1,3 +1,6 @@
+RemoteSystemsTempFiles
+RemoteSystemsTempFiles/
+RemoteSystemsTempFiles/*
 .metadata
 bin/
 tmp/
