@@ -1,10 +1,12 @@
-
+package game;
 import scenes.GameScene;
+import jplay.Keyboard;
 
 
 public class GameController {
 	
 	public GameScene currentScene = null;
+	public Keyboard keyboard = null;
 	
 	// Transit to another scene
 	public void transitTo(GameScene scene){
@@ -16,7 +18,7 @@ public class GameController {
 		currentScene = scene;
 		
 		//run initial setup
-		scene.initialSetup();
+		scene.initialSetup(this);
 	}
 	
 	public void update(){

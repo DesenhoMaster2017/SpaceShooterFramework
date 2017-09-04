@@ -3,8 +3,9 @@ import jplay.Window;
 import java.awt.Color;
 
 import constants.WindowConstants;
-
-import scenes.stages.stage1.*;
+import scenes.GameScene;
+import scenes.menu.MenuScene;
+import game.GameController;
 
 
 public class Main {
@@ -17,10 +18,11 @@ public class Main {
 		
 		//Game controller handles game states, screen changes, stages...
 		GameController game = new GameController();
+		game.keyboard = window.getKeyboard();
 		
 		//Should transit first to menu... but for development purposes...
-		StageTest stage = new StageTest();
-		game.transitTo(stage);
+		GameScene scene= new MenuScene();
+		game.transitTo(scene);
 
 		//Game main loop
 		while(true) {
