@@ -10,6 +10,7 @@ public class StageTest extends GameScene {
 
 	private Sprite player;
 	private GameImage background;
+	private Shield shield;
 
 	public void initialSetup(){
 
@@ -23,9 +24,9 @@ public class StageTest extends GameScene {
 		player.x = WindowConstants.WIDTH/2 - player.width/2;
 		player.y = WindowConstants.HEIGHT - player.height;
 
+		shield = new Shield(player);
+		
 	}
-
-	Shield shield = new Shield();
 
 	public void update(){
 
@@ -37,5 +38,8 @@ public class StageTest extends GameScene {
 		//Player movement
 		player.moveX(Keyboard.LEFT_KEY, Keyboard.RIGHT_KEY, 4);//velocity = 1
 		player.moveY(Keyboard.UP_KEY, Keyboard.DOWN_KEY, 4);//velocity = 1
+		
+		shield.update();
+
 	}
 }
