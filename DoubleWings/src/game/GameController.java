@@ -1,7 +1,7 @@
 package game;
+
 import scenes.GameScene;
 import jplay.Keyboard;
-
 
 public class GameController {
 	
@@ -10,7 +10,7 @@ public class GameController {
 	private boolean isRunning = true; 
 	
 	// Transit to another scene
-	public void transitTo(GameScene scene){
+	public void transitTo(GameScene scene) {
 		
 		//leave transition if scene is null
 		if(scene == null) return;
@@ -20,6 +20,7 @@ public class GameController {
 		
 		//Update current scene variable
 		currentScene = scene;
+
 	}
 	
 	// Updates current scene and control running status
@@ -37,5 +38,5 @@ public class GameController {
 	public void quit(){
 		isRunning = false;
 	}
-
+	
 }

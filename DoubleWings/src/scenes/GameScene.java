@@ -7,8 +7,8 @@ public abstract class GameScene {
 	protected GameController game;
 	protected Keyboard keyboard; 
 
-	public void update(){};
+    public abstract void update();
 		
-	public void initialSetup(GameController game){};
+	public abstract void initialSetup(GameController game);
 	
 }
