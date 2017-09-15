@@ -41,6 +41,7 @@ public class StageTest extends GameScene {
 		player.moveX(Keyboard.LEFT_KEY, Keyboard.RIGHT_KEY, 4);//velocity = 1
 		player.moveY(Keyboard.UP_KEY, Keyboard.DOWN_KEY, 4);//velocity = 1
 		
+		//Active o method update from Shield following the player 
 		shield.update();
 
 	}

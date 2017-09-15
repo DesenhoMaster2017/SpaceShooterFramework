@@ -6,10 +6,10 @@ import constants.WindowConstants;
 
 import scenes.stages.stage1.*;
 
-
 public class Main {
 
 	public static void main(String[] args) {
+		
 		System.out.println("It's running!");
 
 		//It creates an windows with 800 pixels of width and 600 pixels of height   
@@ -36,7 +36,7 @@ public class Main {
 			
 			//Refresh the screen
 			window.update();
+		
 		}
 	}
-
 }
