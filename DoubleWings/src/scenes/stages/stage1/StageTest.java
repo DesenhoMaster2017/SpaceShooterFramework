@@ -1,5 +1,7 @@
 package scenes.stages.stage1;
 
+import game.GameController;
+
 import jplay.GameImage;
 import jplay.Keyboard;
 import jplay.Sprite;
@@ -12,7 +14,15 @@ public class StageTest extends GameScene {
 	private GameImage background;
 	
 	
-	public void initialSetup(){
+	public void initialSetup(GameController game){
+		
+		//Set game controller elements
+		this.game = game;
+		this.keyboard = game.keyboard;
+		
+		//Configure up and down keys
+		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_EVERY_PRESS);
+		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_EVERY_PRESS);
 		
 		//Loading background image
 		background = new GameImage("src/assets/img/temp_background.png");

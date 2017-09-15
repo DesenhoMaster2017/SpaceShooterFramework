@@ -1,5 +1,8 @@
 package scenes.menu;
+
 import scenes.GameScene;
+import scenes.stages.stage1.StageTest;
+
 import jplay.GameImage;
 import jplay.Keyboard;
 
@@ -60,6 +63,8 @@ enum OptionMenu {
 	
 }
 
+
+
 // MenuScene 
 public class MenuScene extends GameScene {
 	//GameScene constants
@@ -67,7 +72,6 @@ public class MenuScene extends GameScene {
 	private static final int DISTANCE_BETWEEN_BUTTONS = WindowConstants.HEIGHT/48;
 	
 	private OptionMenu selectedMenuOption = OptionMenu.Start_Game;//Define initial menu option
-	private Keyboard keyboard = null; //Attribute to save keyboard
 	
 	// Sprites on scene
 	private GameImage background;
@@ -77,14 +81,12 @@ public class MenuScene extends GameScene {
 	
 	public void initialSetup(GameController game){
 		
-		//Update game controller variable
+		//Set game controller elements
 		this.game = game;
+		keyboard = game.keyboard;
 		
 		//Reset option menu
 		selectedMenuOption = OptionMenu.Start_Game;
-		
-		//save keyboard
-		keyboard = game.keyboard;
 		
 		//Configure up and down keys
 		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
@@ -179,6 +181,8 @@ public class MenuScene extends GameScene {
 
 			case Start_Game:
 				//transit to game
+				GameScene firstStage = new StageTest();
+				game.transitTo(firstStage);
 				break;
 			case Ranking:
 				//transit to ranking

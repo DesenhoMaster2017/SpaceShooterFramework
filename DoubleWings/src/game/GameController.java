@@ -14,12 +14,12 @@ public class GameController {
 		
 		//leave transition if scene is null
 		if(scene == null) return;
+
+		//run initial setup
+		scene.initialSetup(this);
 		
 		//Update current scene variable
 		currentScene = scene;
-		
-		//run initial setup
-		scene.initialSetup(this);
 	}
 	
 	// Updates current scene and control running status
