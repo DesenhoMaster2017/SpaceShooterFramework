@@ -23,9 +23,11 @@ public class Main {
 		//Should transit first to menu... but for development purposes...
 		GameScene scene= new MenuScene();
 		game.transitTo(scene);
-
+		
+		boolean isRunning = true;
+		
 		//Game main loop
-		while(true) {
+		while(isRunning) {
 			
 			//Delay to keep 60 FPS
 			window.delay(16);
@@ -34,11 +36,14 @@ public class Main {
 			window.clear(Color.black);
 			
 			// update game
-			game.update();
+			isRunning = game.update();
 			
 			//Refresh the screen
 			window.update();
 		}
+		
+		//Leaving the game
+		window.exit();
 	}
 
 }

@@ -77,6 +77,9 @@ public class MenuScene extends GameScene {
 	
 	public void initialSetup(GameController game){
 		
+		//Update game controller variable
+		this.game = game;
+		
 		//Reset option menu
 		selectedMenuOption = OptionMenu.Start_Game;
 		
@@ -168,6 +171,29 @@ public class MenuScene extends GameScene {
 		}
 	}
 	
+	//Check keyboard enter and dispatch new scene
+	private void checkButtonSelection(){
+		if (keyboard.keyDown(Keyboard.ENTER_KEY)){
+			
+			switch(selectedMenuOption){
+
+			case Start_Game:
+				//transit to game
+				break;
+			case Ranking:
+				//transit to ranking
+				break;
+			case Settings:
+				//transit to settings
+				break;
+			case Quit:
+				//quit game
+				game.quit();
+				break;
+			}
+		}
+	}
+	
 	public void update(){
 		
 		// Control menu option selection
@@ -175,6 +201,8 @@ public class MenuScene extends GameScene {
 		
 		//Define current arrow position
 		moveArrow();
+		
+		checkButtonSelection();
 		
 		// Draw menu elements
 		draw();

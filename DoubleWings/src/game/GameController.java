@@ -7,6 +7,7 @@ public class GameController {
 	
 	public GameScene currentScene = null;
 	public Keyboard keyboard = null;
+	private boolean isRunning = true; 
 	
 	// Transit to another scene
 	public void transitTo(GameScene scene){
@@ -21,13 +22,20 @@ public class GameController {
 		scene.initialSetup(this);
 	}
 	
-	public void update(){
+	// Updates current scene and control running status
+	public boolean update(){
 		
 		//Updates current scene
 		if (currentScene != null){
 			currentScene.update();
 		}
 		
+		return isRunning; 
+	}
+	
+	// Quit game Ending process
+	public void quit(){
+		isRunning = false;
 	}
 
 }
