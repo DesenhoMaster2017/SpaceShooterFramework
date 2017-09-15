@@ -31,7 +31,7 @@ public class StageTest extends GameScene {
 	public void update(){
 
 		//Draw the images for the game
-		// background.draw();
+		background.draw();
 		player.draw();
 		shield.draw();
 
