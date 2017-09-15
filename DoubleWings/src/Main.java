@@ -3,8 +3,9 @@ import jplay.Window;
 import java.awt.Color;
 
 import constants.WindowConstants;
-
-import scenes.stages.stage1.*;
+import scenes.GameScene;
+import scenes.menu.MenuScene;
+import game.GameController;
 
 
 public class Main {
@@ -17,13 +18,16 @@ public class Main {
 		
 		//Game controller handles game states, screen changes, stages...
 		GameController game = new GameController();
+		game.keyboard = window.getKeyboard();
 		
 		//Should transit first to menu... but for development purposes...
-		StageTest stage = new StageTest();
-		game.transitTo(stage);
-
+		GameScene scene= new MenuScene();
+		game.transitTo(scene);
+		
+		boolean isRunning = true;
+		
 		//Game main loop
-		while(true) {
+		while(isRunning) {
 			
 			//Delay to keep 60 FPS
 			window.delay(16);
@@ -32,11 +36,14 @@ public class Main {
 			window.clear(Color.black);
 			
 			// update game
-			game.update();
+			isRunning = game.update();
 			
 			//Refresh the screen
 			window.update();
 		}
+		
+		//Leaving the game
+		window.exit();
 	}
 
 }
