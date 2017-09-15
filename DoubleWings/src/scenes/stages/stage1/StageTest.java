@@ -11,7 +11,8 @@ public class StageTest extends GameScene {
 	private Sprite player;
 	private GameImage background;
 	private Shield shield;
-
+    
+	@Override
 	public void initialSetup(){
 
 		//Loading background image
@@ -27,7 +28,8 @@ public class StageTest extends GameScene {
 		shield = new Shield(player);
 		
 	}
-
+	
+	@Override
 	public void update(){
 
 		//Draw the images for the game

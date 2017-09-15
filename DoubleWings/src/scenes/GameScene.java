@@ -2,8 +2,8 @@ package scenes;
 
 public abstract class GameScene {
 
-	public void update(){};
+    public abstract void update();
 		
-	public void initialSetup(){};
+	public abstract void initialSetup();
 	
 }
