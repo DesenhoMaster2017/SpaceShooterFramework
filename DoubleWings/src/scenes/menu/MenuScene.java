@@ -1,5 +1,6 @@
 package scenes.menu;
 
+import scenes.ClassicContinue;
 import scenes.GameScene;
 import scenes.stages.stage1.StageTest;
 
@@ -186,6 +187,9 @@ public class MenuScene extends GameScene {
 				break;
 			case Ranking:
 				//transit to ranking
+				//testing continue countdown dev-only
+				GameScene countdown = new ClassicContinue();
+				game.transitTo(countdown);
 				break;
 			case Settings:
 				//transit to settings
