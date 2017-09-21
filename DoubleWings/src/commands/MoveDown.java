@@ -2,11 +2,9 @@ package commands;
 
 import jplay.Sprite;
 
-public class MoveDown implements Command {
-
+public class MoveDown extends MoveCommand {
 	@Override
-	public void execute(Sprite actor) {
-		actor.moveTo(actor.x, actor.y + 4, 4);
+	protected void moveActor(Sprite actor) {
+		actor.y += 1;
 	}
-
 }
