@@ -1,0 +1,10 @@
+package commands;
+
+import jplay.Sprite;
+
+public class MoveDown extends MoveCommand {
+	@Override
+	protected void moveActor(Sprite actor) {
+		actor.y += 1;
+	}
+}
