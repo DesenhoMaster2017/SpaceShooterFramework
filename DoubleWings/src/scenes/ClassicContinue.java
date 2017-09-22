@@ -1,19 +1,27 @@
 package scenes;
 import java.util.ArrayList;
+import java.util.Timer;
 
 import constants.WindowConstants;
 import game.GameController;
 import jplay.GameImage;
 import jplay.Keyboard;
 import jplay.Sprite;
+import scenes.menu.MenuScene;
+import util.CountDownTimer;
+import util.CountDownTimerEnds;
 
-public class ClassicContinue extends GameScene {
-	
+public class ClassicContinue extends GameScene implements CountDownTimerEnds {
+		
 	// Sprites on scene
 	private GameImage background;
 	private Sprite gameOver;
 	private Sprite wantToContinue;
 	private ArrayList<Sprite> countDown = new ArrayList<Sprite>();
+	private Sprite cd;
+	
+	//Thread counter
+	//static Thread thread = new Thread(); 
 	
 	
 	public void initialSetup(GameController game) {
@@ -26,80 +34,54 @@ public class ClassicContinue extends GameScene {
 		keyboard.setBehavior(keyboard.ENTER_KEY, keyboard.DETECT_INITIAL_PRESS_ONLY);
 		keyboard.setBehavior(keyboard.ESCAPE_KEY, keyboard.DETECT_INITIAL_PRESS_ONLY);
 		
-		//background = new GameImage("src/assets/img/temp_background.png");
+		background = new GameImage("src/assets/img/temp_background.png");
 		
 		//Define scenes elements position
 		//Continue sprite upper-center position
 		wantToContinue = new Sprite("src/assets/img/continue/continue.png");
 		wantToContinue.x = WindowConstants.WIDTH/2 - wantToContinue.width/2;
-		wantToContinue.y = WindowConstants.HEIGHT/2 - wantToContinue.height;
-		
+		wantToContinue.y = WindowConstants.HEIGHT/2.5 - wantToContinue.height;
 		//Game over sprite center position
 		gameOver = new Sprite("src/assets/img/continue/game_over.png");
 		gameOver.x = WindowConstants.WIDTH/2 - gameOver.width/2;
 		gameOver.y = WindowConstants.HEIGHT/2 - gameOver.height/2;
 		
-		//Number sprites positions
-		numberPositions();
+		//Number sprite positions
+		cd = new Sprite("src/assets/img/continue/number_9.png");
+		cd.x = WindowConstants.WIDTH/2 - cd.width/2;
+		cd.y = WindowConstants.HEIGHT/2 - cd.height/2;
 		
-	}
-	
-	private void countDown() {
-		
-		
+		Timer timer = new Timer();
+		CountDownTimer countDownn = new CountDownTimer();
+		countDownn.delegate = this;
+		long delay = 1000;
+		timer.scheduleAtFixedRate(countDownn, delay, delay);
 	}
 	
 	public void update() {
 		
-		//background.draw();
+		background.draw();
 		//gameOver.draw();
 		wantToContinue.draw();
-		
-		//for (Sprite spr: this.countDown) {
-		//	spr.draw();
-		//}
-		
-		countDown.get(8).draw();
-		
-		countDown();
-		
-		
+		cd.draw();
 	}
 	
-	private void numberPositions() {
-		
-		//Creating number sprites
-		Sprite number0 = new Sprite("src/assets/img/continue/number_0.png");
-		Sprite number1 = new Sprite("src/assets/img/continue/number_1.png");
-		Sprite number2 = new Sprite("src/assets/img/continue/number_2.png");
-		Sprite number3 = new Sprite("src/assets/img/continue/number_3.png");
-		Sprite number4 = new Sprite("src/assets/img/continue/number_4.png");
-		Sprite number5 = new Sprite("src/assets/img/continue/number_5.png");
-		Sprite number6 = new Sprite("src/assets/img/continue/number_6.png");
-		Sprite number7 = new Sprite("src/assets/img/continue/number_7.png");
-		Sprite number8 = new Sprite("src/assets/img/continue/number_8.png");
-		Sprite number9 = new Sprite("src/assets/img/continue/number_9.png");
-		
-		//Adding sprites elements to array
-		countDown.add(number0);
-		countDown.add(number1);
-		countDown.add(number2);
-		countDown.add(number3);
-		countDown.add(number4);
-		countDown.add(number5);
-		countDown.add(number6);
-		countDown.add(number7);
-		countDown.add(number8);
-		countDown.add(number9);
-		
-		//Setting center position for each element
-		for (Sprite numbers: countDown) {
-			
-			numbers.x = WindowConstants.WIDTH/2 - numbers.width/2;
-			numbers.y = WindowConstants.HEIGHT/2 - numbers.height/2;
-			
-		}
-		
+
+
+
+	@Override
+	public void terminate() {
+		System.out.println("Timer Ended");
+		GameScene menu = new MenuScene();
+		game.transitTo(menu);
+	}
+	
+
+
+
+	@Override
+	public void updateImageForIndex(int index) {
+		cd.loadImage("src/assets/img/continue/number_" + String.valueOf(index) + ".png");
 	}
 
 }
