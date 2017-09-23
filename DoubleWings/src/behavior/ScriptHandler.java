@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import behavior.GenerateBehavior;
+import commands.Command;
 
 public class ScriptHandler {
 	

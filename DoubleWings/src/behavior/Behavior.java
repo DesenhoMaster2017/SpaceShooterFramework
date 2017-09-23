@@ -2,6 +2,8 @@ package behavior;
 
 import java.util.ArrayList;
 
+import commands.Command;
+
 public class Behavior {
 	
 	/**

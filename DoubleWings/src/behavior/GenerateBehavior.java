@@ -5,6 +5,12 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Scanner;
+
+import commands.Command;
+import commands.CommandCreator;
+import commands.CommandType;
+import commands.MoveCommand;
+
 import java.util.ArrayList;
 
 /** Assumes UTF-8 encoding. JDK 7+. */
@@ -38,9 +44,11 @@ public class GenerateBehavior {
     
    <P>This simple default implementation expects simple commands, one per line 
    Examples of valid input: 
-   <tt>shoot</tt>
-   <tt>left</tt>
-   <tt>up</tt>
+   <tt>SHOOT</tt>
+   <tt>LEFT</tt>
+   <tt>DOWN</tt>
+   <tt>RIHT</tt>
+   <tt>UP</tt>
   */
   protected Command processLine(String commandLine) throws IOException{
     //use a second Scanner to parse the content of each line 
@@ -50,7 +58,9 @@ public class GenerateBehavior {
       String commandOutput = commandInput.next();
       log("Command received: " + quote(commandOutput.trim()));
       commandInput.close();
-      Command command = new Command(commandOutput);
+      
+     Command command = CommandCreator.createCommand(CommandType.valueOf(commandOutput));
+      
       return command;
       
     }
