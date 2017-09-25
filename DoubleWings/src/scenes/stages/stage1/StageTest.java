@@ -2,10 +2,11 @@ package scenes.stages.stage1;
 
 import game.GameController;
 import game.World;
+import entity.*;
 
 import jplay.GameImage;
 import jplay.Keyboard;
-import Entity.GameEntity;
+import entity.GameEntity;
 import constants.WindowConstants;
 import scenes.GameScene;
 
@@ -13,7 +14,6 @@ public class StageTest extends GameScene {
 
 	private GameEntity player;
 	private GameImage background;
-	private Shield shield;
 	private World gameWorld;
     
 	@Override
@@ -31,33 +31,49 @@ public class StageTest extends GameScene {
 		//Loading background image
 		background = new GameImage("src/assets/img/temp_background.png");
 
+		configureEntities();
+	}
+	
+	private void configureEntities(){
 		//Creating player sprite
-		player = new GameEntity("src/assets/img/temp_player.png");
-
+		player = new Player("src/assets/img/temp_player.png");
+		player.setLife(5);
+				
 		//Putting player on the center-bottom of the screen
 		player.x = WindowConstants.WIDTH/2 - player.width/2;
 		player.y = WindowConstants.HEIGHT - player.height;
 
-		shield = new Shield(player);
+		Shield shield = new Shield(player);
+		shield.setLife(10);
+				
+		Enemy asteroid1 = new Enemy("src/assets/img/asteroid.png");
+		asteroid1.setLife(10);
+		asteroid1.x = WindowConstants.WIDTH/2 - asteroid1.width/2;
+		asteroid1.y = 0;
+		asteroid1.vely = 2.0;
+				
+		Enemy asteroid2 = new Enemy("src/assets/img/asteroid.png");
+		asteroid2.setLife(10);
+		asteroid2.x = WindowConstants.WIDTH/2 - asteroid2.width/2;
+		asteroid2.y = -200;
+		asteroid2.vely = 2.0;
+
+		gameWorld.add(asteroid1);
+		gameWorld.add(asteroid2);
 		
+		gameWorld.add(shield);
 		gameWorld.add(player);
-		
 	}
 	
 	@Override
 	public void update(){
-
-		//Draw the images for the game
+		
 		background.draw();
-		player.draw();
-		shield.draw();
+		gameWorld.update(); // Updates and draw all entities added in game world
 
 		//Player movement
 		player.moveX(Keyboard.LEFT_KEY, Keyboard.RIGHT_KEY, 4);//velocity = 1
 		player.moveY(Keyboard.UP_KEY, Keyboard.DOWN_KEY, 4);//velocity = 1
-		
-		//Active o method update from Shield following the player 
-		shield.update();
 
 	}
 }
