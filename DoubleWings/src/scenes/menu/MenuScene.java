@@ -188,8 +188,8 @@ public class MenuScene extends GameScene {
 			case Ranking:
 				//transit to ranking
 				//testing continue countdown dev-only
-				GameScene countdown = new ClassicContinue();
-				game.transitTo(countdown);
+				//GameScene countdown = new ClassicContinue();
+				//game.transitTo(countdown);
 				break;
 			case Settings:
 				//transit to settings
