@@ -1,22 +1,25 @@
 package scenes.stages.stage1;
 
 import game.GameController;
+import game.World;
 
 import jplay.GameImage;
 import jplay.Keyboard;
-import jplay.Sprite;
+import Entity.GameEntity;
 import constants.WindowConstants;
 import scenes.GameScene;
 
 public class StageTest extends GameScene {
 
-	private Sprite player;
+	private GameEntity player;
 	private GameImage background;
 	private Shield shield;
+	private World gameWorld;
     
 	@Override
 	public void initialSetup(GameController game){
 		
+		gameWorld = new World();
 		//Set game controller elements
 		this.game = game;
 		this.keyboard = game.keyboard;
@@ -29,13 +32,15 @@ public class StageTest extends GameScene {
 		background = new GameImage("src/assets/img/temp_background.png");
 
 		//Creating player sprite
-		player = new Sprite("src/assets/img/temp_player.png");
+		player = new GameEntity("src/assets/img/temp_player.png");
 
 		//Putting player on the center-bottom of the screen
 		player.x = WindowConstants.WIDTH/2 - player.width/2;
 		player.y = WindowConstants.HEIGHT - player.height;
 
 		shield = new Shield(player);
+		
+		gameWorld.add(player);
 		
 	}
 	
