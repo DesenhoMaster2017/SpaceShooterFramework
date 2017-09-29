@@ -12,7 +12,7 @@ import scenes.GameScene;
 
 public class StageTest extends GameScene {
 
-	private GameEntity player;
+	private Player player;
 	private GameImage background;
 	private World gameWorld;
 
@@ -46,7 +46,7 @@ public class StageTest extends GameScene {
 		// In this way we can collect all the HUD values directly from the player
 		Shield shield = new Shield(player);
 		shield.setLife(10);
-		player.getShield(shield);
+		player.setShield(shield);
 
 		Enemy asteroid1 = new Enemy("src/assets/img/asteroid.png");
 		asteroid1.setLife(10);
