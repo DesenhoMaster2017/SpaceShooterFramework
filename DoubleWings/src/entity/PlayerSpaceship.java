@@ -8,7 +8,7 @@ public class PlayerSpaceship extends GameEntity {
 
 	public PlayerSpaceship(String fileName) {
 		super(fileName);
-		this.shield = new Shield(this);
+		this.shield = new Shield(this, 10);
 	}
 
 	@Override
