@@ -16,6 +16,13 @@ public class GameEntity extends Sprite {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public GameEntity(String fileName, int life) {
+		super(fileName);
+		name = fileName;
+		this.life = life;
+		// TODO Auto-generated constructor stub
+	}
+	
 	public void setLife(int newLife){
 		this.life = newLife;
 		

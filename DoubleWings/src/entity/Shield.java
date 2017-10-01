@@ -19,7 +19,18 @@ public class Shield extends GameEntity {
 		//Putting shield on the screen with reference the player position
 		this.x = player.x;
 		this.y = player.y;
+	}
+	
+	public Shield(GameEntity player, int life) {
+		// Initializing shield's image and life
+		super("src/assets/img/temp_shield.png", life);
 		
+		//Getting the player from the StageTest class
+				this.player = player;
+
+				//Putting shield on the screen with reference the player position
+				this.x = player.x;
+				this.y = player.y;
 	}
     
 	//Method to update the shield according the player
