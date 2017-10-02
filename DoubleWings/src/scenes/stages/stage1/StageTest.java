@@ -25,26 +25,23 @@ public class StageTest extends GameScene {
 	private Enemy asteroid1;
     
 	@Override
-	public void initialSetup(GameController game){
+	protected void initialSetup(){
 		
 		gameWorld = new World();
-		//Set game controller elements
-		this.game = game;
-		this.keyboard = game.keyboard;
 		
 		//Configure up and down keys
 		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_EVERY_PRESS);
 		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_EVERY_PRESS);
-		
-		//Loading background image
-		background = new GameImage("src/assets/img/temp_background.png");
 
 		configureEntities();
 		
 		//Development purposes
 		creatingCommands();
-		
-		
+	}
+	
+	protected void viewSetup(){
+		// Loading background image
+		background = new GameImage("src/assets/img/temp_background.png");
 	}
 	
 	private void creatingCommands(){

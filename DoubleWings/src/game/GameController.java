@@ -16,7 +16,7 @@ public class GameController {
 		if(scene == null) return;
 
 		//run initial setup
-		scene.initialSetup(this);
+		scene.configure(this);
 		
 		//Update current scene variable
 		currentScene = scene;
