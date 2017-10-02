@@ -2,11 +2,11 @@ package scenes.stages.stage1;
 
 import game.GameController;
 import game.World;
+import hud.HUD;
 import entity.*;
 
 import jplay.GameImage;
 import jplay.Keyboard;
-import entity.GameEntity;
 import constants.WindowConstants;
 import scenes.GameScene;
 
@@ -15,6 +15,7 @@ public class StageTest extends GameScene {
 	private Player player;
 	private GameImage background;
 	private World gameWorld;
+	private HUD hud;
 
 	@Override
 	public void initialSetup(GameController game){
@@ -47,6 +48,11 @@ public class StageTest extends GameScene {
 		Shield shield = new Shield(player);
 		shield.setLife(10);
 		player.setShield(shield);
+		
+		//Create the HUD and adding it as player's observer
+		hud = new HUD();
+		player.registerObserver(hud);
+		
 
 		Enemy asteroid1 = new Enemy("src/assets/img/asteroid.png");
 		asteroid1.setLife(10);

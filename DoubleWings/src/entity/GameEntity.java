@@ -1,6 +1,7 @@
 package entity;
 
 import jplay.Sprite;
+import observer.GameEntityObserver;
 
 public class GameEntity extends Sprite {
 
@@ -9,6 +10,7 @@ public class GameEntity extends Sprite {
 	private boolean isDead = false;
 	public Double velx = 0.0;
 	public Double vely = 0.0;
+	private GameEntityObserver observer;
 	
 	public GameEntity(String fileName) {
 		super(fileName);
@@ -48,4 +50,14 @@ public class GameEntity extends Sprite {
 	public void destroy(){
 		
 	}
+	
+	//Observer getter and setter
+	public GameEntityObserver getObserver() {
+		return observer;
+	}
+
+	public void registerObserver(GameEntityObserver observer) {
+		this.observer = observer;
+	}
+
 }

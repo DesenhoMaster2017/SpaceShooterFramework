@@ -2,8 +2,9 @@ package hud;
 
 import entity.Player;
 import jplay.Sprite;
+import observer.GameEntityObserver;
 
-public class HUD{
+public class HUD implements GameEntityObserver{
 
   private Player player; // Variable to read player informations
   private Sprite shieldLifeBar;
@@ -16,22 +17,24 @@ public class HUD{
     // FIX: Add actual images
     shieldLifeBar = new Sprite(".png", 3);
     chances = new Sprite(".png", 3);
-    // score = new Sprite(".png", 3);
   }
 
   // TIP: Perhaps use a pattern to specialize all the updates
   public void update(){
-
-    draw();
+	  
   }
 
   public void draw(){
 
     shieldLifeBar.draw();
     chances.draw();
-    // score.draw();
+    this.drawScore();
   }
-
+  
+  public void drawScore() {
+	  
+  }
+  
   public void updateShieldLifeBar(){
 
   }
