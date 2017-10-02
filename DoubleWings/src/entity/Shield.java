@@ -1,15 +1,14 @@
-package scenes.stages.stage1;
+package entity;
 
-import jplay.Sprite;
+import entity.GameEntity;
 
-public class Shield extends Sprite {
+public class Shield extends GameEntity {
 
-	private int life;
 	private int regeneration;
-	private Sprite player;
+	private GameEntity player;
     
 	//Creation constructor to Shield
-	public Shield(Sprite player) {
+	public Shield(GameEntity player) {
 		
         //Initialization with shield image
 		super("src/assets/img/temp_shield.png");
@@ -33,6 +32,16 @@ public class Shield extends Sprite {
 		//Adjusting position player with force shield
 		this.x = player.x - horizontalCorrection;
 		this.y = player.y - verticalCorrection;
-		
+	}
+	
+	// Handle when contact happen
+	@Override
+	public void didContact(GameEntity entity){
+		if (entity.getClass() == Enemy.class){
+			
+			entity.receiveDamage(100); // test purposes
+			this.receiveDamage(20); // test purposes
+			System.out.println("hit enemy");
+		}
 	}
 }
