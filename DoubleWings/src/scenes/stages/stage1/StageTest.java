@@ -52,7 +52,6 @@ public class StageTest extends GameScene {
 		//Create the HUD and adding it as player's observer
 		hud = new HUD();
 		player.registerObserver(hud);
-		
 
 		Enemy asteroid1 = new Enemy("src/assets/img/asteroid.png");
 		asteroid1.setLife(10);
@@ -78,6 +77,7 @@ public class StageTest extends GameScene {
 
 		background.draw();
 		gameWorld.update(); // Updates and draw all entities added in game world
+		hud.draw(); // Draw all HUD elements
 
 		//Player movement
 		player.moveX(Keyboard.LEFT_KEY, Keyboard.RIGHT_KEY, 4);//velocity = 1

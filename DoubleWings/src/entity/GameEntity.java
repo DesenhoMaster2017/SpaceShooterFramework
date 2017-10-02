@@ -10,7 +10,7 @@ public class GameEntity extends Sprite {
 	private boolean isDead = false;
 	public Double velx = 0.0;
 	public Double vely = 0.0;
-	private GameEntityObserver observer;
+	protected GameEntityObserver observer;
 	
 	public GameEntity(String fileName) {
 		super(fileName);

@@ -1,10 +1,13 @@
 package entity;
 
+import hud.HUD;
+
 public class Player extends GameEntity {
 
 	private Shield shield;
 	private int score = 0; // Score default value
 	private int chances = 3; // Initially the player will have three lifes
+	private HUD observer; //Temp solution to the observer
 
 	public Player(String fileName) {
 		super(fileName);
@@ -35,5 +38,13 @@ public class Player extends GameEntity {
 
 		}
 	}
-
+	
+	//Chanses setters and getters
+	public void setChances(int chances){
+		observer.updateChances(this.chances);
+	}
+	
+	public int getChances() {
+		return this.chances;
+	}
 }

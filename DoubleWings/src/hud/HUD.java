@@ -1,50 +1,57 @@
 package hud;
 
-import entity.Player;
 import jplay.Sprite;
 import observer.GameEntityObserver;
 
 public class HUD implements GameEntityObserver{
 
-  private Player player; // Variable to read player informations
-  private Sprite shieldLifeBar;
-  private Sprite chances;
-  // private (int or Sprite) score;
-
-  public HUD(){
-
-    // Load HUD elements' sprite and sets the number of frames
-    // FIX: Add actual images
-    shieldLifeBar = new Sprite(".png", 3);
-    chances = new Sprite(".png", 3);
-  }
-
-  // TIP: Perhaps use a pattern to specialize all the updates
-  public void update(){
-	  
-  }
-
-  public void draw(){
-
-    shieldLifeBar.draw();
-    chances.draw();
-    this.drawScore();
-  }
+	private Sprite shieldLifeBar;
+	private Sprite chancesSimbol;
   
-  public void drawScore() {
+	//Copy of the attributes observed by the HUD
+	private int score;
+
+	public HUD(){
+		
+		shieldLifeBar = new Sprite(".png");
+    
+		chancesSimbol = new Sprite("src/assets/img/hud/chances.png", 4);
+		this.chancesSimbol.setCurrFrame(3);
+		this.chancesSimbol.x = 0;
+		this.chancesSimbol.y = 0;
+	}
+
+	// TIP: Perhaps use a pattern to specialize all the updates
+	public void update(){
 	  
-  }
+	}
+
+	public void draw(){
+
+		shieldLifeBar.draw();
+		chancesSimbol.draw();
+		this.drawScore();
+	}
   
-  public void updateShieldLifeBar(){
+	public void drawScore() {
+	  
+	}
+  
+	public void updateShieldLifeBar(){
 
-  }
+	}
 
-  public void updateChances(){
+	public void updateChances(int playerChances){
+		if (playerChances <= 3 && playerChances >= 0) {
+			this.chancesSimbol.setCurrFrame(playerChances);
+			
+		} else {
+			this.chancesSimbol.setCurrFrame(0);
+		}
+	}
 
-  }
-
-  // public void updateScore(){
-  //
-  // }
+	public void updateScore(){
+   
+	}
 
 }
