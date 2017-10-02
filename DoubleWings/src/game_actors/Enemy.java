@@ -5,7 +5,6 @@ import jplay.Sprite;
 
 public class Enemy extends Sprite {
 	static private String spriteImagePath = "src/assets/img/temp_player.png";
-	private final MoveCommand[] behavior = {new MoveLeft(), new MoveDown(), new MoveUp(), new MoveRight()};
 	private int commandCount = 0;
 
 	public Enemy(int x, int y) {
@@ -14,9 +13,9 @@ public class Enemy extends Sprite {
 		this.y = y;
 	}
 	
-	public void executeBehavior() {
-		if (commandCount < behavior.length) {
-			if (behavior[commandCount].execute(this)) {
+	public void executeBehavior(Command[] commands) {
+		if (commandCount < commands.length) {
+			if (commands[commandCount].execute(this)) {
 				commandCount += 1;
 			} else {/*donot*/}
 		System.out.println("x: " + this.x + " y: " + this.y);
