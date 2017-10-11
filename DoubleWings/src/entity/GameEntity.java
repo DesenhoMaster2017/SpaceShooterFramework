@@ -1,6 +1,9 @@
 package entity;
 
+import game.GameController;
 import jplay.Sprite;
+import scenes.ClassicContinue;
+import scenes.GameScene;
 
 public class GameEntity extends Sprite {
 
@@ -21,6 +24,9 @@ public class GameEntity extends Sprite {
 		
 		if (life <= 0) {
 			die();
+			GameScene countdown = new ClassicContinue();
+			GameController game = new GameController();
+			game.transitTo(countdown);
 		}
 	}
 	

@@ -30,8 +30,8 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		keyboard = game.keyboard;
 		
 		//Configure enter key and escape
-		keyboard.setBehavior(Keyboard.ENTER_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
-		keyboard.setBehavior(Keyboard.ESCAPE_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
+		//keyboard.setBehavior(Keyboard.ENTER_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
+		//keyboard.setBehavior(Keyboard.ESCAPE_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
 		
 		background = new GameImage("src/assets/img/temp_background.png");
 		

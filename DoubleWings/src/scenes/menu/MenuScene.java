@@ -90,8 +90,8 @@ public class MenuScene extends GameScene {
 		selectedMenuOption = OptionMenu.Start_Game;
 		
 		//Configure up and down keys
-		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
-		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
+		//keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
+		//keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
 		
 		//Define Scene elements
 		background = new GameImage("src/assets/img/menu/background.png");

@@ -3,6 +3,8 @@ package game;
 import java.util.ArrayList;
 
 import entity.GameEntity;
+import scenes.ClassicContinue;
+import scenes.GameScene;
 
 public class World {
 	
@@ -60,6 +62,7 @@ public class World {
 				System.out.println("Error removing entity");
 			}
 		}
+		
 		
 		deadObjs.clear();
 	}
