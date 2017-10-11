@@ -6,10 +6,16 @@ import entity.*;
 
 import jplay.GameImage;
 import jplay.Keyboard;
+import jplay.Sprite;
 import entity.GameEntity;
+
+import java.util.Timer;
+
 import constants.WindowConstants;
 import scenes.ClassicContinue;
+import scenes.GameOver;
 import scenes.GameScene;
+import util.CountDownTimer;
 
 public class StageTest extends GameScene {
 
@@ -77,12 +83,12 @@ public class StageTest extends GameScene {
 		player.moveY(Keyboard.UP_KEY, Keyboard.DOWN_KEY, 4);//velocity = 1
 
 		if (player.isDead()){
-			launchGameOver();
+			launchGameContinue();
 		}
-		
+				
 	}
 	
-	public void launchGameOver(){
+	public void launchGameContinue(){
 		GameScene countdown = new ClassicContinue();
 		game.transitTo(countdown);
 	}

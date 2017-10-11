@@ -13,7 +13,8 @@ public class GameController {
 	public void transitTo(GameScene scene) {
 		
 		//leave transition if scene is null
-		if(scene == null) return;
+		if(scene == null) 
+		  return;
 
 		//run initial setup
 		scene.initialSetup(this);
