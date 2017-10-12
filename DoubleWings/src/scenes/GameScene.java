@@ -6,9 +6,23 @@ public abstract class GameScene {
 	
 	protected GameController game;
 	protected Keyboard keyboard; 
-
+	
     public abstract void update();
+    
+    public void configure(GameController game){
+    	this.game = game;
+    	this.keyboard = game.keyboard;
+    	
+    	initialSetup();
+    	viewSetup();
+    }
 		
-	public abstract void initialSetup(GameController game);
+	protected abstract void initialSetup();
+	protected abstract void viewSetup();
+	
+	public void destroy(){
+		this.game = null;
+		this.keyboard = null;
+	}
 	
 }

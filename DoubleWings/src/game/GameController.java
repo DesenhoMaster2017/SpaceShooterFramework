@@ -13,10 +13,15 @@ public class GameController {
 	public void transitTo(GameScene scene) {
 		
 		//leave transition if scene is null
-		if(scene == null) return;
+		if(scene == null || keyboard == null) 
+		  return;
+		
+		if(currentScene != null){
+			currentScene.destroy();
+		}
 
 		//run initial setup
-		scene.initialSetup(this);
+		scene.configure(this);
 		
 		//Update current scene variable
 		currentScene = scene;
