@@ -10,61 +10,7 @@ import jplay.Keyboard;
 import java.util.ArrayList;
 
 import constants.WindowConstants;
-import game.GameController;
 import jplay.Sprite;
-
-enum OptionMenu {  
-	Start_Game(0), Ranking(1), Settings(2), Quit(3);
-	
-	private final int value; //Current option on menu
-	
-	OptionMenu(int option){
-		value = option;
-	}
-	
-	OptionMenu next(){
-		
-		int option = value;
-		if (value < 3){
-			option += 1;
-		}
-		
-		return OptionMenu(option);
-	}
-
-	OptionMenu back(){
-		
-		int option = value;
-		if (value > 0){
-			option -= 1;
-		}
-		
-		return OptionMenu(option);
-	}
-
-	private OptionMenu OptionMenu(int option) {
-
-		switch(option){
-
-		case 0:
-			return OptionMenu.Start_Game;
-			
-		case 1:
-			return OptionMenu.Ranking;
-			
-		case 2:
-			return OptionMenu.Settings;
-			
-		case 3:
-			return OptionMenu.Quit;
-		}
-
-		return OptionMenu.Start_Game;
-	}
-	
-}
-
-
 
 // MenuScene 
 public class MenuScene extends GameScene {
@@ -80,29 +26,27 @@ public class MenuScene extends GameScene {
 	private Sprite arrow;
 	private ArrayList<Sprite> buttons = new ArrayList<Sprite>();
 	
-	public void initialSetup(GameController game){
-		
-		//Set game controller elements
-		this.game = game;
-		keyboard = game.keyboard;
+	protected void initialSetup(){
 		
 		//Reset option menu
 		selectedMenuOption = OptionMenu.Start_Game;
 		
 		//Configure up and down keys
-		//keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
-		//keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
-		
+		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
+		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
+	}
+	
+	protected void viewSetup(){
 		//Define Scene elements
 		background = new GameImage("src/assets/img/menu/background.png");
-		
+
 		title = new Sprite("src/assets/img/menu/title.png");
 		title.x = WindowConstants.WIDTH/2 - title.width/2;
 		title.y = WindowConstants.HEIGHT/3 - title.height/2;
-		
+
 		//Define buttons position
 		appendButtons();
-		
+
 		arrow = new Sprite("src/assets/img/menu/arrow.png");
 		arrow.x = 10;
 		arrow.y = 10;

@@ -22,11 +22,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	//static Thread thread = new Thread(); 
 	
 	
-	public void initialSetup(GameController game) {
-		
-		//Set game controller elements
-		this.game = game;
-		keyboard = game.keyboard;
+	public void initialSetup() {
 		
 		//Configure enter key and escape
 		//keyboard.setBehavior(Keyboard.ENTER_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
@@ -46,6 +42,12 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		counter.y = WindowConstants.HEIGHT/2 - counter.height/2;
 		
 		timeWait();
+	}
+	
+	@Override
+	protected void viewSetup() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void timeWait(){
@@ -70,9 +72,11 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	
 	@Override
 	public void terminate() {
-		System.out.println("Timer Ended");
-		GameScene gameOver = new GameOver();
-		game.transitTo(gameOver);
+		if (game != null){
+			System.out.println("Timer Ended");
+			GameScene gameOver = new GameOver();
+			game.transitTo(gameOver);
+		}
 	}
 	
 	@Override
@@ -80,12 +84,15 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		counter.loadImage("src/assets/img/continue/number_" + String.valueOf(index) + ".png");
 	}
 	
-	private void checkButtonSelection ( ) {
-		if (keyboard.keyDown(Keyboard.ENTER_KEY)) {
-			//Transit to a continue state of the game
-		} else if (keyboard.keyDown(Keyboard.ESCAPE_KEY)) {
-			GameScene menu = new MenuScene();
-			game.transitTo(menu);
+	private void checkButtonSelection () {
+		
+		if(game != null && keyboard != null){
+			if (keyboard.keyDown(Keyboard.ENTER_KEY)) {
+				//Transit to a continue state of the game
+			} else if (keyboard.keyDown(Keyboard.ESCAPE_KEY)) {
+				GameScene menu = new MenuScene();
+				game.transitTo(menu);
+			}
 		}
 	}
 

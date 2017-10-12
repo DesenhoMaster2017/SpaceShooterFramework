@@ -21,7 +21,7 @@ public class GameOver extends GameScene implements CountDownTimerEnds {
 	//static Thread thread = new Thread(); 
 	
 	
-	public void initialSetup(GameController game) {
+	public void initialSetup() {
 		
 		//Set game controller elements
 		this.game = game;
@@ -39,6 +39,13 @@ public class GameOver extends GameScene implements CountDownTimerEnds {
 		gameOver.y = WindowConstants.HEIGHT/2 - gameOver.height/2;
 		
 		timeWait();
+	}
+
+
+	@Override
+	protected void viewSetup() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void timeWait(){

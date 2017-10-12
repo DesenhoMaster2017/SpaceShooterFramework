@@ -4,6 +4,10 @@ import game.GameController;
 import game.World;
 import entity.*;
 
+import java.util.ArrayList;
+
+import commands.*;
+
 import jplay.GameImage;
 import jplay.Keyboard;
 import jplay.Sprite;
@@ -22,24 +26,43 @@ public class StageTest extends GameScene {
 	private GameEntity player;
 	private GameImage background;
 	private World gameWorld;
+	private ArrayList<Command> commands;
+	private Command currentCommand = null;
+	private int commandCount = 0;
+	private Enemy asteroid1;
     
 	@Override
-	public void initialSetup(GameController game){
+	protected void initialSetup(){
 		
 		gameWorld = new World();
-		//Set game controller elements
-		this.game = game;
-		this.keyboard = game.keyboard;
 		
 		//Configure up and down keys
 		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_EVERY_PRESS);
 		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_EVERY_PRESS);
-		
-		//Loading background image
-		background = new GameImage("src/assets/img/temp_background.png");
 
 		configureEntities();
+		
+		//Development purposes
+		creatingCommands();
 	}
+	
+	protected void viewSetup(){
+		// Loading background image
+		background = new GameImage("src/assets/img/temp_background.png");
+	}
+	
+	private void creatingCommands(){
+		commands = new ArrayList<Command>();
+		
+		commands.add(CommandCreator.createCommand(CommandType.LEFT));
+		commands.add(CommandCreator.createCommand(CommandType.DOWN));		
+		commands.add(CommandCreator.createCommand(CommandType.RIGHT));
+		commands.add(CommandCreator.createCommand(CommandType.RIGHT));
+		commands.add(CommandCreator.createCommand(CommandType.RIGHT));
+		
+		currentCommand = commands.remove(commands.size() - 1); // return removed object
+	}
+
 	
 	private void configureEntities(){
 		//Creating player sprite
@@ -53,7 +76,7 @@ public class StageTest extends GameScene {
 		Shield shield = new Shield(player);
 		shield.setLife(10);
 				
-		Enemy asteroid1 = new Enemy("src/assets/img/asteroid.png");
+		asteroid1 = new Enemy("src/assets/img/asteroid.png");
 		asteroid1.setLife(10);
 		asteroid1.x = WindowConstants.WIDTH/2 - asteroid1.width/2;
 		asteroid1.y = 0;
@@ -72,6 +95,7 @@ public class StageTest extends GameScene {
 		gameWorld.add(player);
 	}
 	
+	
 	@Override
 	public void update(){
 		
@@ -81,11 +105,31 @@ public class StageTest extends GameScene {
 		//Player movement
 		player.moveX(Keyboard.LEFT_KEY, Keyboard.RIGHT_KEY, 4);//velocity = 1
 		player.moveY(Keyboard.UP_KEY, Keyboard.DOWN_KEY, 4);//velocity = 1
+		
+		executeAsteroidCommand();
 
 		if (player.isDead()){
 			launchGameContinue();
 		}
 				
+	}
+	
+	public void executeAsteroidCommand(){
+		//Asteroid command execute
+		commandCount += 1;
+
+		if (commandCount >= 50 && commands.size() > 0){
+
+			System.out.println("Commands: " + commands.size());
+			currentCommand = commands.remove(commands.size() - 1); // return removed object
+			System.out.println("current: "+ String.valueOf(currentCommand));			
+
+			commandCount = 0;
+		}
+
+		if (currentCommand != null){
+			currentCommand.execute(asteroid1);
+		}
 	}
 	
 	public void launchGameContinue(){
