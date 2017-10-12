@@ -19,6 +19,7 @@ import constants.WindowConstants;
 import scenes.ClassicContinue;
 import scenes.GameOver;
 import scenes.GameScene;
+import scenes.Lose;
 import util.CountDownTimer;
 
 public class StageTest extends GameScene {
@@ -31,7 +32,9 @@ public class StageTest extends GameScene {
 	private int commandCount = 0;
 	private Enemy asteroid1;
 	private int lifePlayer = 3;
-    
+	
+	Lose  lose = new Lose();
+	
 	@Override
 	protected void initialSetup(){
 		
@@ -45,6 +48,8 @@ public class StageTest extends GameScene {
 		
 		//Development purposes
 		creatingCommands();
+		
+		
 	}
 	
 	protected void viewSetup(){
@@ -112,16 +117,18 @@ public class StageTest extends GameScene {
 		if (player.isDead()){
 			
 			if(lifePlayer > 0){
+				System.out.println(lifePlayer + " " + "Passou aqui");
+				lose.setLifePlayer(lifePlayer);
 				lifePlayer = lifePlayer - 1;
-				launchGameContinue();
+				System.out.println("Valor passado: " + lose.getLifePlayer());
+				launchScreenLose();
 			}
 					
 			else if(lifePlayer == 0){
+				System.out.println(lifePlayer + " " + "Acabou");
 				launchGameOver();
 			}		
-				
 		}
-				
 	}
 	
 	public void executeAsteroidCommand(){
@@ -142,7 +149,7 @@ public class StageTest extends GameScene {
 		}
 	}
 	
-	public void launchGameContinue(){
+	public void launchGameContinue(){	
 		GameScene countdown = new ClassicContinue();
 		game.transitTo(countdown);
 	}
@@ -150,6 +157,10 @@ public class StageTest extends GameScene {
 	public void launchGameOver(){
 		GameScene gameOver = new GameOver();
 		game.transitTo(gameOver);
+	}
+	
+	public void launchScreenLose(){
+		game.transitTo(lose);
 	}
 	
 }
