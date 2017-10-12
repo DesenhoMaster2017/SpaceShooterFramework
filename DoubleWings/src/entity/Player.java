@@ -1,16 +1,12 @@
 package entity;
 
-import game.GameController;
-import scenes.ClassicContinue;
-import scenes.GameScene;
-
 public class Player extends GameEntity {
 	
 	private int score;
 	
 	public Player(String fileName) {
 		super(fileName);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override

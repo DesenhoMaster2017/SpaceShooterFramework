@@ -2,19 +2,17 @@ package scenes;
 import java.util.Timer;
 
 import constants.WindowConstants;
-import game.GameController;
 import jplay.GameImage;
 import jplay.InputBase;
 import jplay.Keyboard;
 import jplay.Sprite;
 import scenes.menu.MenuScene;
-import scenes.stages.stage1.StageTest;
 import util.CountDownTimer;
 import util.CountDownTimerEnds;
 
 public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		
-	// Sprites on scene
+	// Sprite on scene
 	private GameImage background;
 	private Sprite wantToContinue;
 	private Sprite counter;
@@ -23,17 +21,17 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	//Thread counter
 	//static Thread thread = new Thread(); 
 	
-	
 	public void initialSetup() {
 		
 		//Configure enter key and escape
 		keyboard.setBehavior(Keyboard.ENTER_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
 		keyboard.setBehavior(Keyboard.ESCAPE_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
 		
+		//Create image background
 		background = new GameImage("src/assets/img/temp_background.png");
 		
-		//Define scenes elements position
-		//Continue sprite upper-center position
+		/*Define scenes elements position
+		 *Continue sprite upper-center position*/
 		wantToContinue = new Sprite("src/assets/img/continue/continue.png");
 		wantToContinue.x = WindowConstants.WIDTH/2 - wantToContinue.width/2;
 		wantToContinue.y = WindowConstants.HEIGHT/2 - wantToContinue.height;
@@ -43,6 +41,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		counter.x = WindowConstants.WIDTH/2 - counter.width/2;
 		counter.y = WindowConstants.HEIGHT/1.5 - counter.height/2;
 		
+		//Enter Sprite displays Screen
 		enter = new Sprite("src/assets/img/continue/Enter-Download-PNG.png");
 		enter.x = WindowConstants.WIDTH/2 - enter.width/2;
 		enter.y = WindowConstants.HEIGHT/500 - enter.height/20;
@@ -56,6 +55,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		
 	}
 	
+	//Time wait to transit between scene
 	public void timeWait(){
 		
 		Timer timer = new Timer();
@@ -66,6 +66,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	
 	}
 	
+	//Update image Sprite on Screen and check button at keyboard
 	public void update() {
 		
 		background.draw();
@@ -77,6 +78,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		
 	}
 	
+	//Method that after the end of the time transit to the screen of game over.
 	@Override
 	public void terminate() {
 		if (game != null){
@@ -86,11 +88,13 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		}
 	}
 	
+	//Update number continue on Screen
 	@Override
 	public void updateImageForIndex(int index) {
 		counter.loadImage("src/assets/img/continue/number_" + String.valueOf(index) + ".png");
 	}
 	
+	//Method to catch click on keyboard
 	private void checkButtonSelection () {
 		
 		if(game != null && keyboard != null){
@@ -98,7 +102,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 				//Transit to a continue state of the game
 				MenuScene transitScene = new MenuScene();
 				game.transitTo(transitScene.firstStage());
-				
+	
 			} else if (keyboard.keyDown(Keyboard.ESCAPE_KEY)) {
 				GameScene menu = new MenuScene();
 				game.transitTo(menu);

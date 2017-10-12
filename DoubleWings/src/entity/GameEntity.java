@@ -13,7 +13,6 @@ public class GameEntity extends Sprite {
 	public Double velx = 0.0;
 	public Double vely = 0.0;
 	
-	
 	public GameEntity(String fileName) {
 		super(fileName);
 		name = fileName;

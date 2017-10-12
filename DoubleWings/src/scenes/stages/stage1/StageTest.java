@@ -1,26 +1,17 @@
 package scenes.stages.stage1;
 
-import game.GameController;
 import game.World;
 import entity.*;
-
 import java.util.ArrayList;
-
 import commands.*;
-
 import jplay.GameImage;
 import jplay.Keyboard;
-import jplay.Sprite;
 import entity.GameEntity;
-
-import java.util.Timer;
-
 import constants.WindowConstants;
 import scenes.ClassicContinue;
 import scenes.GameOver;
 import scenes.GameScene;
 import scenes.Lose;
-import util.CountDownTimer;
 
 public class StageTest extends GameScene {
 
@@ -31,8 +22,9 @@ public class StageTest extends GameScene {
 	private Command currentCommand = null;
 	private int commandCount = 0;
 	private Enemy asteroid1;
-	private int lifePlayer = 3;
+	private int lifePlayer = 3;					// Variable used to count the number of lives of the player
 	
+	// Instantiating an object to do manipulation in the lose class	
 	Lose  lose = new Lose();
 	
 	@Override
@@ -48,8 +40,7 @@ public class StageTest extends GameScene {
 		
 		//Development purposes
 		creatingCommands();
-		
-		
+			
 	}
 	
 	protected void viewSetup(){
@@ -101,7 +92,6 @@ public class StageTest extends GameScene {
 		gameWorld.add(player);
 	}
 	
-	
 	@Override
 	public void update(){
 		
@@ -113,19 +103,20 @@ public class StageTest extends GameScene {
 		player.moveY(Keyboard.UP_KEY, Keyboard.DOWN_KEY, 4);//velocity = 1
 		
 		executeAsteroidCommand();
-
+		
+		//Verify if player is dead
 		if (player.isDead()){
 			
+			//Checks the player's life. If he has any life, he throws it to the continue screen.
 			if(lifePlayer > 0){
-				System.out.println(lifePlayer + " " + "Passou aqui");
 				lose.setLifePlayer(lifePlayer);
 				lifePlayer = lifePlayer - 1;
-				System.out.println("Valor passado: " + lose.getLifePlayer());
 				launchScreenLose();
 			}
-					
+			
+			//If the player contains no life, quit the game by playing it to the game over screen.
 			else if(lifePlayer == 0){
-				System.out.println(lifePlayer + " " + "Acabou");
+		
 				launchGameOver();
 			}		
 		}
@@ -149,16 +140,19 @@ public class StageTest extends GameScene {
 		}
 	}
 	
+	//Method to transition to the continue scene
 	public void launchGameContinue(){	
 		GameScene countdown = new ClassicContinue();
 		game.transitTo(countdown);
 	}
 	
+	//Method to transition to the Game Over scene
 	public void launchGameOver(){
 		GameScene gameOver = new GameOver();
 		game.transitTo(gameOver);
 	}
 	
+	//Method to transition to the lose scene
 	public void launchScreenLose(){
 		game.transitTo(lose);
 	}
