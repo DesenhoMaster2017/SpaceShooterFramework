@@ -6,12 +6,13 @@ public class Shield extends GameEntity {
 
 	private int regeneration;
 	private GameEntity player;
+	static private String spriteImagePath = "src/assets/img/temp_shield.png";
     
 	//Creation constructor to Shield
 	public Shield(GameEntity player) {
 		
         //Initialization with shield image
-		super("src/assets/img/temp_shield.png");
+		super(spriteImagePath);
         
 		//Getting the player from the StageTest class
 		this.player = player;
@@ -23,14 +24,14 @@ public class Shield extends GameEntity {
 	
 	public Shield(GameEntity player, int life) {
 		// Initializing shield's image and life
-		super("src/assets/img/temp_shield.png", life);
+		super(spriteImagePath, life);
 		
 		//Getting the player from the StageTest class
-				this.player = player;
+		this.player = player;
 
 				//Putting shield on the screen with reference the player position
-				this.x = player.x;
-				this.y = player.y;
+		this.x = player.x;
+		this.y = player.y;
 	}
     
 	//Method to update the shield according the player
