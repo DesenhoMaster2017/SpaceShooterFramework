@@ -34,7 +34,7 @@ public class GameOver extends GameScene implements CountDownTimerEnds {
 		background = new GameImage("src/assets/img/temp_background.png");
 	
 		//Game over sprite center position
-		gameOver = new Sprite("src/assets/img/continue/game_over.png");
+		gameOver = new Sprite("src/assets/img/continue/3540295891_logo.jpg");
 		gameOver.x = WindowConstants.WIDTH/2 - gameOver.width/2;
 		gameOver.y = WindowConstants.HEIGHT/2 - gameOver.height/2;
 		

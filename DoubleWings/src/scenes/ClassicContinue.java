@@ -18,6 +18,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	private GameImage background;
 	private Sprite wantToContinue;
 	private Sprite counter;
+	private Sprite enter;
 	
 	//Thread counter
 	//static Thread thread = new Thread(); 
@@ -35,12 +36,16 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		//Continue sprite upper-center position
 		wantToContinue = new Sprite("src/assets/img/continue/continue.png");
 		wantToContinue.x = WindowConstants.WIDTH/2 - wantToContinue.width/2;
-		wantToContinue.y = WindowConstants.HEIGHT/2.5 - wantToContinue.height;
+		wantToContinue.y = WindowConstants.HEIGHT/2 - wantToContinue.height;
 		
 		//Number sprite positions
 		counter = new Sprite("src/assets/img/continue/number_9.png");
 		counter.x = WindowConstants.WIDTH/2 - counter.width/2;
-		counter.y = WindowConstants.HEIGHT/2 - counter.height/2;
+		counter.y = WindowConstants.HEIGHT/1.5 - counter.height/2;
+		
+		enter = new Sprite("src/assets/img/continue/Enter-Download-PNG.png");
+		enter.x = WindowConstants.WIDTH/2 - enter.width/2;
+		enter.y = WindowConstants.HEIGHT/500 - enter.height/20;
 		
 		timeWait();
 	}
@@ -66,6 +71,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		background.draw();
 		wantToContinue.draw();
 		counter.draw();
+		enter.draw();
 		
 		checkButtonSelection();
 		
