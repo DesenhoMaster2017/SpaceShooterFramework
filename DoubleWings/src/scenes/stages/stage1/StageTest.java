@@ -30,6 +30,7 @@ public class StageTest extends GameScene {
 	private Command currentCommand = null;
 	private int commandCount = 0;
 	private Enemy asteroid1;
+	private int lifePlayer = 3;
     
 	@Override
 	protected void initialSetup(){
@@ -67,7 +68,7 @@ public class StageTest extends GameScene {
 	private void configureEntities(){
 		//Creating player sprite
 		player = new Player("src/assets/img/temp_player.png");
-		player.setLife(5);
+		player.setLife(3);
 				
 		//Putting player on the center-bottom of the screen
 		player.x = WindowConstants.WIDTH/2 - player.width/2;
@@ -109,7 +110,16 @@ public class StageTest extends GameScene {
 		executeAsteroidCommand();
 
 		if (player.isDead()){
-			launchGameContinue();
+			
+			if(lifePlayer > 0){
+				lifePlayer = lifePlayer - 1;
+				launchGameContinue();
+			}
+					
+			else if(lifePlayer == 0){
+				launchGameOver();
+			}		
+				
 		}
 				
 	}
@@ -136,4 +146,10 @@ public class StageTest extends GameScene {
 		GameScene countdown = new ClassicContinue();
 		game.transitTo(countdown);
 	}
+	
+	public void launchGameOver(){
+		GameScene gameOver = new GameOver();
+		game.transitTo(gameOver);
+	}
+	
 }

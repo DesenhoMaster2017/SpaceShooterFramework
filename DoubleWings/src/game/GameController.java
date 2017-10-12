@@ -16,7 +16,7 @@ public class GameController {
 		if(scene == null || keyboard == null) 
 		  return;
 		
-		if(currentScene != null){
+		else if(currentScene != null){
 			currentScene.destroy();
 		}
 

@@ -8,6 +8,7 @@ import jplay.InputBase;
 import jplay.Keyboard;
 import jplay.Sprite;
 import scenes.menu.MenuScene;
+import scenes.stages.stage1.StageTest;
 import util.CountDownTimer;
 import util.CountDownTimerEnds;
 
@@ -25,8 +26,8 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	public void initialSetup() {
 		
 		//Configure enter key and escape
-		//keyboard.setBehavior(Keyboard.ENTER_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
-		//keyboard.setBehavior(Keyboard.ESCAPE_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
+		keyboard.setBehavior(Keyboard.ENTER_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
+		keyboard.setBehavior(Keyboard.ESCAPE_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
 		
 		background = new GameImage("src/assets/img/temp_background.png");
 		
@@ -89,6 +90,9 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		if(game != null && keyboard != null){
 			if (keyboard.keyDown(Keyboard.ENTER_KEY)) {
 				//Transit to a continue state of the game
+				MenuScene transitScene = new MenuScene();
+				game.transitTo(transitScene.firstStage());
+				
 			} else if (keyboard.keyDown(Keyboard.ESCAPE_KEY)) {
 				GameScene menu = new MenuScene();
 				game.transitTo(menu);

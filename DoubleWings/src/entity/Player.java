@@ -1,5 +1,9 @@
 package entity;
 
+import game.GameController;
+import scenes.ClassicContinue;
+import scenes.GameScene;
+
 public class Player extends GameEntity {
 
 	public Player(String fileName) {
