@@ -1,12 +1,14 @@
 package entity;
 
-public class Player extends GameEntity {
+public class PlayerSpaceship extends GameEntity {
 	
-	private int score;
+	private static final String spriteImagePath = "src/assets/img/temp_player.png"; 
 	
-	public Player(String fileName) {
-		super(fileName);
-		
+	private Shield shield;
+	
+	public PlayerSpaceship() {
+		super(spriteImagePath, 3);
+		this.shield = new Shield(this);
 	}
 
 	@Override
