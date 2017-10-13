@@ -1,13 +1,14 @@
 package entity;
 
 import hud.HUD;
+import observer.GameEntityObserver;
 
 public class Player extends GameEntity {
 
 	private Shield shield;
 	private int score = 0; // Score default value
 	private int chances = 3; // Initially the player will have three lifes
-	private HUD observer; //Temp solution to the observer
+	private GameEntityObserver observer = null; //Temp solution to the observer
 
 	public Player(String fileName) {
 		super(fileName);
@@ -24,6 +25,15 @@ public class Player extends GameEntity {
 
 		this.shield = newShield;
 	}
+	
+	// HUD observer getter and setter 
+	public GameEntityObserver getObserver() {
+		return this.observer;
+	}
+	
+	public void setObserver(HUD observer) {
+		this.observer = observer;
+	}
 
 	@Override
 	public void didContact(GameEntity entity){
@@ -39,9 +49,10 @@ public class Player extends GameEntity {
 		}
 	}
 	
-	//Chanses setters and getters
+	//Chances setters and getters
 	public void setChances(int chances){
-		observer.updateChances(this.chances);
+		//Notifying HUD to update chances shower
+//		observer.updateChances(this.chances);
 	}
 	
 	public int getChances() {

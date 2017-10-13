@@ -6,16 +6,20 @@ import observer.GameEntityObserver;
 public class GameEntity extends Sprite {
 
 	public String name;
-	private int life = 1;
+	protected int life = 1;
 	private boolean isDead = false;
 	public Double velx = 0.0;
 	public Double vely = 0.0;
-	protected GameEntityObserver observer;
 	
 	public GameEntity(String fileName) {
 		super(fileName);
 		name = fileName;
 		// TODO Auto-generated constructor stub
+	}
+	
+	//Life getter and setter
+	public int getLife() {
+		return this.life;
 	}
 	
 	public void setLife(int newLife){
@@ -39,7 +43,7 @@ public class GameEntity extends Sprite {
 		setLife(life - damage);
 	}
 	
-	private void die(){
+	protected void die(){
 		
 		isDead = true;
 		
@@ -49,15 +53,6 @@ public class GameEntity extends Sprite {
 	
 	public void destroy(){
 		
-	}
-	
-	//Observer getter and setter
-	public GameEntityObserver getObserver() {
-		return observer;
-	}
-
-	public void registerObserver(GameEntityObserver observer) {
-		this.observer = observer;
 	}
 
 }

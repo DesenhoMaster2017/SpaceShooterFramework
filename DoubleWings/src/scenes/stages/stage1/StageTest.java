@@ -36,23 +36,28 @@ public class StageTest extends GameScene {
 	}
 
 	private void configureEntities(){
+				
 		//Creating player sprite
 		player = new Player("src/assets/img/temp_player.png");
 		player.setLife(5);
 
 		//Putting player on the center-bottom of the screen
 		player.x = WindowConstants.WIDTH/2 - player.width/2;
-		player.y = WindowConstants.HEIGHT - player.height;
+		player.y = WindowConstants.HEIGHT - player.height - WindowConstants.HEIGHT/10;
 
 		// In this way we can collect all the HUD values directly from the player
 		Shield shield = new Shield(player);
-		shield.setLife(10);
+		shield.setLife(20);
+		shield.setObserver(hud);
 		player.setShield(shield);
-		
+
 		//Create the HUD and adding it as player's observer
 		hud = new HUD();
-		player.registerObserver(hud);
-
+//		player.registerObserver(hud);
+		shield.setObserver(hud);
+		hud.setEntity(player);
+		hud.setShieldEntity(shield);
+		
 		Enemy asteroid1 = new Enemy("src/assets/img/asteroid.png");
 		asteroid1.setLife(10);
 		asteroid1.x = WindowConstants.WIDTH/2 - asteroid1.width/2;

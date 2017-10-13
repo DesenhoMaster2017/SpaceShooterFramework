@@ -1,11 +1,14 @@
 package entity;
 
 import entity.GameEntity;
+import hud.HUD;
+import observer.GameEntityObserver;
 
 public class Shield extends GameEntity {
 
 	private int regeneration;
 	private GameEntity player;
+	private GameEntityObserver observer = null; //Temp solution to the observer
     
 	//Creation constructor to Shield
 	public Shield(GameEntity player) {
@@ -40,8 +43,30 @@ public class Shield extends GameEntity {
 		if (entity.getClass() == Enemy.class){
 			
 			entity.receiveDamage(100); // test purposes
-			this.receiveDamage(20); // test purposes
+			this.receiveDamage(10); // test purposes
 			System.out.println("hit enemy");
 		}
+	}
+	
+	@Override
+	public void setLife(int newLife){
+		super.setLife(newLife);
+		
+		if (observer != null) {
+			//Notifing HUD to update shield life bar
+			observer.notifyObserver(this);
+//			this.observer.updateShieldLifeBar(this.life);
+		} else {
+			System.out.println("HUD is null :(");
+		}
+	}
+	
+	// HUD observer getter and setter 
+	public GameEntityObserver getObserver() {
+		return this.observer;
+	}
+		
+	public void setObserver(GameEntityObserver observer) {
+		this.observer = observer;
 	}
 }
