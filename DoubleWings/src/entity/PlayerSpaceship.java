@@ -8,7 +8,7 @@ public class PlayerSpaceship extends GameEntity {
 	private static String spriteImagePath = "src/assets/img/temp_player.png";
 
 	public PlayerSpaceship() {
-		super(spriteImagePath);
+		super(spriteImagePath, 5);
 		this.shield = new Shield(this, 10);
 	}
 

@@ -11,7 +11,6 @@ import commands.*;
 import jplay.GameImage;
 import jplay.Keyboard;
 import jplay.Sprite;
-import entity.GameEntity;
 
 import java.util.Timer;
 
@@ -66,7 +65,7 @@ public class StageTest extends GameScene {
 	
 	private void configureEntities(){
 		//Creating player sprite
-		player = new Player("src/assets/img/temp_player.png");
+		player = new PlayerSpaceship();
 		player.setLife(5);
 				
 		//Putting player on the center-bottom of the screen
