@@ -2,18 +2,22 @@ package entity;
 
 public class PlayerSpaceship extends GameEntity {
 	
+	// default sprite file path
 	private static final String spriteImagePath = "src/assets/img/temp_player.png"; 
+	private static final int defautlLife = 1;
 	
 	private Shield shield;
 	
 	public PlayerSpaceship() {
-		super(spriteImagePath, 3);
+		super(spriteImagePath, defautlLife);
 		this.shield = new Shield(this);
 	}
 	
 	public PlayerSpaceship(double x, double y) {
-		super(spriteImagePath, 3);
+		super(spriteImagePath, defautlLife);
 		this.shield = new Shield(this);
+		
+		// x position fixed for sprite width
 		this.x = x - this.width / 2;
 		this.y = y;
 	}
