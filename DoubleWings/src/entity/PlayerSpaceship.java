@@ -10,6 +10,13 @@ public class PlayerSpaceship extends GameEntity {
 		super(spriteImagePath, 3);
 		this.shield = new Shield(this);
 	}
+	
+	public PlayerSpaceship(double x, double y) {
+		super(spriteImagePath, 3);
+		this.shield = new Shield(this);
+		this.x = x - this.width / 2;
+		this.y = y;
+	}
 
 	@Override
 	public void didContact(GameEntity entity){
@@ -23,6 +30,10 @@ public class PlayerSpaceship extends GameEntity {
 		}else {
 			
 		}
+	}
+	
+	public Shield getShield() {
+		return this.shield;
 	}
 	
 }

@@ -15,7 +15,7 @@ import scenes.Lose;
 
 public class StageTest extends GameScene {
 
-	private GameEntity player;
+	private PlayerSpaceship player;
 	private GameImage background;
 	private World gameWorld;
 	private ArrayList<Command> commands;
@@ -62,17 +62,9 @@ public class StageTest extends GameScene {
 
 	
 	private void configureEntities(){
-		//Creating player sprite
-		player = new Player("src/assets/img/temp_player.png");
-		player.setLife(3);
-				
-		//Putting player on the center-bottom of the screen
-		player.x = WindowConstants.WIDTH/2 - player.width/2;
-		player.y = WindowConstants.HEIGHT - player.height;
-
-		Shield shield = new Shield(player);
-		shield.setLife(10);
-				
+		//Creating player sprite on the center-bottom of the screen
+		player = new PlayerSpaceship(WindowConstants.WIDTH/2, WindowConstants.HEIGHT/2);
+			
 		asteroid1 = new Enemy("src/assets/img/asteroid.png");
 		asteroid1.setLife(10);
 		asteroid1.x = WindowConstants.WIDTH/2 - asteroid1.width/2;
@@ -87,9 +79,8 @@ public class StageTest extends GameScene {
 
 		gameWorld.add(asteroid1);
 		gameWorld.add(asteroid2);
-		
-		gameWorld.add(shield);
 		gameWorld.add(player);
+		gameWorld.add(player.getShield());
 	}
 	
 	@Override
