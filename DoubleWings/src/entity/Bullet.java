@@ -4,8 +4,16 @@ package entity;
 
 public class Bullet extends GameEntity {
 
-	public Bullet(String fileName, double x, double y, GameEntity owner){
-		super(fileName);
+	private static String imageFile = "src/assets/img/bullet_player.png";
+	public GameEntity owner = null;
+	
+	public Bullet(){
+		super(imageFile);
+	}
+	
+	public void fireBy(GameEntity owner, double vely){
+		this.owner = owner;
+		this.vely = vely;
 		
 		Integer horizontalCorrection = (this.width - owner.width)/2;
 		
@@ -16,6 +24,11 @@ public class Bullet extends GameEntity {
 		}else {
 			this.y = owner.y + owner.height;
 		}
-    }
+	}
     
+	@Override
+	public void reborn(){
+		super.reborn();
+		this.owner = null;
+	}
 }
