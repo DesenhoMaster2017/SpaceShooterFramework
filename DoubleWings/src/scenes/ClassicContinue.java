@@ -20,7 +20,12 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	
 	//Thread counter
 	//static Thread thread = new Thread(); 
-	
+
+	@Override
+	protected void viewSetup() {
+		// TODO Auto-generated method stub
+		
+	}
 	public void initialSetup() {
 		
 		//Configure enter key and escape
@@ -47,12 +52,6 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		enter.y = WindowConstants.HEIGHT/500 - enter.height/20;
 		
 		timeWait();
-	}
-	
-	@Override
-	protected void viewSetup() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	//Time wait to transit between scene
@@ -109,5 +108,6 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 			}
 		}
 	}
+	
 
 }
