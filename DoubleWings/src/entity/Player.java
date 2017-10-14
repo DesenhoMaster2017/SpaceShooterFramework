@@ -8,6 +8,8 @@ public class Player extends GameEntity {
 	public int leftKey = 0;
 	public int rightKey = 0;
 	public int shootKey = 0;
+	
+	public double movimentVel = 0;
 
 	public Player(String fileName) {
 		super(fileName);
@@ -36,8 +38,8 @@ public class Player extends GameEntity {
 	public void checkInput(){
 		
 		//Player movement
-		moveX(leftKey, rightKey, this.velx);
-		moveY(upKey, downKey, this.vely);
+		moveX(leftKey, rightKey, this.movimentVel);
+		moveY(upKey, downKey, this.movimentVel);
 		
 		//shootKey
 	}

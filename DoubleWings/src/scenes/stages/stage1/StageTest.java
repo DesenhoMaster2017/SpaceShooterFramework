@@ -3,6 +3,7 @@ package scenes.stages.stage1;
 import game.World;
 import entity.*;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import commands.*;
@@ -33,6 +34,12 @@ public class StageTest extends GameScene implements GameEventCallback{
 		//Configure up and down keys
 		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_EVERY_PRESS);
 		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_EVERY_PRESS);
+		
+		//Second Player configuration
+		keyboard.addKey(KeyEvent.VK_A, Keyboard.DETECT_EVERY_PRESS);
+		keyboard.addKey(KeyEvent.VK_S, Keyboard.DETECT_EVERY_PRESS);
+		keyboard.addKey(KeyEvent.VK_D, Keyboard.DETECT_EVERY_PRESS);
+		keyboard.addKey(KeyEvent.VK_W, Keyboard.DETECT_EVERY_PRESS);
 
 		configureEntities();
 		
@@ -68,6 +75,9 @@ public class StageTest extends GameScene implements GameEventCallback{
 		player.x = WindowConstants.WIDTH/2 - player.width/2;
 		player.y = WindowConstants.HEIGHT - player.height;
 		
+		//Default velocity
+		player.movimentVel = 4;
+		
 		Shield shield = new Shield(player);
 		shield.setLife(10);
 		
@@ -80,13 +90,17 @@ public class StageTest extends GameScene implements GameEventCallback{
 	
 	private void configureEntities(){
 		
-		
 		Player pl1 = createPlayer();
 		pl1.downKey = Keyboard.DOWN_KEY;
 		pl1.upKey = Keyboard.UP_KEY;
 		pl1.leftKey = Keyboard.LEFT_KEY;
 		pl1.rightKey = Keyboard.RIGHT_KEY;
-
+		
+		Player pl2 = createPlayer();
+		pl2.downKey = KeyEvent.VK_S;
+		pl2.upKey = KeyEvent.VK_W;
+		pl2.leftKey = KeyEvent.VK_A;
+		pl2.rightKey = KeyEvent.VK_D;
 		
 		
 		//Testing commands
@@ -126,6 +140,13 @@ public class StageTest extends GameScene implements GameEventCallback{
 	
 	@Override
 	public void update(){
+		
+		for (int i = 0; i < 100; i++){
+			if(this.keyboard.keyDown(i)){
+				System.out.println("key down: " + i);
+			}
+			
+		}
 		
 		background.draw();
 		gameWorld.update(); // Updates and draw all entities added in game world
