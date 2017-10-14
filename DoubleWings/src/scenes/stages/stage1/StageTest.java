@@ -1,6 +1,5 @@
 package scenes.stages.stage1;
 
-import game.GameController;
 import game.World;
 import entity.*;
 
@@ -13,8 +12,10 @@ import jplay.Keyboard;
 import entity.GameEntity;
 import constants.WindowConstants;
 import scenes.GameScene;
+import game.evolver.GameEvent;
+import game.evolver.GameEventCallback;
 
-public class StageTest extends GameScene {
+public class StageTest extends GameScene implements GameEventCallback{
 
 	private GameEntity player;
 	private GameImage background;
@@ -37,6 +38,8 @@ public class StageTest extends GameScene {
 		
 		//Development purposes
 		creatingCommands();
+		
+		this.configureEvents();
 	}
 	
 	protected void viewSetup(){
@@ -68,24 +71,40 @@ public class StageTest extends GameScene {
 
 		Shield shield = new Shield(player);
 		shield.setLife(10);
-				
+		
+		//Testing commands
 		asteroid1 = new Enemy("src/assets/img/asteroid.png");
 		asteroid1.setLife(10);
 		asteroid1.x = WindowConstants.WIDTH/2 - asteroid1.width/2;
 		asteroid1.y = 0;
 		asteroid1.vely = 2.0;
-				
-		Enemy asteroid2 = new Enemy("src/assets/img/asteroid.png");
-		asteroid2.setLife(10);
-		asteroid2.x = WindowConstants.WIDTH/2 - asteroid2.width/2;
-		asteroid2.y = -200;
-		asteroid2.vely = 2.0;
-
+		
 		gameWorld.add(asteroid1);
-		gameWorld.add(asteroid2);
 		
 		gameWorld.add(shield);
 		gameWorld.add(player);
+	}
+	
+	public void createFirstAsteroid(){
+		Enemy first = new Enemy("src/assets/img/asteroid.png");
+		first.setLife(10);
+		first.x = Math.random() * (WindowConstants.WIDTH - first.width*2) + first.width;
+		first.y = -200;
+		first.vely = 2.0;
+		
+		gameWorld.add(first);
+	}
+	
+	public void createSecondAsteroid(){
+		
+		Enemy second = new Enemy("src/assets/img/asteroid.png");
+		second.setLife(10);
+		second.x = Math.random() * (WindowConstants.WIDTH - second.width*2) + second.width;
+		second.y = -200;
+		second.vely = 4.0;
+		
+		gameWorld.add(second);
+		
 	}
 	
 	
@@ -115,5 +134,61 @@ public class StageTest extends GameScene {
 			currentCommand.execute(asteroid1);
 		}
 		
+	}
+
+	
+	// Callback event handler
+	@Override
+	public void eventCallback(GameEvent event) {
+		
+		System.out.println("Event callback received with type: " + event.type);
+		
+		switch (event.type){
+		case 1:
+			launchEnemyDown();
+			break;
+		case 2:
+			launchEnemyCrazy();
+			break;
+		default:
+			this.script1();
+			break;
+		}
+	}
+	
+	public void launchEnemyDown(){
+		System.out.println("Launch Enemy Down! \\o/");
+		this.createFirstAsteroid();
+	}
+	
+	public void launchEnemyCrazy(){
+		System.out.println("Crazy enemy in sight! ò.Ó ");
+		this.createSecondAsteroid();
+	}
+	
+	public void configureEvents(){
+		this.script1();
+	}
+	
+	public void script1(){
+		
+		// 200 = default
+		// 1 = first enemy
+		// 2 = second type enemy
+		this.gameWorld.addEventAfterCurrentTime(this, 700, 200, "Recursive script");
+		
+		this.gameWorld.addEventAfterCurrentTime(this, 200, 1, "Enemy down");
+		
+		this.gameWorld.addEventAfterCurrentTime(this, 400, 2, "Enemy Crazy bastard");
+		
+		this.gameWorld.addEventAfterCurrentTime(this, 250, 1, "Enemy down");
+		this.gameWorld.addEventAfterCurrentTime(this, 300, 1, "Enemy down");
+		this.gameWorld.addEventAfterCurrentTime(this, 400, 1, "Enemy down");
+		
+		this.gameWorld.addEventAfterCurrentTime(this, 50, 2, "Enemy Crazy bastard");
+		
+		this.gameWorld.addEventAfterCurrentTime(this, 620, 2, "Enemy Crazy bastard");
+		this.gameWorld.addEventAfterCurrentTime(this, 660, 2, "Enemy Crazy bastard");
+		this.gameWorld.addEventAfterCurrentTime(this, 690, 2, "Enemy Crazy bastard");
 	}
 }

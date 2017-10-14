@@ -1,17 +1,20 @@
 package game;
 
 import java.util.ArrayList;
-
+import game.evolver.*;
 import entity.GameEntity;
 
 public class World {
 	
 	private ArrayList<GameEntity> objs;
 	private ArrayList<GameEntity> deadObjs; //Array that Handles dead entities
+	private GameEvolver evolver = new GameEvolver();
 	
 	public World() {
 		objs = new ArrayList<GameEntity>();
 		deadObjs = new ArrayList<GameEntity>();
+		
+		evolver.start();
 	}
 	
 	public void add(GameEntity entity) {
@@ -23,6 +26,8 @@ public class World {
 	}
 	
 	public void update() {
+		
+		evolver.update();
 		
 		// check all collisions
 		for(int i = 0; i < objs.size(); i++) {
@@ -63,4 +68,28 @@ public class World {
 		
 		deadObjs.clear();
 	}
+	
+	//GameEvent Facade
+	public void addEvent(GameEventCallback callback, int time, int type, String name){
+		GameEvent event = this.createNewEvent(callback, time, type, name);
+		this.evolver.add(event);
+	}
+	
+	public void addEventAfterCurrentTime(GameEventCallback callback, int time, int type, String name){
+		GameEvent event = this.createNewEvent(callback, time, type, name);
+		event.time += evolver.getCurrentIteration();
+		this.evolver.add(event);
+	}
+	
+	private GameEvent createNewEvent(GameEventCallback callback, int time, int type, String name){
+		GameEvent event = new GameEvent();
+		event.setCallback(callback);
+		event.time = time;
+		event.name = name;
+		event.type = type;
+		
+		return event;
+	}
+	
 }
+
