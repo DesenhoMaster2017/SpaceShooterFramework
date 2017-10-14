@@ -1,23 +1,43 @@
 package entity;
 
-public class Player extends GameEntity {
+import constants.WindowConstants;
 
-	public Player(String fileName) {
-		super(fileName);
-		// TODO Auto-generated constructor stub
+public class Player {
+	// 
+	private boolean canContinue = true;
+	private int lifes = 3;
+	private PlayerSpaceship spaceship;
+	
+	public Player() {
+		createNewSpaceship();
 	}
-
-	@Override
-	public void didContact(GameEntity entity){
-		if (entity.getClass() == Shield.class){
-			
-		}else if (entity.getClass() == Enemy.class){
-			
-			entity.receiveDamage(100); // test purposes
-			this.receiveDamage(20); // test purposes
-			
+	
+	private void createNewSpaceship() {
+		this.spaceship = new PlayerSpaceship(WindowConstants.WIDTH/2, WindowConstants.HEIGHT/2);
+	}
+	
+	public void loseLife() {
+		this.lifes -= 1;
+		if (this.lifes <= 0) {
+			loseGame();
+		} else { /*do nothing*/ }
+	}
+	
+	public void resetLife() {
+		this.lifes = 3;
+	}
+	
+	public void loseGame() {
+		if (this.canContinue) {
+			useContinue();
 		} else {
+			// handle gameover screen
 		}
+	}
+	
+	public void useContinue() {
+		this.canContinue = false;
+		// handle continue screen
 	}
 	
 }
