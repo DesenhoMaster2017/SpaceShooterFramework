@@ -25,6 +25,8 @@ public class Shield extends GameEntity {
 	//Method to update the shield according the player
 	public void update() {
 		
+		super.update();
+		
 		//Shield movement
 		Integer horizontalCorrection = (this.width - player.width)/2;
 		Integer verticalCorrection = (this.height - player.height)/2;

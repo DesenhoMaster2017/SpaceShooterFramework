@@ -1,7 +1,9 @@
 package game;
 
 import java.util.ArrayList;
+import entity.pool.EnemyPool;
 import game.evolver.*;
+import entity.Enemy;
 import entity.GameEntity;
 
 public class World {
@@ -9,6 +11,7 @@ public class World {
 	private ArrayList<GameEntity> objs;
 	private ArrayList<GameEntity> deadObjs; //Array that Handles dead entities
 	private GameEvolver evolver = new GameEvolver();
+	private EnemyPool enemyPool = new EnemyPool();
 	
 	public World() {
 		objs = new ArrayList<GameEntity>();
@@ -59,6 +62,11 @@ public class World {
 		
 		for (GameEntity deadObj : deadObjs){
 			boolean didRemove = objs.remove(deadObj);
+			
+			if (deadObj.getClass() == Enemy.class){
+				enemyPool.acquire((Enemy) deadObj);
+			}
+			
 			if (didRemove == true){
 				System.out.println("Entity removed from the world");
 			}else{
@@ -91,5 +99,14 @@ public class World {
 		return event;
 	}
 	
+	
+	// Object Pool facade
+	public Enemy createEnemy(){
+		return enemyPool.release();
+	}
+	
+	public void releaseEnemy(Enemy enemy){
+		enemyPool.acquire(enemy);
+	}
 }
 

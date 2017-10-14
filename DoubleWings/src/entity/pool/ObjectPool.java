@@ -6,7 +6,7 @@ public abstract class ObjectPool<Type> {
 
 	private ArrayList<Type> objects = new ArrayList<Type>();
 	
-	public Type acquire(){
+	public Type release(){
 		
 		Type obj;
 		
@@ -23,7 +23,7 @@ public abstract class ObjectPool<Type> {
 	
 	protected abstract Type create();
 	
-	public void release(Type obj){
+	public void acquire(Type obj){
 		if (objects.contains(obj) == false){
 			objects.add(obj);
 		}

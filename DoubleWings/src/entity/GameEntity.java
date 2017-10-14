@@ -10,6 +10,9 @@ public class GameEntity extends Sprite {
 	public Double velx = 0.0;
 	public Double vely = 0.0;
 	
+	private double entityLimit = 1000; // Kill entity after leaving bounds
+	
+	
 	public GameEntity(String fileName) {
 		super(fileName);
 		name = fileName;
@@ -21,6 +24,19 @@ public class GameEntity extends Sprite {
 		
 		if (life <= 0) {
 			die();
+		}
+	}
+	
+	@Override
+	public void update(){
+		super.update();
+		
+		if( Math.abs(this.x) > this.entityLimit){
+			this.isDead = true;
+		}
+		
+		if( Math.abs(this.y) > this.entityLimit){
+			this.isDead = true;
 		}
 	}
 	
