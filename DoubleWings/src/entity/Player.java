@@ -1,26 +1,33 @@
 package entity;
 
 import constants.WindowConstants;
+import game.GameController;
+import scenes.ClassicContinue;
+import scenes.GameOver;
 
 public class Player {
 	// 
 	private boolean canContinue = true;
 	private int lifes = 3;
 	private PlayerSpaceship spaceship;
+	private GameController game;
 	
-	public Player() {
-		createNewSpaceship();
+	public Player(GameController game) {
+		this.game = game;
+		this.spaceship = new PlayerSpaceship(this, WindowConstants.WIDTH/2, WindowConstants.HEIGHT/2);
 	}
 	
-	private void createNewSpaceship() {
-		this.spaceship = new PlayerSpaceship(WindowConstants.WIDTH/2, WindowConstants.HEIGHT/2);
+	private void resetSpaceship() {
+		this.spaceship.revive();
 	}
 	
 	public void loseLife() {
 		this.lifes -= 1;
 		if (this.lifes <= 0) {
 			loseGame();
-		} else { /*do nothing*/ }
+		} else {
+			resetSpaceship();
+		}
 	}
 	
 	public void resetLife() {
@@ -31,13 +38,17 @@ public class Player {
 		if (this.canContinue) {
 			useContinue();
 		} else {
-			// handle gameover screen
+			this.game.transitTo(new GameOver());
 		}
 	}
 	
 	public void useContinue() {
 		this.canContinue = false;
-		// handle continue screen
+		this.game.transitTo(new ClassicContinue());
+	}
+	
+	public PlayerSpaceship getSpaceship() {
+		return spaceship;
 	}
 	
 }

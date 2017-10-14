@@ -16,8 +16,7 @@ import scenes.GameScene;
 import scenes.Lose;
 
 public class StageTest extends GameScene {
-
-	private PlayerSpaceship player;
+	private Player player;
 	private GameImage background;
 	private World gameWorld;
 	private ArrayList<Command> commands;
@@ -27,7 +26,7 @@ public class StageTest extends GameScene {
 	private int lifePlayer = 3;					// Variable used to count the number of lives of the player
 	
 	// Instantiating an object to do manipulation in the lose class	
-	Lose  lose = new Lose();
+	Lose lose = new Lose();
 	
 	@Override
 	protected void initialSetup(){
@@ -65,7 +64,7 @@ public class StageTest extends GameScene {
 	
 	private void configureEntities(){
 		//Creating player sprite on the center-bottom of the screen
-		player = new PlayerSpaceship(WindowConstants.WIDTH/2, WindowConstants.HEIGHT/2);
+		final PlayerSpaceship spaceShip = this.game.getPlayer().getSpaceship();
 		asteroid1 = new Enemy("src/assets/img/asteroid.png");
 		asteroid1.setLife(10);
 		asteroid1.x = WindowConstants.WIDTH/2 - asteroid1.width/2;
@@ -80,8 +79,8 @@ public class StageTest extends GameScene {
 
 		gameWorld.add(asteroid1);
 		gameWorld.add(asteroid2);
-		gameWorld.add(player);
-		gameWorld.add(player.getShield());
+		gameWorld.add(spaceShip);
+		gameWorld.add(spaceShip.getShield());
 	}
 	
 	@Override
@@ -91,27 +90,9 @@ public class StageTest extends GameScene {
 		gameWorld.update(); // Updates and draw all entities added in game world
 
 		//Player movement
-		player.moveX(Keyboard.LEFT_KEY, Keyboard.RIGHT_KEY, 4);//velocity = 1
-		player.moveY(Keyboard.UP_KEY, Keyboard.DOWN_KEY, 4);//velocity = 1
+		
 		
 		executeAsteroidCommand();
-		
-		//Verify if player is dead
-		if (player.isDead()){
-			
-			//Checks the player's life. If he has any life, he throws it to the continue screen.
-			if(lifePlayer > 0){
-				lose.setLifePlayer(lifePlayer);
-				lifePlayer = lifePlayer - 1;
-				launchScreenLose();
-			}
-			
-			//If the player contains no life, quit the game by playing it to the game over screen.
-			else if(lifePlayer == 0){
-		
-				launchGameOver();
-			}		
-		}
 	}
 	
 	public void executeAsteroidCommand(){

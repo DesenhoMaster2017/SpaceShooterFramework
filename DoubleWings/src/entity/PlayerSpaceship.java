@@ -1,5 +1,7 @@
 package entity;
 
+import jplay.Keyboard;
+
 public class PlayerSpaceship extends GameEntity {
 	
 	// default sprite file path
@@ -7,15 +9,12 @@ public class PlayerSpaceship extends GameEntity {
 	private static final int defautlLife = 1;
 	
 	private Shield shield;
-	
-	public PlayerSpaceship() {
+	private Player player;
+
+	public PlayerSpaceship(Player player, double x, double y) {
 		super(spriteImagePath, defautlLife);
 		this.shield = new Shield(this);
-	}
-	
-	public PlayerSpaceship(double x, double y) {
-		super(spriteImagePath, defautlLife);
-		this.shield = new Shield(this);
+		this.player = player;
 		
 		// x position fixed for sprite width
 		this.x = x - this.width / 2;
@@ -37,6 +36,18 @@ public class PlayerSpaceship extends GameEntity {
 
 	public Shield getShield() {
 		return this.shield;
+	}
+
+	@Override
+	public void update() {
+		if (this.isDead()) {
+			// Enter here if the spaceship is destroyed
+			this.player.loseLife();
+		} else {
+			// Track keyboard inputs for movement
+			this.moveX(Keyboard.LEFT_KEY, Keyboard.RIGHT_KEY, 4);//velocity = 1
+			this.moveY(Keyboard.UP_KEY, Keyboard.DOWN_KEY, 4);//velocity = 1
+		}
 	}
 	
 
