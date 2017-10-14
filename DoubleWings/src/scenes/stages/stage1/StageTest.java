@@ -51,7 +51,7 @@ public class StageTest extends GameScene implements GameEventCallback{
 		commands = new ArrayList<Command>();
 		
 		commands.add(CommandCreator.createCommand(CommandType.LEFT));
-		commands.add(CommandCreator.createCommand(CommandType.DOWN));		
+		commands.add(CommandCreator.createCommand(CommandType.DOWN));
 		commands.add(CommandCreator.createCommand(CommandType.RIGHT));
 		commands.add(CommandCreator.createCommand(CommandType.RIGHT));
 		commands.add(CommandCreator.createCommand(CommandType.RIGHT));
