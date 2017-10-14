@@ -59,11 +59,6 @@ public class GameEntity extends Sprite {
 		destroy();
 	}
 	
-	public void revive() {
-		this.isDead = false;
-		this.life = 1;
-	}
-	
 	public void destroy(){
 		
 	}
