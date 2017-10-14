@@ -17,13 +17,13 @@ import game.evolver.GameEventCallback;
 
 public class StageTest extends GameScene implements GameEventCallback{
 
-	private GameEntity player;
 	private GameImage background;
 	private World gameWorld;
 	private ArrayList<Command> commands;
 	private Command currentCommand = null;
 	private int commandCount = 0;
 	private Enemy asteroid1;
+	
     
 	@Override
 	protected void initialSetup(){
@@ -59,21 +59,35 @@ public class StageTest extends GameScene implements GameEventCallback{
 		currentCommand = commands.remove(commands.size() - 1); // return removed object
 	}
 	
-	public void configurePlayer(){
+	public Player createPlayer(){
 		//Creating player sprite
-		player = new Player("src/assets/img/temp_player.png");
+		Player player = new Player("src/assets/img/temp_player.png");
 		player.setLife(5);
 				
 		//Putting player on the center-bottom of the screen
 		player.x = WindowConstants.WIDTH/2 - player.width/2;
 		player.y = WindowConstants.HEIGHT - player.height;
+		
+		Shield shield = new Shield(player);
+		shield.setLife(10);
+		
+		gameWorld.add(shield);
+		gameWorld.add(player);
+		
+		return player;
 	}
 
 	
 	private void configureEntities(){
+		
+		
+		Player pl1 = createPlayer();
+		pl1.downKey = Keyboard.DOWN_KEY;
+		pl1.upKey = Keyboard.UP_KEY;
+		pl1.leftKey = Keyboard.LEFT_KEY;
+		pl1.rightKey = Keyboard.RIGHT_KEY;
 
-		Shield shield = new Shield(player);
-		shield.setLife(10);
+		
 		
 		//Testing commands
 		asteroid1 = new Enemy("src/assets/img/asteroid.png");
@@ -83,9 +97,6 @@ public class StageTest extends GameScene implements GameEventCallback{
 		asteroid1.vely = 2.0;
 		
 		gameWorld.add(asteroid1);
-		
-		gameWorld.add(shield);
-		gameWorld.add(player);
 	}
 	
 	public void createFirstAsteroid(){

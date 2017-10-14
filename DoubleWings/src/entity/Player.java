@@ -27,6 +27,12 @@ public class Player extends GameEntity {
 		}
 	}
 	
+	@Override
+	public void update(){
+		super.update();
+		checkInput();
+	}
+	
 	public void checkInput(){
 		
 		//Player movement
