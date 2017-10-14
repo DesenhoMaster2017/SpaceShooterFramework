@@ -1,21 +1,21 @@
 package entity;
 
-public class Bullet extends GameEntity {
-	final private int BULLETSPEED = 10;
 
-	public Bullet(String fileName, double x, double y, Player player){
+
+public class Bullet extends GameEntity {
+
+	public Bullet(String fileName, double x, double y, GameEntity owner){
 		super(fileName);
 		
-		Integer horizontalCorrection = (this.width - player.width)/2;
+		Integer horizontalCorrection = (this.width - owner.width)/2;
 		
-		this.x = player.x - horizontalCorrection;
-		this.y = player.y;
+		this.x = owner.x - horizontalCorrection;
+		
+		if (owner.getClass() == Player.class){
+			this.y = owner.y;
+		}else {
+			this.y = owner.y + owner.height;
+		}
     }
     
-  		
-
-    public void moveBullet() {
-        // moveY(BULLETSPEED);
-    		y -= BULLETSPEED;
-    }
 }

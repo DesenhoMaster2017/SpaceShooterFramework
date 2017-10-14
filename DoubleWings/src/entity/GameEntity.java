@@ -1,6 +1,7 @@
 package entity;
 
 import jplay.Sprite;
+import game.World;
 
 public class GameEntity extends Sprite {
 
@@ -9,6 +10,7 @@ public class GameEntity extends Sprite {
 	private boolean isDead = false;
 	public Double velx = 0.0;
 	public Double vely = 0.0;
+	public World gameWorld = null;
 	
 	public GameEntity(String fileName) {
 		super(fileName);

@@ -65,6 +65,8 @@ public class StageTest extends GameScene {
 		//Putting player on the center-bottom of the screen
 		player.x = WindowConstants.WIDTH/2 - player.width/2;
 		player.y = WindowConstants.HEIGHT - player.height;
+		
+		player.gameWorld = this.gameWorld;
 
 		Shield shield = new Shield(player);
 		shield.setLife(10);
@@ -120,13 +122,6 @@ public class StageTest extends GameScene {
 			gameWorld.add(player.fireBullet());
 		}
 		
-        for(Bullet temporaryBullet : player.getFiredBullets()){
-        		if(temporaryBullet.y > 0) {
-        			temporaryBullet.moveBullet();
-//        		} else {
-//        			player.removeBullet(temporaryBullet);
-        		}
-        }
 		
 	}
 }
