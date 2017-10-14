@@ -37,6 +37,12 @@ public class PlayerSpaceship extends GameEntity {
 	public Shield getShield() {
 		return this.shield;
 	}
+	
+	@Override
+	public void revive() {
+		super.revive();
+		this.shield = new Shield(this);
+	}
 
 	@Override
 	public void update() {

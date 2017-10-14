@@ -1,6 +1,7 @@
 package game;
 
 import scenes.GameScene;
+import scenes.stages.stage1.StageTest;
 import entity.Player;
 import jplay.Keyboard;
 
@@ -52,6 +53,11 @@ public class GameController {
 	
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public void revivePlayer() {
+		StageTest stage = (StageTest) currentScene;
+		stage.didLoseLife(player.getSpaceship());
 	}
 	
 }

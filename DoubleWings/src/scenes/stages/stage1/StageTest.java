@@ -113,21 +113,8 @@ public class StageTest extends GameScene {
 		}
 	}
 	
-	//Method to transition to the continue scene
-	public void launchGameContinue(){	
-		GameScene countdown = new ClassicContinue();
-		game.transitTo(countdown);
+	public void didLoseLife(PlayerSpaceship newSpaceship) {
+		gameWorld.add(newSpaceship);
+		gameWorld.add(newSpaceship.getShield());
 	}
-	
-	//Method to transition to the Game Over scene
-	public void launchGameOver(){
-		GameScene gameOver = new GameOver();
-		game.transitTo(gameOver);
-	}
-	
-	//Method to transition to the lose scene
-	public void launchScreenLose(){
-		game.transitTo(lose);
-	}
-	
 }

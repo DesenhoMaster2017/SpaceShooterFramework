@@ -18,11 +18,13 @@ public class Player {
 	}
 	
 	private void resetSpaceship() {
-		this.spaceship.revive();
+		this.spaceship = new PlayerSpaceship(this, this.spaceship.x, this.spaceship.y);
+		game.revivePlayer();
 	}
 	
 	public void loseLife() {
 		this.lifes -= 1;
+		System.out.println(lifes);
 		if (this.lifes <= 0) {
 			loseGame();
 		} else {
