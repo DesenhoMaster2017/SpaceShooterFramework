@@ -89,4 +89,16 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		}
 	}
 
+	@Override
+	protected void initialSetup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void viewSetup() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
