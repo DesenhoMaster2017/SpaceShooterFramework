@@ -6,9 +6,11 @@ import scenes.ClassicContinue;
 import scenes.GameOver;
 
 public class Player {
-	// 
+	
+	private static final int initialLife = 3;
+	
 	private boolean canContinue = true;
-	private int lifes = 3;
+	private int lifes = initialLife;
 	private PlayerSpaceship spaceship;
 	private GameController game;
 	
@@ -22,9 +24,13 @@ public class Player {
 		game.revivePlayer();
 	}
 	
+	/**
+	 * Lose one life. Handle losing life and game over scenarios. 
+	 * 
+	 * */
 	public void loseLife() {
 		this.lifes -= 1;
-		System.out.println(lifes);
+		System.out.println("lifes on player: " + lifes);
 		if (this.lifes <= 0) {
 			loseGame();
 		} else {
@@ -33,7 +39,9 @@ public class Player {
 	}
 	
 	public void resetLife() {
-		this.lifes = 3;
+		this.lifes = initialLife;
+		resetSpaceship();
+		System.out.println("life reset to: " + lifes);
 	}
 	
 	public void loseGame() {
@@ -46,6 +54,7 @@ public class Player {
 	
 	public void useContinue() {
 		this.canContinue = false;
+		resetLife();
 		this.game.transitTo(new ClassicContinue());
 	}
 	
