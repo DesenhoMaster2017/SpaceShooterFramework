@@ -4,6 +4,8 @@ import entity.GameEntity;
 
 public class Shield extends GameEntity {
 
+	private static String spriteFilePath = "src/assets/img/temp_shield.png";
+	
 	private int regeneration;
 	private GameEntity player;
 	static private String spriteImagePath = "src/assets/img/temp_shield.png";
@@ -12,7 +14,11 @@ public class Shield extends GameEntity {
 	public Shield(GameEntity player) {
 		
         //Initialization with shield image
+<<<<<<< HEAD
 		super(spriteImagePath);
+=======
+		super(spriteFilePath, 10);
+>>>>>>> lol
         
 		//Getting the player from the StageTest class
 		this.player = player;

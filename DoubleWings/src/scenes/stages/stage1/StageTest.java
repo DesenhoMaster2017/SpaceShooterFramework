@@ -1,35 +1,34 @@
 package scenes.stages.stage1;
 
-import game.GameController;
 import game.World;
 import entity.*;
-
 import java.util.ArrayList;
-
 import commands.*;
-
 import jplay.GameImage;
 import jplay.Keyboard;
 import jplay.Sprite;
-
 import java.util.Timer;
-
+import entity.GameEntity;
 import constants.WindowConstants;
 import scenes.ClassicContinue;
 import scenes.GameOver;
 import scenes.GameScene;
-import util.CountDownTimer;
+import scenes.Lose;
 
 public class StageTest extends GameScene {
 
-	private GameEntity player;
+	private PlayerSpaceship player;
 	private GameImage background;
 	private World gameWorld;
 	private ArrayList<Command> commands;
 	private Command currentCommand = null;
 	private int commandCount = 0;
 	private Enemy asteroid1;
-    
+	private int lifePlayer = 3;					// Variable used to count the number of lives of the player
+	
+	// Instantiating an object to do manipulation in the lose class	
+	Lose  lose = new Lose();
+	
 	@Override
 	protected void initialSetup(){
 		
@@ -43,6 +42,7 @@ public class StageTest extends GameScene {
 		
 		//Development purposes
 		creatingCommands();
+			
 	}
 	
 	protected void viewSetup(){
@@ -64,17 +64,8 @@ public class StageTest extends GameScene {
 
 	
 	private void configureEntities(){
-		//Creating player sprite
-		player = new PlayerSpaceship();
-		player.setLife(5);
-				
-		//Putting player on the center-bottom of the screen
-		player.x = WindowConstants.WIDTH/2 - player.width/2;
-		player.y = WindowConstants.HEIGHT - player.height;
-
-		Shield shield = new Shield(player);
-		shield.setLife(10);
-				
+		//Creating player sprite on the center-bottom of the screen
+		player = new PlayerSpaceship(WindowConstants.WIDTH/2, WindowConstants.HEIGHT/2);
 		asteroid1 = new Enemy("src/assets/img/asteroid.png");
 		asteroid1.setLife(10);
 		asteroid1.x = WindowConstants.WIDTH/2 - asteroid1.width/2;
@@ -89,11 +80,9 @@ public class StageTest extends GameScene {
 
 		gameWorld.add(asteroid1);
 		gameWorld.add(asteroid2);
-		
-		gameWorld.add(shield);
 		gameWorld.add(player);
+		gameWorld.add(player.getShield());
 	}
-	
 	
 	@Override
 	public void update(){
@@ -106,11 +95,23 @@ public class StageTest extends GameScene {
 		player.moveY(Keyboard.UP_KEY, Keyboard.DOWN_KEY, 4);//velocity = 1
 		
 		executeAsteroidCommand();
-
+		
+		//Verify if player is dead
 		if (player.isDead()){
-			launchGameContinue();
+			
+			//Checks the player's life. If he has any life, he throws it to the continue screen.
+			if(lifePlayer > 0){
+				lose.setLifePlayer(lifePlayer);
+				lifePlayer = lifePlayer - 1;
+				launchScreenLose();
+			}
+			
+			//If the player contains no life, quit the game by playing it to the game over screen.
+			else if(lifePlayer == 0){
+		
+				launchGameOver();
+			}		
 		}
-				
 	}
 	
 	public void executeAsteroidCommand(){
@@ -131,8 +132,21 @@ public class StageTest extends GameScene {
 		}
 	}
 	
-	public void launchGameContinue(){
+	//Method to transition to the continue scene
+	public void launchGameContinue(){	
 		GameScene countdown = new ClassicContinue();
 		game.transitTo(countdown);
 	}
+	
+	//Method to transition to the Game Over scene
+	public void launchGameOver(){
+		GameScene gameOver = new GameOver();
+		game.transitTo(gameOver);
+	}
+	
+	//Method to transition to the lose scene
+	public void launchScreenLose(){
+		game.transitTo(lose);
+	}
+	
 }
