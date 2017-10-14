@@ -1,17 +1,23 @@
 package game;
 
 import java.util.ArrayList;
-
+import entity.pool.EnemyPool;
+import game.evolver.*;
+import entity.Enemy;
 import entity.GameEntity;
 
 public class World {
 	
 	private ArrayList<GameEntity> objs;
 	private ArrayList<GameEntity> deadObjs; //Array that Handles dead entities
+	private GameEvolver evolver = new GameEvolver();
+	private EnemyPool enemyPool = new EnemyPool();
 	
 	public World() {
 		objs = new ArrayList<GameEntity>();
 		deadObjs = new ArrayList<GameEntity>();
+		
+		evolver.start();
 	}
 	
 	public void add(GameEntity entity) {
@@ -23,6 +29,8 @@ public class World {
 	}
 	
 	public void update() {
+		
+		evolver.update();
 		
 		// check all collisions
 		for(int i = 0; i < objs.size(); i++) {
@@ -54,6 +62,11 @@ public class World {
 		
 		for (GameEntity deadObj : deadObjs){
 			boolean didRemove = objs.remove(deadObj);
+			
+			if (deadObj.getClass() == Enemy.class){
+				enemyPool.acquire((Enemy) deadObj);
+			}
+			
 			if (didRemove == true){
 				System.out.println("Entity removed from the world");
 			}else{
@@ -63,4 +76,39 @@ public class World {
 		
 		deadObjs.clear();
 	}
+	
+	//GameEvent Facade
+	public void addEvent(GameEventCallback callback, int time, int type, String name){
+		GameEvent event = this.createNewEvent(callback, time, type, name);
+		this.evolver.add(event);
+	}
+	
+	public void addEventAfterCurrentTime(GameEventCallback callback, int time, int type, String name){
+		GameEvent event = this.createNewEvent(callback, time, type, name);
+		event.time += evolver.getCurrentIteration();
+		this.evolver.add(event);
+	}
+	
+	private GameEvent createNewEvent(GameEventCallback callback, int time, int type, String name){
+		GameEvent event = new GameEvent();
+		event.setCallback(callback);
+		event.time = time;
+		event.name = name;
+		event.type = type;
+		
+		return event;
+	}
+	
+	
+	// Object Pool facade
+	public Enemy createEnemy(){
+		Enemy enemy = enemyPool.release();
+		enemy.reborn();
+		return enemy;
+	}
+	
+	public void releaseEnemy(Enemy enemy){
+		enemyPool.acquire(enemy);
+	}
 }
+

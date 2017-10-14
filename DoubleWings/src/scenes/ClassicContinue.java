@@ -23,11 +23,13 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	//static Thread thread = new Thread(); 
 	
 	
-	public void initialSetup(GameController game) {
+	@Override
+	protected void viewSetup() {
+		// TODO Auto-generated method stub
 		
-		//Set game controller elements
-		this.game = game;
-		keyboard = game.keyboard;
+	}
+	
+	public void initialSetup() {
 		
 		//Configure enter key and escape
 		keyboard.setBehavior(Keyboard.ENTER_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
@@ -88,6 +90,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 			game.transitTo(menu);
 		}
 	}
+	
 
 	@Override
 	protected void initialSetup() {
