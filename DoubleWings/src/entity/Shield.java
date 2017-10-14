@@ -14,11 +14,7 @@ public class Shield extends GameEntity {
 	public Shield(GameEntity player) {
 		
         //Initialization with shield image
-<<<<<<< HEAD
-		super(spriteImagePath);
-=======
 		super(spriteFilePath, 10);
->>>>>>> lol
         
 		//Getting the player from the StageTest class
 		this.player = player;
