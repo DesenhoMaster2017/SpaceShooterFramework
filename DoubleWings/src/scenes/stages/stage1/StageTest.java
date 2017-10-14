@@ -53,10 +53,8 @@ public class StageTest extends GameScene {
 
 		//Create the HUD and adding it as player's observer
 		hud = new HUD();
-//		player.registerObserver(hud);
+		player.setObserver(hud);
 		shield.setObserver(hud);
-		hud.setEntity(player);
-		hud.setShieldEntity(shield);
 		
 		Enemy asteroid1 = new Enemy("src/assets/img/asteroid.png");
 		asteroid1.setLife(10);

@@ -12,9 +12,6 @@ public class HUD implements GameEntityObserver{
 	private Sprite shieldLifeBar;
 	private Sprite shieldLifeBarOrnament;
 	private Sprite chancesSimbol;
-	
-	private Player player;
-	private Shield shield;
   
 	//Copy of the attributes observed by the HUD
 	private int score;
@@ -53,21 +50,23 @@ public class HUD implements GameEntityObserver{
   
 	public void updateShieldLifeBar(int shieldLife){
 		//Make life bar width proportional to the shield current life
-		System.out.println("Shield changed in the hu");
-		System.out.println(shieldLife);
+//		System.out.println("Shield changed in the hu");
+//		System.out.println(shieldLife);
 		float proportion = (float) shieldLife / 20;
-		System.out.println(proportion);
+//		System.out.println(proportion);
 		float newLifeBarWidth = proportion * this.shieldLifeBar.width;
 		this.shieldLifeBar.width = (int) newLifeBarWidth;
-		System.out.println(shieldLifeBar.width);
+//		System.out.println(shieldLifeBar.width);
 		this.shieldLifeBar.x = WindowConstants.WIDTH/2 - this.shieldLifeBar.width/2;
 	}
 
+	//Update player chances on HUD
 	public void updateChances(int playerChances){
 		if (playerChances <= 3 && playerChances >= 0) {
 			this.chancesSimbol.setCurrFrame(playerChances);
 			
 		} else {
+			System.out.println("HUD log: Player chances number is out of range.");
 			this.chancesSimbol.setCurrFrame(0);
 		}
 	}
@@ -76,29 +75,20 @@ public class HUD implements GameEntityObserver{
    
 	}
 
-	//Adding entities to be observed
-	@Override
-	public void setEntity(GameEntity entity) {
-		this.player = (Player) entity;
-		
-	}
-	
-	public void setShieldEntity(Shield shield) {
-		this.shield = shield;
-	}
-
+	//Take action depending of the game entity 
 	@Override
 	public void notifyObserver(GameEntity entity) {
-		//Take action depending of the class 
 		if (entity instanceof Shield) {
+			//System.out.println("HUD log: Shield class indentified.");
 			updateShieldLifeBar(entity.getLife());
 			
 		} else if (entity instanceof Player){
 			System.out.println("HUD log: Player class indentified.");
+			Player player = (Player) entity;
+			updateChances(player.getChances());
+			
 		} else {
 			System.out.println("HUD log: No class identified.");
-		}
-		
+		}	
 	}
-
 }
