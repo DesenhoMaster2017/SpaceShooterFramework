@@ -58,9 +58,8 @@ public class StageTest extends GameScene implements GameEventCallback{
 		
 		currentCommand = commands.remove(commands.size() - 1); // return removed object
 	}
-
 	
-	private void configureEntities(){
+	public void configurePlayer(){
 		//Creating player sprite
 		player = new Player("src/assets/img/temp_player.png");
 		player.setLife(5);
@@ -68,6 +67,10 @@ public class StageTest extends GameScene implements GameEventCallback{
 		//Putting player on the center-bottom of the screen
 		player.x = WindowConstants.WIDTH/2 - player.width/2;
 		player.y = WindowConstants.HEIGHT - player.height;
+	}
+
+	
+	private void configureEntities(){
 
 		Shield shield = new Shield(player);
 		shield.setLife(10);
@@ -115,10 +118,6 @@ public class StageTest extends GameScene implements GameEventCallback{
 		
 		background.draw();
 		gameWorld.update(); // Updates and draw all entities added in game world
-
-		//Player movement
-		player.moveX(Keyboard.LEFT_KEY, Keyboard.RIGHT_KEY, 4);//velocity = 1
-		player.moveY(Keyboard.UP_KEY, Keyboard.DOWN_KEY, 4);//velocity = 1
 
 		//Asteroid command execute
 		commandCount += 1;
