@@ -1,22 +1,21 @@
 package scenes.stages.stage1;
 
-import game.GameController;
 import game.World;
 import entity.*;
 
 import java.util.ArrayList;
+//import java.util.ConcurrentModificationException;
 
 import commands.*;
 
 import jplay.GameImage;
 import jplay.Keyboard;
-import entity.GameEntity;
 import constants.WindowConstants;
 import scenes.GameScene;
 
 public class StageTest extends GameScene {
 
-	private GameEntity player;
+	private Player player;
 	private GameImage background;
 	private World gameWorld;
 	private ArrayList<Command> commands;
@@ -32,6 +31,7 @@ public class StageTest extends GameScene {
 		//Configure up and down keys
 		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_EVERY_PRESS);
 		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_EVERY_PRESS);
+		keyboard.setBehavior(Keyboard.SPACE_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
 
 		configureEntities();
 		
@@ -114,6 +114,19 @@ public class StageTest extends GameScene {
 		if (currentCommand != null){
 			currentCommand.execute(asteroid1);
 		}
+		
+		//Bullets creation and movement
+		if(keyboard.keyDown(Keyboard.SPACE_KEY)){
+			gameWorld.add(player.fireBullet());
+		}
+		
+        for(Bullet temporaryBullet : player.getFiredBullets()){
+        		if(temporaryBullet.y > 0) {
+        			temporaryBullet.moveBullet();
+        		} else {
+        			player.removeBullet(temporaryBullet);
+        		}
+        }
 		
 	}
 }
