@@ -123,8 +123,8 @@ public class StageTest extends GameScene {
         for(Bullet temporaryBullet : player.getFiredBullets()){
         		if(temporaryBullet.y > 0) {
         			temporaryBullet.moveBullet();
-        		} else {
-        			player.removeBullet(temporaryBullet);
+//        		} else {
+//        			player.removeBullet(temporaryBullet);
         		}
         }
 		
