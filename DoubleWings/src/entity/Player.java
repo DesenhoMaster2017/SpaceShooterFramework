@@ -1,10 +1,18 @@
 package entity;
 
+
 public class Player extends GameEntity {
+	
+	public int upKey = 0;
+	public int downKey = 0;
+	public int leftKey = 0;
+	public int rightKey = 0;
+	public int shootKey = 0;
+	
+	public double movimentVel = 0;
 
 	public Player(String fileName) {
 		super(fileName);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -19,6 +27,21 @@ public class Player extends GameEntity {
 		}else {
 			
 		}
+	}
+	
+	@Override
+	public void update(){
+		super.update();
+		checkInput();
+	}
+	
+	public void checkInput(){
+		
+		//Player movement
+		moveX(leftKey, rightKey, this.movimentVel);
+		moveY(upKey, downKey, this.movimentVel);
+		
+		//shootKey
 	}
 	
 }
