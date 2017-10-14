@@ -102,7 +102,9 @@ public class World {
 	
 	// Object Pool facade
 	public Enemy createEnemy(){
-		return enemyPool.release();
+		Enemy enemy = enemyPool.release();
+		enemy.reborn();
+		return enemy;
 	}
 	
 	public void releaseEnemy(Enemy enemy){

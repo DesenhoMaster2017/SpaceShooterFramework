@@ -86,7 +86,8 @@ public class StageTest extends GameScene implements GameEventCallback{
 	}
 	
 	public void createFirstAsteroid(){
-		Enemy first = new Enemy("src/assets/img/asteroid.png");
+		Enemy first = this.gameWorld.createEnemy();
+		first.loadImage("src/assets/img/asteroid.png");
 		first.setLife(10);
 		first.x = Math.random() * (WindowConstants.WIDTH - first.width*2) + first.width;
 		first.y = -200;
@@ -97,7 +98,8 @@ public class StageTest extends GameScene implements GameEventCallback{
 	
 	public void createSecondAsteroid(){
 		
-		Enemy second = new Enemy("src/assets/img/asteroid.png");
+		Enemy second = this.gameWorld.createEnemy();
+		second.loadImage("src/assets/img/asteroid.png");
 		second.setLife(10);
 		second.x = Math.random() * (WindowConstants.WIDTH - second.width*2) + second.width;
 		second.y = -200;

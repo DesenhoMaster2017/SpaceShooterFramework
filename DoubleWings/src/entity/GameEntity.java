@@ -64,4 +64,14 @@ public class GameEntity extends Sprite {
 	public void destroy(){
 		
 	}
+	
+	public void reborn(){
+		this.isDead = false;
+		this.x = 0;
+		this.y = 0;
+		this.velx = 0.0;
+		this.vely = 0.0;
+		this.life = 1;
+		this.name = "empty entity";
+	}
 }
