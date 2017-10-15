@@ -21,7 +21,7 @@ public class StageTest extends GameScene implements GameEventCallback {
 	private Command currentCommand = null;
 	private int commandCount = 0;
 	private Enemy asteroid1;
-	private Parallax parallax;
+	private Parallax parallax;           //Creation variable to instance a new parallax
 
 	@Override
 	protected void initialSetup(){
@@ -49,14 +49,18 @@ public class StageTest extends GameScene implements GameEventCallback {
 		// Loading background image
 		//background = new GameImage("src/assets/img/temp_background.png");
 		
+		//Creation a object to class Parallax
 		parallax = new Parallax();
 		
+		//The first one added will be the last one to be painted.
 		parallax.add("src/assets/img/temp_background.png");
 		parallax.add("src/assets/img/universe1.png");
 		parallax.add("src/assets/img/universe2.jpg");
 		parallax.add("src/assets/img/universe3.jpg");
-		parallax.add("src/assets/img/universe4.jpg");
+		//Since universe4.jpg was the last to be added to the list, it will be the main layer (mainLayer).
+		parallax.add("src/assets/img/universe4.jpg");  
 		
+		//Adjusts the speed of all layers from the main layer
 		parallax.setVelAllLayers(0, 1);
 	}
 	
@@ -92,8 +96,8 @@ public class StageTest extends GameScene implements GameEventCallback {
 		//Creating player sprite
 		final PlayerSpaceship spaceship = this.game.getPlayer().getSpaceship();
 		
-		
 		gameWorld.add(spaceship);
+		
 		gameWorld.add(spaceship.getShield());
 	}
 	
@@ -129,10 +133,13 @@ public class StageTest extends GameScene implements GameEventCallback {
 		
 		//background.draw();
 		
+		//Print all layers that have been added
 		parallax.drawLayers();
 		
+		//The method below is responsible for maintaining infinite repetition of the layers.
 		parallax.repeatLayers(800, 600, false);
 		
+		//Move the parallax orientation vertically
 		parallax.moveLayersStandardY(false);
 		
 		gameWorld.update(); // Updates and draw all entities added in game world

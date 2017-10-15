@@ -15,7 +15,7 @@ public class Lose extends GameScene implements CountDownTimerEnds {
 	private Sprite lose;
 	private Sprite lifeRemaining;
 	private int lifePlayer;                      //Variable to check how many lives the player has remain
-	private Parallax parallax;
+	private Parallax parallax;                   //Creation variable to instance a new parallax
 	
 	//Thread counter
 	//static Thread thread = new Thread(); 
@@ -24,14 +24,18 @@ public class Lose extends GameScene implements CountDownTimerEnds {
 		
 		//background = new GameImage("src/assets/img/temp_background.png");
 		
+		//Creation a object to class Parallax
         parallax = new Parallax();
 		
+        //The first one added will be the last one to be painted.
 		parallax.add("src/assets/img/temp_background.png");
 		parallax.add("src/assets/img/universe1.png");
 		parallax.add("src/assets/img/universe2.jpg");
 		parallax.add("src/assets/img/universe3.jpg");
+		//Since universe4.jpg was the last to be added to the list, it will be the main layer (mainLayer).
 		parallax.add("src/assets/img/universe4.jpg");
 		
+		//Adjusts the speed of all layers from the main layer
 		parallax.setVelAllLayers(0, 1);
 		
 		/*Define scenes elements position
@@ -92,10 +96,13 @@ public class Lose extends GameScene implements CountDownTimerEnds {
 		
 		//background.draw();
         
+		//Print all layers that have been added
 		parallax.drawLayers();
 		
+		//The method below is responsible for maintaining infinite repetition of the layers.
 		parallax.repeatLayers(800, 600, false);
 		
+		//Move the parallax orientation vertically
 		parallax.moveLayersStandardY(false);
 		
 		lose.draw();
