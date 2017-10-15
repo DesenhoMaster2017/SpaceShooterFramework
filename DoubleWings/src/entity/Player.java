@@ -16,12 +16,12 @@ public class Player {
 	
 	public Player(GameController game) {
 		this.game = game;
-		this.spaceship = new PlayerSpaceship(this, WindowConstants.WIDTH/2, WindowConstants.HEIGHT/2);
+		this.spaceship = new PlayerSpaceship(this, WindowConstants.WIDTH/2, WindowConstants.HEIGHT/2, true);
 	}
 	
 	private void resetSpaceship() {
-		this.spaceship = new PlayerSpaceship(this, this.spaceship.x, this.spaceship.y);
-		game.revivePlayer();
+		this.spaceship = new PlayerSpaceship(this, this.spaceship.x, this.spaceship.y, false);
+		game.revivePlayerSpaceship();
 	}
 	
 	/**
@@ -29,13 +29,19 @@ public class Player {
 	 * 
 	 * */
 	public void loseLife() {
-		this.lifes -= 1;
-		System.out.println("lifes on player: " + lifes);
-		if (this.lifes <= 0) {
-			loseGame();
-		} else {
-			resetSpaceship();
-		}
+		System.out.println("entered here in loseLife ");
+//		if (!isLosingLife) {
+//			isLosingLife = true;
+			this.lifes -= 1;
+			System.out.println("LOST A LIIIIIIIIIFE");
+			System.out.println("lifes on player: " + lifes);
+			if (this.lifes < 0) {
+				System.out.println("LOSE GAAAAAAAAAAAAME");
+				loseGame();
+			} else {
+				System.out.println("RESEEET");
+				resetSpaceship();
+			}
 	}
 	
 	public void resetLife() {

@@ -20,14 +20,19 @@ public class PlayerSpaceship extends GameEntity {
 	private int shootKey = 0;
 	
 	public double movimentVel = defaultMovimentVel; // default value
+	
+	private boolean didDie = false;
 
-	public PlayerSpaceship(Player player, double x, double y) {
+	public PlayerSpaceship(Player player, double x, double y, boolean adjust) {
 		super(spriteImagePath, defautlLife);
 		this.shield = new Shield(this);
 		this.player = player;
-		
-		// x position fixed for sprite width
-		this.x = x - this.width / 2;
+		if (adjust) {
+			// x position fixed for sprite width
+			this.x = x - this.width / 2;	
+		} else {
+			this.x = x;
+		}
 		this.y = y;
 	}
 
@@ -35,10 +40,13 @@ public class PlayerSpaceship extends GameEntity {
 	public void didContact(GameEntity entity){
 		if (entity.getClass() == Shield.class){
 			
-		}else if (entity.getClass() == Enemy.class){
+		} else if (entity.getClass() == Enemy.class) {
 			
 			entity.receiveDamage(100); // test purposes
-			this.receiveDamage(20); // test purposes
+			
+			if (shield.isDead) { // security check to avoid double dying bug
+				this.receiveDamage(20); // test purposes				
+			}
 		}else {
 			
 		}
@@ -70,10 +78,13 @@ public class PlayerSpaceship extends GameEntity {
 		
 		super.update();
 		
-		
 		if (this.isDead()) {
-			// Enter here if the spaceship is destroyed
-			this.player.loseLife();
+			// security check to avoid double dying bug
+			if (!didDie) {
+				// Enter here if the spaceship is destroyed
+				this.player.loseLife();				
+				didDie = true;
+			} else { /*do nothing*/ }
 		} else {
 			checkInput();
 		}
