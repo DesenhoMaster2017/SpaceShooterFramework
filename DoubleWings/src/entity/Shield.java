@@ -6,11 +6,11 @@ import observer.GameEntityObserver;
 public class Shield extends GameEntity {
 
 	private int regeneration;
-	private GameEntity player;
+	private Player player;
 	private GameEntityObserver observer = null;
     
 	//Creation constructor to Shield
-	public Shield(GameEntity player) {
+	public Shield(Player player) {
 		
         //Initialization with shield image
 		super("src/assets/img/temp_shield.png");
@@ -21,7 +21,6 @@ public class Shield extends GameEntity {
 		//Putting shield on the screen with reference the player position
 		this.x = player.x;
 		this.y = player.y;
-		
 	}
     
 	//Method to update the shield according the player
@@ -41,8 +40,8 @@ public class Shield extends GameEntity {
 	public void didContact(GameEntity entity){
 		if (entity.getClass() == Enemy.class){
 			
-			entity.receiveDamage(100); // test purposes
-			this.receiveDamage(10); // test purposes
+			entity.receiveDamage(100);
+			this.receiveDamage(10);
 			System.out.println("hit enemy");
 		}
 	}
@@ -50,7 +49,6 @@ public class Shield extends GameEntity {
 	@Override
 	public void setLife(int newLife){
 		super.setLife(newLife);
-		
 		//Notifing HUD to update shield life bar
 		if (observer != null) {
 			observer.notifyObserver(this);

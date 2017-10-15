@@ -1,6 +1,5 @@
 package entity;
 
-import hud.HUD;
 import observer.GameEntityObserver;
 
 public class Player extends GameEntity {
@@ -68,5 +67,11 @@ public class Player extends GameEntity {
 
 	public void setScore(int score) {
 		this.score = score;
+		//Notifying HUD to update score shower
+		if (observer != null) {
+			observer.notifyObserver(this);	
+		} else {
+			System.out.println("Player log: HUD is null :(");
+		}
 	}
 }

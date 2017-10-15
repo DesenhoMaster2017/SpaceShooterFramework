@@ -10,7 +10,7 @@ public class GameController {
 	private boolean isRunning = true; 
 	
 	// Transit to another scene
-	public void transitTo(GameScene scene) {
+	public void transitTo(GameScene scene) {	
 		
 		//leave transition if scene is null
 		if(scene == null) return;
