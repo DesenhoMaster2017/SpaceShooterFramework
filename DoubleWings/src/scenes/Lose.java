@@ -3,6 +3,7 @@ package scenes;
 import java.util.Timer;
 import constants.WindowConstants;
 import jplay.GameImage;
+import jplay.Parallax;
 import jplay.Sprite;
 import util.CountDownTimer;
 import util.CountDownTimerEnds;
@@ -14,13 +15,24 @@ public class Lose extends GameScene implements CountDownTimerEnds {
 	private Sprite lose;
 	private Sprite lifeRemaining;
 	private int lifePlayer;                      //Variable to check how many lives the player has remain
+	private Parallax parallax;
 	
 	//Thread counter
 	//static Thread thread = new Thread(); 
 	
 	public void initialSetup() {
 		
-		background = new GameImage("src/assets/img/temp_background.png");
+		//background = new GameImage("src/assets/img/temp_background.png");
+		
+        parallax = new Parallax();
+		
+		parallax.add("src/assets/img/temp_background.png");
+		parallax.add("src/assets/img/universe1.png");
+		parallax.add("src/assets/img/universe2.jpg");
+		parallax.add("src/assets/img/universe3.jpg");
+		parallax.add("src/assets/img/universe4.jpg");
+		
+		parallax.setVelAllLayers(0, 1);
 		
 		/*Define scenes elements position
 		 *Continue sprite upper-center position*/
@@ -78,8 +90,16 @@ public class Lose extends GameScene implements CountDownTimerEnds {
 	//Update Sprite on Screen
 	public void update() {
 		
-		background.draw();
+		//background.draw();
+        
+		parallax.drawLayers();
+		
+		parallax.repeatLayers(800, 600, false);
+		
+		parallax.moveLayersStandardY(false);
+		
 		lose.draw();
+		
 		lifeRemaining.draw();
 		
 	}
