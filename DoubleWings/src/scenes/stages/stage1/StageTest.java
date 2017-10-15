@@ -139,12 +139,6 @@ public class StageTest extends GameScene implements GameEventCallback {
 		}
 	}
 	
-	public void didLoseLife(PlayerSpaceship newSpaceship) {
-		gameWorld.add(newSpaceship);
-		gameWorld.add(newSpaceship.getShield());
-	}
-
-	
 	// Callback event handler
 	@Override
 	public void eventCallback(GameEvent event) {
