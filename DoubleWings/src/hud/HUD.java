@@ -8,7 +8,7 @@ import java.awt.Font;
 
 
 import constants.WindowConstants;
-import entity.GameEntity;
+//import entity.GameEntity;
 import entity.Player;
 import entity.Shield;
 
@@ -82,10 +82,11 @@ public class HUD implements GameEntityObserver{
 
 	//Take action depending of the game entity 
 	@Override
-	public void notifyObserver(GameEntity entity) {
+	public void notifyObserver(Object entity) {
 		if (entity instanceof Shield) {
 			//System.out.println("HUD log: Shield class indentified.");
-			updateShieldLifeBar(entity.getLife());
+			Shield shield = (Shield) entity;
+			updateShieldLifeBar(shield.getLife());
 			
 		} else if (entity instanceof Player){
 			//System.out.println("HUD log: Player class indentified.");

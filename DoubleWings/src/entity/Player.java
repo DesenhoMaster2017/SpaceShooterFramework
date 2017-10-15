@@ -6,35 +6,21 @@ import scenes.ClassicContinue;
 import scenes.GameOver;
 import observer.GameEntityObserver;
 
-public class Player extends GameEntity {
+public class Player {
 
 	private static final int initialChances = 3; // Initially the player will have three lifes
-	
-  private Shield shield;
+
 	private boolean canContinue = true;
 	private int chances = initialChances;
 	private PlayerSpaceship spaceship;
 	private GameController game;
-  private int score = 0; // Score default value
+	private int score = 0; // Score default value
 	private GameEntityObserver observer = null; //Temp solution to the observer
   
-	public Player(String fileName) {
-		super(fileName);
-		// TODO Auto-generated constructor stub
-
-	}
   
-  public Player(GameController game) {
+	public Player(GameController game) {
 		this.game = game;
 		this.spaceship = new PlayerSpaceship(this, WindowConstants.WIDTH/2, WindowConstants.HEIGHT/2, true);
-	}
-
-	public Shield getShield(Shield shield){
-		return shield;
-	}
-
-	public void setShield(Shield newShield) {
-		this.shield = newShield;
 	}
 	
 	// HUD observer getter and setter 
@@ -44,19 +30,6 @@ public class Player extends GameEntity {
 	
 	public void setObserver(GameEntityObserver observer) {
 		this.observer = observer;
-	}
-
-	@Override
-	public void didContact(GameEntity entity){
-		if (entity.getClass() == Shield.class){
-
-		}else if (entity.getClass() == Enemy.class){
-			entity.receiveDamage(100); // test purposes
-			this.receiveDamage(20); // test purposes
-
-		}else {
-
-		}
 	}
 	
 	//Chances setters and getters
@@ -117,7 +90,7 @@ public class Player extends GameEntity {
   public void resetLife() {
 		setChances(initialChances);
 		resetSpaceship();
-		System.out.println("life reset to: " + this.chances);
+		System.out.println("Player log: life reset to: " + this.chances);
 	}
 	
 	public void loseGame() {

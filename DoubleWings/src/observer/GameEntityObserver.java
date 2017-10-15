@@ -1,7 +1,7 @@
 package observer;
 
-import entity.GameEntity;
+//import entity.GameEntity;
 
 public interface GameEntityObserver {
-	public void notifyObserver(GameEntity entity);
+	public void notifyObserver(Object entity);
 }

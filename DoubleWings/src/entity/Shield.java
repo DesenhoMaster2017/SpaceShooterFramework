@@ -8,12 +8,12 @@ public class Shield extends GameEntity {
 	private static String spriteFilePath = "src/assets/img/temp_shield.png";
 	
 	private int regeneration;
-	private Player player;
+	private GameEntity player;
 	private GameEntityObserver observer = null;
 	static private String spriteImagePath = "src/assets/img/temp_shield.png";
     
 	//Creation constructor to Shield
-	public Shield(Player player) {
+	public Shield(GameEntity player) {
 		
     //Initialization with shield image
 		super(spriteFilePath, 10);

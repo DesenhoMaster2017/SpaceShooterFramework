@@ -15,15 +15,13 @@ import game.evolver.GameEventCallback;
 
 public class StageTest extends GameScene implements GameEventCallback {
 
-
-	private Player player;
 	private World gameWorld;
 	private HUD hud;
-  private ArrayList<Command> commands;
+	private ArrayList<Command> commands;
 	private Command currentCommand = null;
 	private int commandCount = 0;
-  private Enemy asteroid1;
-  private GameImage background;
+	private Enemy asteroid1;
+  	private GameImage background;
 
 	@Override
 	public void initialSetup(){
@@ -67,7 +65,7 @@ public class StageTest extends GameScene implements GameEventCallback {
 	private void configureEntities(){
     //Create the HUD and adding it as player's observer
 		hud = new HUD();
-		game.player.setObserver(hud);
+		game.getPlayer().setObserver(hud);
   
     //Creating player sprite on the center-bottom of the screen
 		createSpaceShip();
@@ -83,7 +81,7 @@ public class StageTest extends GameScene implements GameEventCallback {
 		final PlayerSpaceship spaceship = this.game.getPlayer().getSpaceship();
 		
     //Adding HUD observer to the shield
-    spaceship.shield.setObserver(hud);
+    spaceship.getShield().setObserver(hud);
 		
 		gameWorld.add(spaceship);
 		gameWorld.add(spaceship.getShield());
