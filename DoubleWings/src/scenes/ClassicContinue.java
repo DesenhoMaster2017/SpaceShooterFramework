@@ -5,6 +5,7 @@ import constants.WindowConstants;
 import jplay.GameImage;
 import jplay.InputBase;
 import jplay.Keyboard;
+import jplay.Parallax;
 import jplay.Sprite;
 import scenes.menu.MenuScene;
 import util.CountDownTimer;
@@ -17,6 +18,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	private Sprite wantToContinue;
 	private Sprite counter;
 	private Sprite enter;
+	private Parallax parallax;
 	
 	//Thread counter
 	//static Thread thread = new Thread(); 
@@ -33,7 +35,17 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		keyboard.setBehavior(Keyboard.ESCAPE_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
 		
 		//Create image background
-		background = new GameImage("src/assets/img/temp_background.png");
+		//background = new GameImage("src/assets/img/temp_background.png");
+		
+        parallax = new Parallax();
+		
+		parallax.add("src/assets/img/temp_background.png");
+		parallax.add("src/assets/img/universe1.png");
+		parallax.add("src/assets/img/universe2.jpg");
+		parallax.add("src/assets/img/universe3.jpg");
+		parallax.add("src/assets/img/universe4.jpg");
+		
+		parallax.setVelAllLayers(0, 1);
 		
 		/*Define scenes elements position
 		 *Continue sprite upper-center position*/
@@ -68,7 +80,13 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	//Update image Sprite on Screen and check button at keyboard
 	public void update() {
 		
-		background.draw();
+		//background.draw();
+        parallax.drawLayers();
+		
+		parallax.repeatLayers(800, 600, false);
+		
+		parallax.moveLayersStandardY(false);
+		
 		wantToContinue.draw();
 		counter.draw();
 		enter.draw();
