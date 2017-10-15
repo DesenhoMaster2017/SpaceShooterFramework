@@ -44,7 +44,7 @@ public class PlayerSpaceship extends GameEntity {
 			
 			entity.receiveDamage(100); // test purposes
 			
-			if (shield.isDead) { // security check to avoid double dying bug
+			if (shield.isDead()) { // security check to avoid double dying bug
 				this.receiveDamage(20); // test purposes				
 			}
 		}else {
