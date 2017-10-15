@@ -20,4 +20,9 @@ public abstract class GameScene {
 	protected abstract void initialSetup();
 	protected abstract void viewSetup();
 	
+	public void destroy(){
+		this.game = null;
+		this.keyboard = null;
+	}
+	
 }

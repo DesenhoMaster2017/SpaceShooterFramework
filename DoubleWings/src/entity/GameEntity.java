@@ -1,6 +1,9 @@
 package entity;
 
+import game.GameController;
 import jplay.Sprite;
+import scenes.ClassicContinue;
+import scenes.GameScene;
 
 public class GameEntity extends Sprite {
 
@@ -19,11 +22,22 @@ public class GameEntity extends Sprite {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setLife(int newLife){
+	public GameEntity(String fileName, int life) {
+		super(fileName);
+		this.name = fileName;
+
+		this.life = life;
+		// TODO Auto-generated constructor stub
+	}
+
+	public void setLife(int newLife) {
 		this.life = newLife;
 		
 		if (life <= 0) {
 			die();
+			GameScene countdown = new ClassicContinue();
+			GameController game = new GameController();
+			game.transitTo(countdown);
 		}
 	}
 	

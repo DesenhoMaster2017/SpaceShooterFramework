@@ -5,6 +5,8 @@ import entity.pool.EnemyPool;
 import game.evolver.*;
 import entity.Enemy;
 import entity.GameEntity;
+import scenes.ClassicContinue;
+import scenes.GameScene;
 
 public class World {
 	
@@ -73,6 +75,7 @@ public class World {
 				System.out.println("Error removing entity");
 			}
 		}
+		
 		
 		deadObjs.clear();
 	}

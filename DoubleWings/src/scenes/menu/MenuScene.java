@@ -17,6 +17,7 @@ public class MenuScene extends GameScene {
 	//GameScene constants
 	private static final int DISTANCE_TITLE_BUTTON = WindowConstants.HEIGHT/24;
 	private static final int DISTANCE_BETWEEN_BUTTONS = WindowConstants.HEIGHT/48;
+	private static GameScene firstLevel;
 	
 	private OptionMenu selectedMenuOption = OptionMenu.Start_Game;//Define initial menu option
 	
@@ -27,6 +28,7 @@ public class MenuScene extends GameScene {
 	private ArrayList<Sprite> buttons = new ArrayList<Sprite>();
 	
 	protected void initialSetup(){
+		
 		//Reset option menu
 		selectedMenuOption = OptionMenu.Start_Game;
 		
@@ -117,6 +119,17 @@ public class MenuScene extends GameScene {
 		}
 	}
 	
+	public GameScene firstStage(){
+		if(firstLevel == null){
+	      firstLevel = new StageTest();
+		  return firstLevel;
+		} 	
+		else{
+			return firstLevel;
+		}
+		  
+	}
+	
 	//Check keyboard enter and dispatch new scene
 	private void checkButtonSelection(){
 		if (keyboard.keyDown(Keyboard.ENTER_KEY)){
@@ -125,14 +138,10 @@ public class MenuScene extends GameScene {
 
 			case Start_Game:
 				//transit to game
-				GameScene firstStage = new StageTest();
-				game.transitTo(firstStage);
+				game.transitTo(firstStage());
 				break;
 			case Ranking:
 				//transit to ranking
-				//testing continue countdown dev-only
-				//GameScene countdown = new ClassicContinue();
-				//game.transitTo(countdown);
 				break;
 			case Settings:
 				//transit to settings
