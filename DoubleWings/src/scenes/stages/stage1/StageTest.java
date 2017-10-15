@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import commands.*;
 import jplay.GameImage;
 import jplay.Keyboard;
+import jplay.Parallax;
 import constants.WindowConstants;
 import scenes.GameScene;
 import game.evolver.GameEvent;
@@ -20,6 +21,7 @@ public class StageTest extends GameScene implements GameEventCallback {
 	private Command currentCommand = null;
 	private int commandCount = 0;
 	private Enemy asteroid1;
+	private Parallax parallax;
 
 	@Override
 	protected void initialSetup(){
@@ -45,7 +47,17 @@ public class StageTest extends GameScene implements GameEventCallback {
 	
 	protected void viewSetup(){
 		// Loading background image
-		background = new GameImage("src/assets/img/temp_background.png");
+		//background = new GameImage("src/assets/img/temp_background.png");
+		
+		parallax = new Parallax();
+		
+		parallax.add("src/assets/img/temp_background.png");
+		parallax.add("src/assets/img/universe1.png");
+		parallax.add("src/assets/img/universe2.jpg");
+		parallax.add("src/assets/img/universe3.jpg");
+		parallax.add("src/assets/img/universe4.jpg");
+		
+		parallax.setVelAllLayers(0, 1);
 	}
 	
 	private void creatingCommands(){
@@ -115,7 +127,14 @@ public class StageTest extends GameScene implements GameEventCallback {
 			}
 		}
 		
-		background.draw();
+		//background.draw();
+		
+		parallax.drawLayers();
+		
+		parallax.repeatLayers(800, 600, false);
+		
+		parallax.moveLayersStandardY(false);
+		
 		gameWorld.update(); // Updates and draw all entities added in game world
 		executeAsteroidCommand();
 	}
