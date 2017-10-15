@@ -55,9 +55,17 @@ public class GameController {
 		return player;
 	}
 	
-	public void revivePlayer() {
-		StageTest stage = (StageTest) currentScene;
-		stage.didLoseLife(player.getSpaceship());
+	public void resetPlayer() {
+		this.player = new Player(this);
+	}
+	
+	public void revivePlayerSpaceship() {
+		if (currentScene.getClass() == StageTest.class) {
+			StageTest stage = (StageTest) currentScene;
+			stage.createSpaceShip();
+		} else {
+			System.out.println("wtffffff");
+		}
 	}
 	
 }
