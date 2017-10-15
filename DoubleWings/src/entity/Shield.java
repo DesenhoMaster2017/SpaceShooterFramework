@@ -5,15 +5,18 @@ import observer.GameEntityObserver;
 
 public class Shield extends GameEntity {
 
+	private static String spriteFilePath = "src/assets/img/temp_shield.png";
+	
 	private int regeneration;
 	private Player player;
 	private GameEntityObserver observer = null;
+	static private String spriteImagePath = "src/assets/img/temp_shield.png";
     
 	//Creation constructor to Shield
 	public Shield(Player player) {
 		
-        //Initialization with shield image
-		super("src/assets/img/temp_shield.png");
+    //Initialization with shield image
+		super(spriteFilePath, 10);
         
 		//Getting the player from the StageTest class
 		this.player = player;
@@ -22,9 +25,23 @@ public class Shield extends GameEntity {
 		this.x = player.x;
 		this.y = player.y;
 	}
+	
+	public Shield(GameEntity player, int life) {
+		// Initializing shield's image and life
+		super(spriteImagePath, life);
+		
+		//Getting the player from the StageTest class
+		this.player = player;
+
+				//Putting shield on the screen with reference the player position
+		this.x = player.x;
+		this.y = player.y;
+	}
     
 	//Method to update the shield according the player
 	public void update() {
+		
+		super.update();
 		
 		//Shield movement
 		Integer horizontalCorrection = (this.width - player.width)/2;

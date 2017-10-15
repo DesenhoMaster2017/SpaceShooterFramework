@@ -21,7 +21,7 @@ public class Main {
 		game.keyboard = window.getKeyboard();
 		
 		//Should transit first to menu... but for development purposes...
-		GameScene scene= new MenuScene();
+		GameScene scene = new MenuScene();
 		game.transitTo(scene);
 		
 		boolean isRunning = true;

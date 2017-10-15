@@ -10,67 +10,14 @@ import jplay.Keyboard;
 import java.util.ArrayList;
 
 import constants.WindowConstants;
-import game.GameController;
 import jplay.Sprite;
-
-enum OptionMenu {  
-	Start_Game(0), Ranking(1), Settings(2), Quit(3);
-	
-	private final int value; //Current option on menu
-	
-	OptionMenu(int option){
-		value = option;
-	}
-	
-	OptionMenu next(){
-		
-		int option = value;
-		if (value < 3){
-			option += 1;
-		}
-		
-		return OptionMenu(option);
-	}
-
-	OptionMenu back(){
-		
-		int option = value;
-		if (value > 0){
-			option -= 1;
-		}
-		
-		return OptionMenu(option);
-	}
-
-	private OptionMenu OptionMenu(int option) {
-
-		switch(option){
-
-		case 0:
-			return OptionMenu.Start_Game;
-			
-		case 1:
-			return OptionMenu.Ranking;
-			
-		case 2:
-			return OptionMenu.Settings;
-			
-		case 3:
-			return OptionMenu.Quit;
-		}
-
-		return OptionMenu.Start_Game;
-	}
-	
-}
-
-
 
 // MenuScene 
 public class MenuScene extends GameScene {
 	//GameScene constants
 	private static final int DISTANCE_TITLE_BUTTON = WindowConstants.HEIGHT/24;
 	private static final int DISTANCE_BETWEEN_BUTTONS = WindowConstants.HEIGHT/48;
+	private static GameScene firstLevel;
 	
 	private OptionMenu selectedMenuOption = OptionMenu.Start_Game;//Define initial menu option
 	
@@ -80,11 +27,7 @@ public class MenuScene extends GameScene {
 	private Sprite arrow;
 	private ArrayList<Sprite> buttons = new ArrayList<Sprite>();
 	
-	public void initialSetup(GameController game){
-		
-		//Set game controller elements
-		this.game = game;
-		keyboard = game.keyboard;
+	protected void initialSetup(){
 		
 		//Reset option menu
 		selectedMenuOption = OptionMenu.Start_Game;
@@ -92,17 +35,19 @@ public class MenuScene extends GameScene {
 		//Configure up and down keys
 		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
 		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
-		
+	}
+	
+	protected void viewSetup(){
 		//Define Scene elements
 		background = new GameImage("src/assets/img/menu/background.png");
-		
+
 		title = new Sprite("src/assets/img/menu/title.png");
 		title.x = WindowConstants.WIDTH/2 - title.width/2;
 		title.y = WindowConstants.HEIGHT/3 - title.height/2;
-		
+
 		//Define buttons position
 		appendButtons();
-		
+
 		arrow = new Sprite("src/assets/img/menu/arrow.png");
 		arrow.x = 10;
 		arrow.y = 10;
@@ -174,6 +119,17 @@ public class MenuScene extends GameScene {
 		}
 	}
 	
+	public GameScene firstStage(){
+		if(firstLevel == null){
+	      firstLevel = new StageTest();
+		  return firstLevel;
+		} 	
+		else{
+			return firstLevel;
+		}
+		  
+	}
+	
 	//Check keyboard enter and dispatch new scene
 	private void checkButtonSelection(){
 		if (keyboard.keyDown(Keyboard.ENTER_KEY)){
@@ -182,14 +138,10 @@ public class MenuScene extends GameScene {
 
 			case Start_Game:
 				//transit to game
-				GameScene firstStage = new StageTest();
-				game.transitTo(firstStage);
+				game.transitTo(firstStage());
 				break;
 			case Ranking:
 				//transit to ranking
-				//testing continue countdown dev-only
-				//GameScene countdown = new ClassicContinue();
-				//game.transitTo(countdown);
 				break;
 			case Settings:
 				//transit to settings
