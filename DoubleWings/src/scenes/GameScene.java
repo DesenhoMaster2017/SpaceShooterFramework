@@ -13,6 +13,8 @@ public abstract class GameScene {
     	this.game = game;
     	this.keyboard = game.keyboard;
     	
+    	System.out.println("keyboard: " + keyboard);
+    	
     	initialSetup();
     	viewSetup();
     }

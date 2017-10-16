@@ -1,10 +1,13 @@
 package entity.player;
 
+import entity.Bullet;
+import util.*;
 import entity.Enemy;
 import entity.GameEntity;
 import jplay.Keyboard;
+import util.DelayTimer;
 
-public class PlayerSpaceship extends GameEntity {
+public class PlayerSpaceship extends GameEntity implements DelayDelegate{
 	
 	// default sprite file path
 	private static final String spriteImagePath = "src/assets/img/temp_player.png"; 
@@ -19,6 +22,10 @@ public class PlayerSpaceship extends GameEntity {
 	private int leftKey = Keyboard.LEFT_KEY;
 	private int rightKey = Keyboard.RIGHT_KEY;
 	private int shootKey = 0;
+	
+	public int shootCooldown = 100;
+	private boolean canShoot = true;
+	private DelayTimer shootCDTimer = new DelayTimer(this, 1);
 	
 	public double movimentVel = defaultMovimentVel; // default value
 	
@@ -59,14 +66,6 @@ public class PlayerSpaceship extends GameEntity {
 		return this.shield;
 	}
 	
-	public void checkInput(){
-		
-		//Player movement
-		moveX(leftKey, rightKey, this.movimentVel);
-		moveY(upKey, downKey, this.movimentVel);
-		
-		//shootKey
-	}
 	
 	public void setKeySet(int upKey, int downKey, int rightKey, int leftKey, int shootKey) {
 		this.upKey = upKey;
@@ -113,5 +112,76 @@ public class PlayerSpaceship extends GameEntity {
 	@Override
 	public boolean isDead(){
 		return false;
+	}
+	
+	public void fireBullet(){
+		
+		if (canShoot){
+			canShoot = false;
+			this.shootCDTimer.schedule(this.shootCooldown);
+			
+			//System.out.println("Fire Bullet!");
+			Bullet bullet = new Bullet();
+			bullet.fireBy(this, -10);
+			gameWorld.add(bullet);
+		}
+		
+	}
+	
+	public void checkInput(){
+		
+		//Player movement
+		moveX(leftKey, rightKey, this.movimentVel);
+		moveY(upKey, downKey, this.movimentVel);
+		
+		//shootKey
+		if(gameWorld != null){
+			if (gameWorld.keyboard != null){
+				if(gameWorld.keyboard.keyDown(shootKey)){
+					this.fireBullet();
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void moveX(int leftKey, int rightKey, double vel){
+		if(gameWorld != null){
+			
+			if (gameWorld.keyboard != null){
+				
+				if(gameWorld.keyboard.keyDown(leftKey)){
+					this.x -= vel;
+				}
+				
+				if(gameWorld.keyboard.keyDown(rightKey)){
+					this.x += vel;
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void moveY(int upKey, int downKey, double vel){
+		if(gameWorld != null){
+			
+			if (gameWorld.keyboard != null){
+				
+				if(gameWorld.keyboard.keyDown(upKey)){
+					this.y -= vel;
+				}
+				
+				if(gameWorld.keyboard.keyDown(downKey)){
+					this.y += vel;
+				}
+			}
+		}
+	}
+
+	@Override
+	public void delayEnded(DelayTimer timer) {
+		if (timer.getType() == 1){
+			this.canShoot = true;
+		}
 	}
 }

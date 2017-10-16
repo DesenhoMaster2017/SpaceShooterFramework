@@ -35,10 +35,12 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   	public void initialSetup(){
 
   		gameWorld = new World();
+  		gameWorld.keyboard = this.keyboard;
 
   		//Configure up and down keys
   		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_EVERY_PRESS);
   		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_EVERY_PRESS);
+  		keyboard.setBehavior(Keyboard.SPACE_KEY, Keyboard.DETECT_EVERY_PRESS);
 
   		//Second Player configuration
   		keyboard.addKey(KeyEvent.VK_A, Keyboard.DETECT_EVERY_PRESS);
@@ -60,14 +62,19 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
   		//The first one added will be the last one to be painted.
   		parallax.add("src/assets/img/temp_background.png");
+  		
   		parallax.add("src/assets/img/universe1.png");
-  		parallax.add("src/assets/img/universe2.jpg");
-  		parallax.add("src/assets/img/universe3.jpg");
-  		//Since universe4.jpg was the last to be added to the list, it will be the main layer (mainLayer).
-  		parallax.add("src/assets/img/universe4.jpg");  
+//  		parallax.add("src/assets/img/universe2.jpg");
+//  		parallax.add("src/assets/img/universe3.jpg");
+//  		//Since universe4.jpg was the last to be added to the list, it will be the main layer (mainLayer).
+//  		parallax.add("src/assets/img/universe4.jpg");  
 
-  		//Adjusts the speed of all layers from the main layer
-  		parallax.setVelAllLayers(0, 1);
+  		parallax.getLayer(0).setVelY(0.1);
+  		parallax.getLayer(1).setVelY(1);
+//  		parallax.getLayer(2).setVelY(2);
+//  		parallax.getLayer(3).setVelY(5);
+//  		parallax.getLayer(4).setVelY(10);
+  		
   	}
 
   	private void creatingCommands(){
@@ -93,7 +100,7 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		createSpaceShip();
   		
   		player.setObserver(hud);
-  		player.delegate = this;  		
+  		player.delegate = this;
 
   		createAsteroid(2.0);
   		createAsteroid(4.0);
@@ -104,6 +111,13 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   	public void createSpaceShip() {
   		//Creating player sprite
   		PlayerSpaceship spaceship = player.getSpaceship();
+  		
+  		spaceship.gameWorld = this.gameWorld;
+  		spaceship.setKeySet(Keyboard.UP_KEY, 
+  				Keyboard.DOWN_KEY, 
+  				Keyboard.RIGHT_KEY, 
+  				Keyboard.LEFT_KEY, 
+  				Keyboard.SPACE_KEY);
 
   		gameWorld.add(spaceship);
   		gameWorld.add(spaceship.getShield());
