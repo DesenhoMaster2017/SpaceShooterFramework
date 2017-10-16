@@ -1,17 +1,19 @@
 package entity;
 
-import game.GameController;
 import jplay.Sprite;
-import scenes.ClassicContinue;
-import scenes.GameScene;
+import game.World;
+
 
 public class GameEntity extends Sprite {
 
 	public String name;
-	private int life = 1;
+	protected int life = 1;
 	private boolean isDead = false;
 	public Double velx = 0.0;
 	public Double vely = 0.0;
+	public int maxLife = 1;
+	public boolean isCollidable = true;
+	public World gameWorld = null;
 	
 	private double entityLimit = 1000; // Kill entity after leaving bounds
 	
@@ -19,25 +21,18 @@ public class GameEntity extends Sprite {
 	public GameEntity(String fileName) {
 		super(fileName);
 		name = fileName;
-		// TODO Auto-generated constructor stub
+	}
+
+	//Life getter and setter
+	public int getLife() {
+		return this.life;
 	}
 	
-	public GameEntity(String fileName, int life) {
-		super(fileName);
-		this.name = fileName;
-
-		this.life = life;
-		// TODO Auto-generated constructor stub
-	}
-
-	public void setLife(int newLife) {
+	public void setLife(int newLife){
 		this.life = newLife;
 		
 		if (life <= 0) {
 			die();
-			GameScene countdown = new ClassicContinue();
-			GameController game = new GameController();
-			game.transitTo(countdown);
 		}
 	}
 	
@@ -54,6 +49,8 @@ public class GameEntity extends Sprite {
 		}
 	}
 	
+	
+	
 	public boolean isDead(){
 		return isDead;
 	}
@@ -67,25 +64,22 @@ public class GameEntity extends Sprite {
 		setLife(life - damage);
 	}
 	
-	private void die(){
-		
+	protected void die(){
 		isDead = true;
-		
-		System.out.println("Entity is dead!");
 		destroy();
 	}
 	
 	public void destroy(){
 		
 	}
-	
+
 	public void reborn(){
 		this.isDead = false;
 		this.x = 0;
 		this.y = 0;
 		this.velx = 0.0;
 		this.vely = 0.0;
-		this.life = 1;
+		this.setLife(maxLife);
 		this.name = "empty entity";
 	}
 }

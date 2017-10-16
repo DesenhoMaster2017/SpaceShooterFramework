@@ -5,6 +5,7 @@ import constants.WindowConstants;
 import jplay.GameImage;
 import jplay.InputBase;
 import jplay.Keyboard;
+import jplay.Parallax;
 import jplay.Sprite;
 import scenes.menu.MenuScene;
 import util.CountDownTimer;
@@ -17,6 +18,7 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	private Sprite wantToContinue;
 	private Sprite counter;
 	private Sprite enter;
+	private Parallax parallax;       //Creation variable to instance a new parallax
 	
 	//Thread counter
 	//static Thread thread = new Thread(); 
@@ -24,8 +26,8 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	@Override
 	protected void viewSetup() {
 		// TODO Auto-generated method stub
-		
 	}
+	
 	public void initialSetup() {
 		
 		//Configure enter key and escape
@@ -33,7 +35,21 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		keyboard.setBehavior(Keyboard.ESCAPE_KEY, InputBase.DETECT_INITIAL_PRESS_ONLY);
 		
 		//Create image background
-		background = new GameImage("src/assets/img/temp_background.png");
+		//background = new GameImage("src/assets/img/temp_background.png");
+		
+		//Creation a object to class Parallax
+        parallax = new Parallax();
+		
+        //The first one added will be the last one to be painted.
+		parallax.add("src/assets/img/temp_background.png");
+		parallax.add("src/assets/img/universe1.png");
+		parallax.add("src/assets/img/universe2.jpg");
+		parallax.add("src/assets/img/universe3.jpg");
+		//Since universe4.jpg was the last to be added to the list, it will be the main layer (mainLayer).
+		parallax.add("src/assets/img/universe4.jpg");
+		
+		//Adjusts the speed of all layers from the main layer
+		parallax.setVelAllLayers(0, 1);
 		
 		/*Define scenes elements position
 		 *Continue sprite upper-center position*/
@@ -68,7 +84,17 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	//Update image Sprite on Screen and check button at keyboard
 	public void update() {
 		
-		background.draw();
+		//background.draw();
+		
+		//Print all layers that have been added
+        parallax.drawLayers();
+		
+        //The method below is responsible for maintaining infinite repetition of the layers.
+		parallax.repeatLayers(800, 600, false);
+		
+		//Move the parallax orientation vertically
+		parallax.moveLayersStandardY(false);
+		
 		wantToContinue.draw();
 		counter.draw();
 		enter.draw();
@@ -109,5 +135,4 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		}
 	}
 	
-
 }

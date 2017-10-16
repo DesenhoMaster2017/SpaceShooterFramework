@@ -1,8 +1,10 @@
 package game;
 
 import java.util.ArrayList;
-import entity.pool.EnemyPool;
+import entity.pool.*;
 import game.evolver.*;
+import jplay.Keyboard;
+import entity.Bullet;
 import entity.Enemy;
 import entity.GameEntity;
 import scenes.ClassicContinue;
@@ -14,6 +16,9 @@ public class World {
 	private ArrayList<GameEntity> deadObjs; //Array that Handles dead entities
 	private GameEvolver evolver = new GameEvolver();
 	private EnemyPool enemyPool = new EnemyPool();
+	private BulletPool bulletPool = new BulletPool();
+	
+	public Keyboard keyboard = null;
 	
 	public World() {
 		objs = new ArrayList<GameEntity>();
@@ -42,7 +47,7 @@ public class World {
 			for(int k = i+1; k <objs.size(); k++) {
 				GameEntity obj2 = objs.get(k);
 				
-				if(obj1.collided(obj2)) {
+				if(obj1.collided(obj2) && obj1.isCollidable && obj2.isCollidable) {
 					obj1.didContact(obj2);
 					obj2.didContact(obj1);
 				}
@@ -65,8 +70,14 @@ public class World {
 		for (GameEntity deadObj : deadObjs){
 			boolean didRemove = objs.remove(deadObj);
 			
+			//Enemy pool recycling
 			if (deadObj.getClass() == Enemy.class){
 				enemyPool.acquire((Enemy) deadObj);
+			}
+			
+			//Bullet pool recycling
+			if (deadObj.getClass() == Bullet.class){
+				bulletPool.acquire((Bullet) deadObj);
 			}
 			
 			if (didRemove == true){

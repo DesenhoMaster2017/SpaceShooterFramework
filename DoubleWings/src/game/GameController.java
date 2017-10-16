@@ -2,7 +2,6 @@ package game;
 
 import scenes.GameScene;
 import scenes.stages.stage1.StageTest;
-import entity.Player;
 import jplay.Keyboard;
 
 public class GameController {
@@ -10,15 +9,10 @@ public class GameController {
 	public GameScene currentScene = null;
 	public Keyboard keyboard = null;
 	private boolean isRunning = true; 
-	private Player player;
 	
-	public GameController() {
-		super();
-		this.player = new Player(this);
-	}
 	
 	// Transit to another scene
-	public void transitTo(GameScene scene) {
+	public void transitTo(GameScene scene) {	
 		
 		//leave transition if scene is null
 		if(scene == null || keyboard == null) 
@@ -49,23 +43,6 @@ public class GameController {
 	// Quit game Ending process
 	public void quit(){
 		isRunning = false;
-	}
-	
-	public Player getPlayer() {
-		return player;
-	}
-	
-	public void resetPlayer() {
-		this.player = new Player(this);
-	}
-	
-	public void revivePlayerSpaceship() {
-		if (currentScene.getClass() == StageTest.class) {
-			StageTest stage = (StageTest) currentScene;
-			stage.createSpaceShip();
-		} else {
-			System.out.println("wtffffff");
-		}
 	}
 	
 }
