@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import jplay.GameImage;
 import jplay.Keyboard;
+import jplay.Parallax;
 import game.World;
 import hud.HUD;
 import entity.Enemy;
@@ -27,7 +28,7 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 	private Command currentCommand = null;
 	private int commandCount = 0;
 	private Enemy asteroid1;
-  	private GameImage background;
+	private Parallax parallax;
   	
 
   	@Override
@@ -53,8 +54,20 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   	}
 
   	protected void viewSetup(){
-  		// Loading background image
-  		background = new GameImage("src/assets/img/temp_background.png");
+  		
+  		//Creation a object to class Parallax
+  		parallax = new Parallax();
+
+  		//The first one added will be the last one to be painted.
+  		parallax.add("src/assets/img/temp_background.png");
+  		parallax.add("src/assets/img/universe1.png");
+  		parallax.add("src/assets/img/universe2.jpg");
+  		parallax.add("src/assets/img/universe3.jpg");
+  		//Since universe4.jpg was the last to be added to the list, it will be the main layer (mainLayer).
+  		parallax.add("src/assets/img/universe4.jpg");  
+
+  		//Adjusts the speed of all layers from the main layer
+  		parallax.setVelAllLayers(0, 1);
   	}
 
   	private void creatingCommands(){
@@ -119,19 +132,25 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
   	@Override
   	public void update(){
+  		updateParalax();
 
-  		for (int i = 0; i < 100; i++){
-  			if(this.keyboard.keyDown(i)){
-  				//				System.out.println("key down: " + i);
-  			}
-  		}
-
-  		background.draw();
   		gameWorld.update(); // Updates and draw all entities added in game world
   		hud.draw(); // Draw all HUD elements
+  		
   		executeAsteroidCommand();
   	}
 
+  	
+  	public void updateParalax(){
+  		//Print all layers that have been added
+  			parallax.drawLayers();
+  			
+  			//The method below is responsible for maintaining infinite repetition of the layers.
+  			parallax.repeatLayers(800, 600, false);
+  			
+  			//Move the parallax orientation vertically
+  			parallax.moveLayersStandardY(false);
+  	}
 
   	public void executeAsteroidCommand(){
 
@@ -222,3 +241,4 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		this.game.transitTo(scene);
   	}
 }
+

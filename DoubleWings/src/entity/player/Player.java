@@ -78,7 +78,7 @@ public class Player {
 		//System.out.println("LOST A LIIIIIIIIIFE");
 		System.out.println("lifes on player: " + this.chances);
 		
-		if (this.chances <= 0) {
+		if (this.chances < 0) {
 			loseGame();
 		} else {
 			resetSpaceship();
