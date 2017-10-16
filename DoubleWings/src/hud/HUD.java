@@ -96,7 +96,7 @@ public class HUD implements GameEntityObserver{
 			//System.out.println("HUD log: Player class identified.");
 			Player player = (Player) entity;
 			updateChances(player.getChances());
-			updateScore(player.getScore());
+			updateScore(player.getScore().getCount());
 			
 		} else {
 			System.out.println("HUD log: No class identified.");

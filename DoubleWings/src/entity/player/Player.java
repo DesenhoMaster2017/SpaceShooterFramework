@@ -1,5 +1,7 @@
 package entity.player;
 
+import Score.Score;
+import Score.ScoreType;
 import entity.Bullet;
 import observer.GameEntityObserver;
 import util.DelayTimer;
@@ -15,12 +17,17 @@ public class Player {
 	private PlayerSpaceship spaceship;
 	public PlayerSceneDelegate delegate = null;
 
-	private int score = 0; // Score default value
+	private Score score;
 	private GameEntityObserver observer = null; //Temp solution to the observer
 	
 	//Respawn
 	public double initialPositionX = 0;
 	public double initialPositionY = 0;
+	
+	public Player() {
+		super();
+		this.score = new Score();
+	}
 
 
 	// HUD observer getter and setter 
@@ -50,12 +57,12 @@ public class Player {
 	}
 
 	//Score setters and getters
-	public int getScore() {
+	public Score getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
-		this.score = score;
+	public void increaseScore(ScoreType score) {
+		this.score.increaseScore(score);
 		//Notifying HUD to update score shower
 		if (observer != null) {
 			observer.notifyObserver(this);	

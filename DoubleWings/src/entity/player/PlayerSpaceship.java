@@ -66,6 +66,10 @@ public class PlayerSpaceship extends GameEntity implements DelayDelegate{
 		return this.shield;
 	}
 	
+	public Player getPlayer() {
+		return this.player;
+	}
+	
 	
 	public void setKeySet(int upKey, int downKey, int rightKey, int leftKey, int shootKey) {
 		this.upKey = upKey;
