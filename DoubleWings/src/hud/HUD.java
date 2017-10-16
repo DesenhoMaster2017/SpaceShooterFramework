@@ -6,14 +6,16 @@ import observer.GameEntityObserver;
 import java.awt.Color;
 import java.awt.Font;
 
-
 import constants.WindowConstants;
-//import entity.GameEntity;
-import entity.Player;
-import entity.Shield;
+import entity.player.*;
+
+
+
 
 public class HUD implements GameEntityObserver{
 
+	private float barSizeMax = WindowConstants.WIDTH;
+	
 	private Sprite shieldLifeBar;
 	private Sprite shieldLifeBarOrnament;
 	private Sprite chancesSimbol;
@@ -52,13 +54,13 @@ public class HUD implements GameEntityObserver{
 		scoreText.draw();
 	}
   
-	public void updateShieldLifeBar(int shieldLife){
+	public void updateShieldLifeBar(Shield shield){
 		//Make life bar width proportional to the shield current life
 //		System.out.println("Shield changed in the hud");
 //		System.out.println(shieldLife);
-		float proportion = (float) shieldLife / 20;
+		float proportion = ((float)shield.getLife()/(float)shield.maxLife);
 //		System.out.println(proportion);
-		float newLifeBarWidth = proportion * this.shieldLifeBar.width;
+		float newLifeBarWidth = proportion * barSizeMax;
 		this.shieldLifeBar.width = (int) newLifeBarWidth;
 //		System.out.println(shieldLifeBar.width);
 		this.shieldLifeBar.x = WindowConstants.WIDTH/2 - this.shieldLifeBar.width/2;
@@ -83,13 +85,15 @@ public class HUD implements GameEntityObserver{
 	//Take action depending of the game entity 
 	@Override
 	public void notifyObserver(Object entity) {
+		
 		if (entity instanceof Shield) {
-			//System.out.println("HUD log: Shield class indentified.");
+			
 			Shield shield = (Shield) entity;
-			updateShieldLifeBar(shield.getLife());
+			System.out.println("HUD log: Shield class identified." + shield.getLife() + " " + shield.maxLife);
+			updateShieldLifeBar(shield);
 			
 		} else if (entity instanceof Player){
-			//System.out.println("HUD log: Player class indentified.");
+			//System.out.println("HUD log: Player class identified.");
 			Player player = (Player) entity;
 			updateChances(player.getChances());
 			updateScore(player.getScore());

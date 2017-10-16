@@ -42,7 +42,7 @@ public class World {
 			for(int k = i+1; k <objs.size(); k++) {
 				GameEntity obj2 = objs.get(k);
 				
-				if(obj1.collided(obj2)) {
+				if(obj1.collided(obj2) && obj1.isCollidable && obj2.isCollidable) {
 					obj1.didContact(obj2);
 					obj2.didContact(obj1);
 				}

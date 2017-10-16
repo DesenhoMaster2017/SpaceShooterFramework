@@ -1,10 +1,8 @@
-package entity;
+package entity.player;
 
-import constants.WindowConstants;
-import game.GameController;
-import scenes.ClassicContinue;
-import scenes.GameOver;
 import observer.GameEntityObserver;
+
+
 
 public class Player {
 
@@ -13,25 +11,27 @@ public class Player {
 	private boolean canContinue = true;
 	private int chances = initialChances;
 	private PlayerSpaceship spaceship;
-	private GameController game;
+	public PlayerSceneDelegate delegate = null;
+
 	private int score = 0; // Score default value
 	private GameEntityObserver observer = null; //Temp solution to the observer
-  
-  
-	public Player(GameController game) {
-		this.game = game;
-		this.spaceship = new PlayerSpaceship(this, WindowConstants.WIDTH/2, WindowConstants.HEIGHT/2, true);
-	}
 	
+	//Respawn
+	public double initialPositionX = 0;
+	public double initialPositionY = 0;
+
+
 	// HUD observer getter and setter 
 	public GameEntityObserver getObserver() {
 		return this.observer;
 	}
-	
+
 	public void setObserver(GameEntityObserver observer) {
+  		//Adding HUD observer to the shield
+  		spaceship.getShield().setObserver(observer);
 		this.observer = observer;
 	}
-	
+
 	//Chances setters and getters
 	public void setChances(int chances){
 		this.chances = chances;
@@ -42,7 +42,7 @@ public class Player {
 			System.out.println("Player log: HUD is null :(");
 		}
 	}
-	
+
 	public int getChances() {
 		return this.chances;
 	}
@@ -61,53 +61,57 @@ public class Player {
 			System.out.println("Player log: HUD is null :(");
 		}
 	}
-  
+
 	private void resetSpaceship() {
-		this.spaceship = new PlayerSpaceship(this, this.spaceship.x, this.spaceship.y, false);
-		game.revivePlayerSpaceship();
+		this.spaceship.reborn();
+		this.spaceship.x = initialPositionX;
+		this.spaceship.y = initialPositionY;
 	}
-  
-  /**
+
+	/**
 	 * Lose one life. Handle losing life and game over scenarios. 
 	 * 
 	 * */
 	public void loseLife() {
-		System.out.println("entered here in loseLife ");
-//		if (!isLosingLife) {
-//			isLosingLife = true;
-			setChances(this.chances - 1);
-			System.out.println("LOST A LIIIIIIIIIFE");
-			System.out.println("lifes on player: " + this.chances);
-			if (this.chances < 0) {
-				System.out.println("LOSE GAAAAAAAAAAAAME");
-				loseGame();
-			} else {
-				System.out.println("RESEEET");
-				resetSpaceship();
-			}
+		//System.out.println("entered here in loseLife ");
+		setChances(this.chances - 1);
+		//System.out.println("LOST A LIIIIIIIIIFE");
+		System.out.println("lifes on player: " + this.chances);
+		
+		if (this.chances <= 0) {
+			loseGame();
+		} else {
+			resetSpaceship();
+		}
 	}
-  
-  public void resetLife() {
+
+	public void resetLife() {
 		setChances(initialChances);
 		resetSpaceship();
 		System.out.println("Player log: life reset to: " + this.chances);
 	}
-	
+
 	public void loseGame() {
 		if (this.canContinue) {
 			useContinue();
 		} else {
-			this.game.transitTo(new GameOver());
+			this.delegate.transitToGameOver();
 		}
 	}
-	
+
 	public void useContinue() {
 		this.canContinue = false;
 		resetLife();
-		this.game.transitTo(new ClassicContinue());
+		this.delegate.transitToContinue();
 	}
-	
+
 	public PlayerSpaceship getSpaceship() {
+		
+		if (spaceship == null){
+			spaceship = new PlayerSpaceship(this, this.initialPositionY, this.initialPositionY, true);
+		}
+		
 		return spaceship;
 	}
+
 }
