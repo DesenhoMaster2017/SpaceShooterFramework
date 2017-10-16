@@ -1,6 +1,7 @@
 package entity;
 
 import jplay.Sprite;
+import game.World;
 
 
 public class GameEntity extends Sprite {
@@ -12,6 +13,7 @@ public class GameEntity extends Sprite {
 	public Double vely = 0.0;
 	public int maxLife = 1;
 	public boolean isCollidable = true;
+	public World gameWorld = null;
 	
 	private double entityLimit = 1000; // Kill entity after leaving bounds
 	

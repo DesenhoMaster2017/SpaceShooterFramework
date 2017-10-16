@@ -29,6 +29,12 @@ public class Enemy extends GameEntity {
 
 	@Override
 	public void didContact(GameEntity entity){
+		if (entity.getClass() == Bullet.class) {
+			
+			entity.receiveDamage(100); // test purposes
+			this.receiveDamage(20); // test purposes
+			
+		}
 		
 	}
 	
