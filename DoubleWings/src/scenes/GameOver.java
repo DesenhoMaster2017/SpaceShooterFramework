@@ -59,7 +59,6 @@ public class GameOver extends GameScene implements CountDownTimerEnds {
 	@Override
 	public void terminate() {
 		System.out.println("Timer Ended");
-		game.resetPlayer();
 		GameScene menu = new MenuScene();
 		game.transitTo(menu);
 	}

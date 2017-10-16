@@ -26,8 +26,8 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 	@Override
 	protected void viewSetup() {
 		// TODO Auto-generated method stub
-		
 	}
+	
 	public void initialSetup() {
 		
 		//Configure enter key and escape

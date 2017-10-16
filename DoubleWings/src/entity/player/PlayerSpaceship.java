@@ -1,12 +1,13 @@
-package entity;
+package entity.player;
 
+import entity.Enemy;
+import entity.GameEntity;
 import jplay.Keyboard;
 
 public class PlayerSpaceship extends GameEntity {
 	
 	// default sprite file path
 	private static final String spriteImagePath = "src/assets/img/temp_player.png"; 
-	private static final int defautlLife = 1;
 	private static final int defaultMovimentVel = 4;
 	
 	private Shield shield;
@@ -24,7 +25,8 @@ public class PlayerSpaceship extends GameEntity {
 	private boolean didDie = false;
 
 	public PlayerSpaceship(Player player, double x, double y, boolean adjust) {
-		super(spriteImagePath, defautlLife);
+		super(spriteImagePath);
+		this.life = maxLife;
 		this.shield = new Shield(this);
 		this.player = player;
 		if (adjust) {
@@ -44,9 +46,10 @@ public class PlayerSpaceship extends GameEntity {
 			
 			entity.receiveDamage(100); // test purposes
 			
-			if (shield.isDead()) { // security check to avoid double dying bug
-				this.receiveDamage(20); // test purposes				
+			if (shield.getLife() <= 0) { // security check to avoid double dying bug
+				this.receiveDamage(20); // test purposes	
 			}
+			
 		}else {
 			
 		}
@@ -78,17 +81,37 @@ public class PlayerSpaceship extends GameEntity {
 		
 		super.update();
 		
-		if (this.isDead()) {
+		if (this.life <= 0) {
 			// security check to avoid double dying bug
-			if (!didDie) {
-				// Enter here if the spaceship is destroyed
-				this.player.loseLife();				
+			if (didDie == false) {
 				didDie = true;
+				
+				// Enter here if the spaceship is destroyed
+				this.player.loseLife();
 			} else { /*do nothing*/ }
 		} else {
 			checkInput();
 		}
 	}
 	
-
+	@Override
+	public void reborn(){
+		super.reborn();
+		this.shield.reborn();
+		this.didDie = false;
+	}
+	
+	@Override
+	public void setLife(int newlife){
+		this.life = newlife;
+		
+		if (this.life < 0){
+			this.life = 0;
+		}
+	}
+	
+	@Override
+	public boolean isDead(){
+		return false;
+	}
 }
