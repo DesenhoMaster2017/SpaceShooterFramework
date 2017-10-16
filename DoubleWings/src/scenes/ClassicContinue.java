@@ -2,7 +2,6 @@ package scenes;
 import java.util.Timer;
 
 import constants.WindowConstants;
-import game.GameController;
 import jplay.GameImage;
 import jplay.InputBase;
 import jplay.Keyboard;
@@ -91,17 +90,4 @@ public class ClassicContinue extends GameScene implements CountDownTimerEnds {
 		}
 	}
 	
-
-	@Override
-	protected void initialSetup() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void viewSetup() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
