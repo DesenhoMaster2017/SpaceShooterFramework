@@ -1,6 +1,9 @@
 package entity;
 
+import Score.ScoreType;
 import commands.Command;
+import entity.player.Player;
+import entity.player.PlayerSpaceship;
 
 public class Enemy extends GameEntity {
 
@@ -30,12 +33,11 @@ public class Enemy extends GameEntity {
 	@Override
 	public void didContact(GameEntity entity){
 		if (entity.getClass() == Bullet.class) {
-			
 			entity.receiveDamage(100); // test purposes
 			this.receiveDamage(20); // test purposes
-			
+			Bullet bullet = (Bullet) entity;
+			PlayerSpaceship spaceship = (PlayerSpaceship) bullet.owner;
+			spaceship.getPlayer().increaseScore(ScoreType.LOW);
 		}
-		
 	}
-	
 }
