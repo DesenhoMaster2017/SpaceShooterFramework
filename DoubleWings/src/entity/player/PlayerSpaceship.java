@@ -10,7 +10,7 @@ import util.DelayTimer;
 public class PlayerSpaceship extends GameEntity implements DelayDelegate{
 	
 	// default sprite file path
-	private static final String spriteImagePath = "src/assets/img/temp_player.png"; 
+	private static final String spriteImagePath = "src/assets/img/player_lvl1.png"; 
 	private static final int defaultMovimentVel = 4;
 	
 	private Shield shield;

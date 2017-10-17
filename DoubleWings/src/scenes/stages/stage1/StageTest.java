@@ -61,16 +61,17 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		parallax = new Parallax();
 
   		//The first one added will be the last one to be painted.
-  		parallax.add("src/assets/img/temp_background.png");
-  		
-  		parallax.add("src/assets/img/universe1.png");
+  		parallax.add("src/assets/img/background_layer_0.png");
+  		parallax.add("src/assets/img/background_layer_1.png");
+  		parallax.add("src/assets/img/background_layer_2.png");
 //  		parallax.add("src/assets/img/universe2.jpg");
 //  		parallax.add("src/assets/img/universe3.jpg");
 //  		//Since universe4.jpg was the last to be added to the list, it will be the main layer (mainLayer).
 //  		parallax.add("src/assets/img/universe4.jpg");  
 
-  		parallax.getLayer(0).setVelY(0.1);
-  		parallax.getLayer(1).setVelY(1);
+		parallax.getLayer(0).setVelY(0.5);
+  		parallax.getLayer(1).setVelY(4.5);
+  		parallax.getLayer(2).setVelY(5);
 //  		parallax.getLayer(2).setVelY(2);
 //  		parallax.getLayer(3).setVelY(5);
 //  		parallax.getLayer(4).setVelY(10);
