@@ -1,6 +1,8 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import entity.pool.*;
 import game.evolver.*;
 import jplay.Keyboard;
@@ -15,6 +17,9 @@ public class World {
 	private ArrayList<GameEntity> objs;
 	private ArrayList<GameEntity> deadObjs; //Array that Handles dead entities
 	private GameEvolver evolver = new GameEvolver();
+	
+	private HashMap<Class, ObjectPool> pools = new HashMap<Class, ObjectPool>();
+	
 	private EnemyPool enemyPool = new EnemyPool();
 	private BulletPool bulletPool = new BulletPool();
 	
@@ -43,52 +48,21 @@ public class World {
 		for(int i = 0; i < objs.size(); i++) {
 			GameEntity obj1 = objs.get(i);
 			
-			// i + 1 to not repeat obj collision check
-			for(int k = i+1; k <objs.size(); k++) {
-				GameEntity obj2 = objs.get(k);
-				
-				if(obj1.collided(obj2) && obj1.isCollidable && obj2.isCollidable) {
-					obj1.didContact(obj2);
-					obj2.didContact(obj1);
-				}
-			}
+			//Handle collision 
+			handleCollision(i, obj1);
 			
-			// Draw and update all objects
-			obj1.draw();
-			obj1.update();
+			//Basic update for entity
+			this.updateEntity(obj1);
 			
-			// Update object position
-			obj1.x += obj1.velx;
-			obj1.y += obj1.vely;
-			
-			// Check if entity is dead
-			if (obj1.isDead()) {
+			//Check pools
+			if (this.checkObjRecycling(obj1) == true){
 				deadObjs.add(obj1);
 			}
 		}
 		
-		for (GameEntity deadObj : deadObjs){
-			boolean didRemove = objs.remove(deadObj);
-			
-			//Enemy pool recycling
-			if (deadObj.getClass() == Enemy.class){
-				enemyPool.acquire((Enemy) deadObj);
-			}
-			
-			//Bullet pool recycling
-			if (deadObj.getClass() == Bullet.class){
-				bulletPool.acquire((Bullet) deadObj);
-			}
-			
-			if (didRemove == true){
-				System.out.println("Entity removed from the world");
-			}else{
-				System.out.println("Error removing entity");
-			}
-		}
+		//Clearing dead objs
+		clearDeadObjs();
 		
-		
-		deadObjs.clear();
 	}
 	
 	//GameEvent Facade
@@ -121,8 +95,80 @@ public class World {
 		return enemy;
 	}
 	
-	public void releaseEnemy(Enemy enemy){
-		enemyPool.acquire(enemy);
+	public Object createEntity(Class c){
+		
+		ObjectPool pool = this.pools.get(c);
+		Object obj = null;
+
+		if (pool != null){
+			obj = pool.release();
+		}
+		
+		return obj;
 	}
+	
+	public void recycle(Object obj){
+		ObjectPool pool = this.pools.get(obj.getClass());
+
+		if (pool != null){
+			pool.acquire(obj);
+		}
+	}
+	
+	private void handleCollision(int i, GameEntity obj1){
+		// i + 1 to not repeat obj collision check
+		for(int k = i+1; k <objs.size(); k++) {
+			GameEntity obj2 = objs.get(k);
+
+			//Check collision
+			if(obj1.isCollidable && obj2.isCollidable && obj1.collided(obj2)) {
+				obj1.didContact(obj2);
+				obj2.didContact(obj1);
+			}
+		}
+	}
+	
+	private void updateEntity(GameEntity obj1){
+		// Draw and update all objects
+		obj1.draw();
+		obj1.update();
+
+		// Update object position
+		obj1.x += obj1.velx;
+		obj1.y += obj1.vely;
+	}
+	
+	private void clearDeadObjs(){
+		for (GameEntity deadObj : deadObjs){
+			boolean didRemove = objs.remove(deadObj);
+			
+			if (didRemove == true){
+				System.out.println("Entity removed from the world");
+			}else{
+				System.out.println("Error removing entity");
+			}
+		}
+		
+		deadObjs.clear();
+	}
+	
+	private Boolean checkObjRecycling(Object obj){
+		ObjectPool pool = this.pools.get(obj.getClass());
+		
+		if (pool != null){
+			if (pool.shouldRecycle(obj)){
+				pool.acquire(obj);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public void addPool(ObjectPool<?> pool){
+		this.pools.put(pool.recyclingClass(), pool);
+	}
+	
+	
 }
 

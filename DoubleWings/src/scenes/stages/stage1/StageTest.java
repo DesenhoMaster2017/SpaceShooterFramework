@@ -9,6 +9,7 @@ import game.World;
 import hud.HUD;
 import entity.Enemy;
 import entity.player.*;
+import entity.pool.*;
 import commands.*;
 import constants.WindowConstants;
 import scenes.ClassicContinue;
@@ -36,6 +37,9 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
   		gameWorld = new World();
   		gameWorld.keyboard = this.keyboard;
+  		
+  		gameWorld.addPool(new EnemyPool());
+  		gameWorld.addPool(new BulletPool());
 
   		//Configure up and down keys
   		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_EVERY_PRESS);
