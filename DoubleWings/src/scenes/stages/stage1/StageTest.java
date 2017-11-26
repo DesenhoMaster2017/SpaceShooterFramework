@@ -1,8 +1,8 @@
 package scenes.stages.stage1;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import jplay.GameImage;
 import jplay.Keyboard;
 import jplay.Parallax;
 import game.World;
@@ -36,10 +36,10 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   	public void initialSetup(){
 
   		gameWorld = new World();
-  		gameWorld.keyboard = this.keyboard;
   		
   		gameWorld.addPool(new EnemyPool());
   		gameWorld.addPool(new BulletPool());
+  		
 
   		//Configure up and down keys
   		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_EVERY_PRESS);
@@ -116,20 +116,13 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   	public void createSpaceShip() {
   		//Creating player sprite
   		PlayerSpaceship spaceship = player.getSpaceship();
-  		
-  		spaceship.gameWorld = this.gameWorld;
-  		spaceship.setKeySet(Keyboard.UP_KEY, 
-  				Keyboard.DOWN_KEY, 
-  				Keyboard.RIGHT_KEY, 
-  				Keyboard.LEFT_KEY, 
-  				Keyboard.SPACE_KEY);
 
   		gameWorld.add(spaceship);
   		gameWorld.add(spaceship.getShield());
   	}
 
   	public void createAsteroid(double velY) {
-  		Enemy asteroid = this.gameWorld.createEnemy();
+  		Enemy asteroid = (Enemy) this.gameWorld.createEntity(Enemy.class);
   		asteroid.loadImage("src/assets/img/asteroid.png");
   		asteroid.setLife(10);
   		asteroid.x = Math.random() * (WindowConstants.WIDTH - asteroid.width*2) + asteroid.width;

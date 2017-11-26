@@ -19,4 +19,11 @@ public class EnemyPool extends ObjectPool<Enemy>{
 	public Class recyclingClass() {
 		return Enemy.class;
 	}
+	
+	@Override
+	public Enemy release(){
+		Enemy e = super.release();
+		e.reborn();
+		return e;
+	}
 }

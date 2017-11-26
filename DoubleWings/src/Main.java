@@ -5,6 +5,7 @@ import java.awt.Color;
 import constants.WindowConstants;
 import scenes.GameScene;
 import scenes.menu.MenuScene;
+import scenes.stages.stage1.StageTest;
 import game.GameController;
 
 public class Main {
@@ -17,11 +18,13 @@ public class Main {
 		Window window = new Window(WindowConstants.WIDTH,WindowConstants.HEIGHT);
 		
 		//Game controller handles game states, screen changes, stages...
-		GameController game = new GameController();
+		GameController game = GameController.singleton;
 		game.keyboard = window.getKeyboard();
+		game.addWindow(window);
+		
 		
 		//Should transit first to menu... but for development purposes...
-		GameScene scene = new MenuScene();
+		GameScene scene = new StageTest();//MenuScene();
 		game.transitTo(scene);
 		
 		boolean isRunning = true;

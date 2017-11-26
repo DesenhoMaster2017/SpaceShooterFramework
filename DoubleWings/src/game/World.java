@@ -5,25 +5,15 @@ import java.util.HashMap;
 
 import entity.pool.*;
 import game.evolver.*;
-import jplay.Keyboard;
-import entity.Bullet;
-import entity.Enemy;
 import entity.GameEntity;
-import scenes.ClassicContinue;
-import scenes.GameScene;
 
 public class World {
 	
 	private ArrayList<GameEntity> objs;
 	private ArrayList<GameEntity> deadObjs; //Array that Handles dead entities
 	private GameEvolver evolver = new GameEvolver();
-	
 	private HashMap<Class, ObjectPool> pools = new HashMap<Class, ObjectPool>();
-	
-	private EnemyPool enemyPool = new EnemyPool();
-	private BulletPool bulletPool = new BulletPool();
-	
-	public Keyboard keyboard = null;
+
 	
 	public World() {
 		objs = new ArrayList<GameEntity>();
@@ -33,7 +23,8 @@ public class World {
 	}
 	
 	public void add(GameEntity entity) {
-		objs.add(entity);			
+		objs.add(entity);
+		entity.setGameWorld(this);
 	}
 	
 	public void remove(GameEntity entity) {
@@ -87,14 +78,7 @@ public class World {
 		return event;
 	}
 	
-	
 	// Object Pool facade
-	public Enemy createEnemy(){
-		Enemy enemy = enemyPool.release();
-		enemy.reborn();
-		return enemy;
-	}
-	
 	public Object createEntity(Class c){
 		
 		ObjectPool pool = this.pools.get(c);
@@ -106,7 +90,6 @@ public class World {
 		
 		return obj;
 	}
-	
 	public void recycle(Object obj){
 		ObjectPool pool = this.pools.get(obj.getClass());
 
@@ -115,6 +98,7 @@ public class World {
 		}
 	}
 	
+	//Collision
 	private void handleCollision(int i, GameEntity obj1){
 		// i + 1 to not repeat obj collision check
 		for(int k = i+1; k <objs.size(); k++) {

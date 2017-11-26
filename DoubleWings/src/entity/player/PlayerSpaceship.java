@@ -1,13 +1,18 @@
 package entity.player;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.HashMap;
+
 import entity.Bullet;
 import util.*;
 import entity.Enemy;
 import entity.GameEntity;
+import input.Input;
 import jplay.Keyboard;
 import util.DelayTimer;
 
-public class PlayerSpaceship extends GameEntity implements DelayDelegate{
+public class PlayerSpaceship extends GameEntity implements DelayDelegate, KeyListener{
 	
 	// default sprite file path
 	private static final String spriteImagePath = "src/assets/img/player_lvl1.png"; 
@@ -28,7 +33,6 @@ public class PlayerSpaceship extends GameEntity implements DelayDelegate{
 	private DelayTimer shootCDTimer = new DelayTimer(this, 1);
 	
 	public double movimentVel = defaultMovimentVel; // default value
-	
 	private boolean didDie = false;
 
 	public PlayerSpaceship(Player player, double x, double y, boolean adjust) {
@@ -43,6 +47,9 @@ public class PlayerSpaceship extends GameEntity implements DelayDelegate{
 			this.x = x;
 		}
 		this.y = y;
+		
+		setupInputListen();
+		setupDefaultAction();
 	}
 
 	@Override
@@ -60,6 +67,38 @@ public class PlayerSpaceship extends GameEntity implements DelayDelegate{
 		}else {
 			
 		}
+	}
+	
+	public void setupInputListen(){
+		Input.addListener(this);
+	}
+	
+	public void setupDefaultAction(){
+		
+		//shootKey
+		this.addActionToKey(KeyEvent.VK_UP, 1, new RunEvent(){
+			@Override
+			public void run(Object source) {
+				fireBullet();
+			}
+		});
+		
+		//move left
+		this.addActionToKey(KeyEvent.VK_LEFT, 1, new RunEvent(){
+			@Override
+			public void run(Object source) {
+				x -= movimentVel;
+			}
+		});
+		
+		//move right
+		this.addActionToKey(KeyEvent.VK_RIGHT, 1, new RunEvent(){
+			@Override
+			public void run(Object source) {
+				x += movimentVel;
+			}
+		});				
+						
 	}
 
 	public Shield getShield() {
@@ -127,65 +166,103 @@ public class PlayerSpaceship extends GameEntity implements DelayDelegate{
 			//System.out.println("Fire Bullet!");
 			Bullet bullet = new Bullet();
 			bullet.fireBy(this, -10);
-			gameWorld.add(bullet);
+			this.addToGameWorld(bullet);
 		}
 		
 	}
 	
 	public void checkInput(){
 		
-		//Player movement
-		moveX(leftKey, rightKey, this.movimentVel);
-		moveY(upKey, downKey, this.movimentVel);
+		// Deal pressed manually
+		for(int key : this.inputStates.keySet()){
+			int state = this.inputStates.get(key);
+			if (state == 1){
+				InputKey input = new InputKey(key, 1); // Creation can over heat memory
+				RunEvent l = this.listeners.get(input.hashCode());
+				if(l != null){
+					l.run(this);
+				}
+			}
+		}
 		
-		//shootKey
-		if(gameWorld != null){
-			if (gameWorld.keyboard != null){
-				if(gameWorld.keyboard.keyDown(shootKey)){
-					this.fireBullet();
-				}
-			}
-		}
-	}
-	
-	@Override
-	public void moveX(int leftKey, int rightKey, double vel){
-		if(gameWorld != null){
-			
-			if (gameWorld.keyboard != null){
-				
-				if(gameWorld.keyboard.keyDown(leftKey)){
-					this.x -= vel;
-				}
-				
-				if(gameWorld.keyboard.keyDown(rightKey)){
-					this.x += vel;
-				}
-			}
-		}
-	}
-	
-	@Override
-	public void moveY(int upKey, int downKey, double vel){
-		if(gameWorld != null){
-			
-			if (gameWorld.keyboard != null){
-				
-				if(gameWorld.keyboard.keyDown(upKey)){
-					this.y -= vel;
-				}
-				
-				if(gameWorld.keyboard.keyDown(downKey)){
-					this.y += vel;
-				}
-			}
-		}
 	}
 
 	@Override
 	public void delayEnded(DelayTimer timer) {
 		if (timer.getType() == 1){
 			this.canShoot = true;
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		this.handleInputEvent(new InputKey(e.getKeyCode(), 0));
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		inputStates.put(e.getKeyCode(), 1);
+		//this.handleInputEvent(new InputKey(e.getKeyCode(), 1));
+		
+		// pressed State is handle manually
+		// keyPressed only, produces too much delay
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		inputStates.put(e.getKeyCode(), 2);
+		this.handleInputEvent(new InputKey(e.getKeyCode(), 2));
+	}
+	
+	private class InputKey {
+		private int key = -1;
+		private int type = 0;
+		private int code = 0;
+		
+		public InputKey(int k, int t){
+			key = k;
+			type = t;
+			//Creating pair for hashcode
+			code = Integer.parseInt(Integer.toString(key) + Integer.toString(type));
+		}
+		
+		public int getKey(){
+			return key;
+		}
+		
+		public int getType(){
+			return type;
+		}
+		
+		@Override
+		public int hashCode(){
+			return code;
+		}
+		
+	}
+	
+	private HashMap<Integer, Integer> inputStates = new HashMap<Integer, Integer>();
+	private HashMap<Integer, RunEvent> listeners = new HashMap<Integer, RunEvent>();
+	
+	//Type:   0 = type,  1 = press, 2 = release 
+	//Key: equals KeyEvent keyCode
+	public void addActionToKey(int key, int type, RunEvent e){
+		
+		InputKey input = new InputKey(key, type);
+		
+		listeners.put(input.hashCode(), e);
+		//System.out.println("new " + input.hashCode());
+	}
+	
+	private void handleInputEvent(InputKey e){
+		
+		//System.out.println("handle " + e.hashCode());
+		
+		RunEvent event = listeners.get(e.hashCode());
+		if(event != null){
+			event.run(this);
+		}else{
+			//System.out.println("Event action not found");
 		}
 	}
 }

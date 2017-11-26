@@ -4,8 +4,8 @@ import jplay.Sprite;
 import game.World;
 
 
-public class GameEntity extends Sprite {
-
+public class GameEntity extends Sprite{ 
+	
 	public String name;
 	protected int life = 1;
 	private boolean isDead = false;
@@ -13,14 +13,23 @@ public class GameEntity extends Sprite {
 	public Double vely = 0.0;
 	public int maxLife = 1;
 	public boolean isCollidable = true;
-	public World gameWorld = null;
-	
+	private World gameWorld;
 	private double entityLimit = 1000; // Kill entity after leaving bounds
 	
 	
 	public GameEntity(String fileName) {
 		super(fileName);
 		name = fileName;
+	}
+	
+	public void addToGameWorld(GameEntity e){
+		if(gameWorld != null){
+			this.gameWorld.add(e);
+		}
+	}
+	
+	public void setGameWorld(World gw){
+		this.gameWorld = gw;
 	}
 
 	//Life getter and setter
@@ -57,7 +66,7 @@ public class GameEntity extends Sprite {
 	
 	//Trigger an event when contact happens
 	public void didContact(GameEntity entity) {
-		System.out.println(this.name + " contact: " + entity.name);
+		//System.out.println(this.name + " contact: " + entity.name);
 	}
 	
 	public void receiveDamage(int damage){

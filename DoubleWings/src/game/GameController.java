@@ -1,11 +1,13 @@
 package game;
 
 import scenes.GameScene;
-import scenes.stages.stage1.StageTest;
+import java.awt.event.KeyListener;
+import javax.swing.JFrame;
 import jplay.Keyboard;
 
 public class GameController {
 	
+	public static GameController singleton = new GameController();
 	public GameScene currentScene = null;
 	public Keyboard keyboard = null;
 	private boolean isRunning = true; 
@@ -43,6 +45,22 @@ public class GameController {
 	// Quit game Ending process
 	public void quit(){
 		isRunning = false;
+	}
+	
+	
+	//Window to hear keyboard input
+	private JFrame window;
+	
+	public void addWindow(JFrame w){
+		this.window = w;
+	}
+	
+	public void addInputListener(KeyListener l){
+		this.window.addKeyListener(l);
+	}
+	
+	public void removeInputListener(KeyListener l){
+		this.window.removeKeyListener(l);
 	}
 	
 }
