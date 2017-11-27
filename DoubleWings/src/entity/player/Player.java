@@ -59,13 +59,6 @@ public class Player extends GameEntity implements DelayDelegate {
 			
 		}
 	}
-	
-	@Override
-	public void update(){
-		super.update();
-		controller.update();
-	}
-	
 
 	public Shield getShield() {
 		return this.shield;

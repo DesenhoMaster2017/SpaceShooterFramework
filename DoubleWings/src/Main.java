@@ -1,7 +1,7 @@
 
 import game.Game;
 import scenes.menu.MenuScene;
-import scenes.stages.stage1.StageTest;
+import scenes.stages.StageTest;
 
 public class Main {
 

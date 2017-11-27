@@ -1,9 +1,6 @@
-package scenes.stages.stage1;
+package scenes.stages;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import jplay.Keyboard;
 import jplay.Parallax;
 import game.World;
 import hud.HUD;
@@ -12,11 +9,8 @@ import entity.player.*;
 import entity.pool.*;
 import commands.*;
 import constants.WindowConstants;
-import scenes.ClassicContinue;
-import scenes.GameOver;
-import scenes.GameScene;
-import game.evolver.GameEvent;
-import game.evolver.GameEventCallback;
+import scenes.*;
+import game.evolver.*;
 
 
 
@@ -135,6 +129,7 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
   		gameWorld.update(); // Updates and draw all entities added in game world
   		hud.draw(); // Draw all HUD elements
+  		playerControl.update(); // Update input checking
   		
   		executeAsteroidCommand();
   	}
