@@ -223,19 +223,17 @@ public class PlayerController implements KeyListener{
 //MARK:  Input Handle	
 	private void checkInput(){
 
-		// Deal pressed manually
+		// Handle press manually
 		for(int key : this.inputStates.keySet()){
 			int state = this.inputStates.get(key);
 			
 			if (state == 0){
-				inputStates.put(key, 1);
+				inputStates.put(key, 1); // Change to holding
 				InputKey input = new InputKey(key, 0); // Creation can over heat memory
 				RunEvent l = this.listeners.get(input.hashCode());
 				if(l != null){
 					l.run(this.entity);
 				}
-				
-				System.out.println("0: " + state);
 			}
 			
 			if (state == 1){
@@ -244,8 +242,6 @@ public class PlayerController implements KeyListener{
 				if(l != null){
 					l.run(this.entity);
 				}
-				
-				System.out.println("1: " + state);
 			}
 			
 		}

@@ -1,5 +1,6 @@
 
 import game.Game;
+import scenes.menu.MenuScene;
 import scenes.stages.stage1.StageTest;
 
 public class Main {
@@ -8,11 +9,12 @@ public class Main {
 		
 		Game g = new Game();
 		
-		//First stage at game run
-		g.setFirstStage(new StageTest());
+		//Creating first scene as menu
+		MenuScene menu = new MenuScene();
+		menu.firstLevel = new StageTest();
 		
-		//Menu background for customization
-		g.setMenuBackground("src/assets/img/menu/background.png");
+		//First stage at game run
+		g.setFirstScene(menu);
 		
 		//Start game loop
 		g.start();

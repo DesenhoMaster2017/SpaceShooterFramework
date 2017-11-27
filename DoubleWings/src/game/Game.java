@@ -11,20 +11,10 @@ import scenes.menu.MenuScene;
 
 public class Game {
 
+	private GameScene firstScene;
 	
-	private MenuScene menu = new MenuScene();
-	
-	public void setMenuBackground(String filename){
-		
-		GameImage image = new GameImage(filename);
-		
-		if (image != null){
-			menu.background = image; 
-		}
-	}
-	
-	public void setFirstStage(GameScene firstStage){
-		menu.firstLevel = firstStage;
+	public void setFirstScene(GameScene firstScene){
+		this.firstScene = firstScene;
 	}
 	
 	public void start(){
@@ -39,7 +29,7 @@ public class Game {
 		
 		//Should transit first to menu... but for development purposes...
 		
-		game.transitTo(menu);
+		game.transitTo(firstScene);
 		
 		boolean isRunning = true;
 		System.out.println("Game is Running!");
