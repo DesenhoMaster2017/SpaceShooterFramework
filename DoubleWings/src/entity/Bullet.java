@@ -19,7 +19,7 @@ public class Bullet extends GameEntity {
 		
 		this.x = owner.x - horizontalCorrection;
 		
-		if (owner.getClass() == Player.class){
+		if (owner instanceof Player){
 			this.y = owner.y;
 		}else {
 			this.y = owner.y + owner.height;

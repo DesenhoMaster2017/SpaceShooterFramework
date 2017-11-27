@@ -105,7 +105,6 @@ public class Player extends GameEntity implements DelayDelegate {
 			bullet.fireBy(this, -10);
 			this.addToGameWorld(bullet);
 		}
-		
 	}
 
 	@Override

@@ -54,16 +54,18 @@ public class Enemy extends GameEntity implements BehaviorExecutor {
 			entity.receiveDamage(10);
 			this.receiveDamage(8);
 			Bullet bullet = (Bullet) entity;
-			Player spaceship = (Player) bullet.owner;
+			
+			if(bullet.owner instanceof Player){
+				Player spaceship = (Player) bullet.owner;
+				if(this.getLife() <= 0){
+					spaceship.getPlayerController().increaseScore(ScoreType.LOW);
+				}
+			}
+			
 			
 			//Load blank
 			this.loadImage("src/assets/img/asteroid_blank.png");
 			blank = 0;
-			
-			if(this.getLife() <= 0){
-				spaceship.getPlayerController().increaseScore(ScoreType.LOW);
-			}
-			
 		}
 	}
 	

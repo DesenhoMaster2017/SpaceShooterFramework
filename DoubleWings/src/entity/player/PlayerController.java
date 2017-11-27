@@ -166,8 +166,10 @@ public class PlayerController implements KeyListener{
 		this.addActionToKey(KeyEvent.VK_SPACE, 1, new RunEvent(){
 			@Override
 			public void run(Object source) {
-				Player ship = (Player) source;
-				ship.fireBullet();
+				if (source instanceof Player){
+					Player ship = (Player) source;
+					ship.fireBullet();
+				}
 			}
 		});
 
@@ -175,8 +177,10 @@ public class PlayerController implements KeyListener{
 		this.addActionToKey(KeyEvent.VK_LEFT, 1, new RunEvent(){
 			@Override
 			public void run(Object source) {
-				Player ship = (Player) source;
-				ship.x -= ship.movimentVel;
+				if (source instanceof Player){
+					Player ship = (Player) source;
+					ship.x -= ship.movimentVel;
+				}
 			}
 		});
 
@@ -184,8 +188,10 @@ public class PlayerController implements KeyListener{
 		this.addActionToKey(KeyEvent.VK_RIGHT, 1, new RunEvent(){
 			@Override
 			public void run(Object source) {
-				Player ship = (Player) source;
-				ship.x += ship.movimentVel;
+				if (source instanceof Player){
+					Player ship = (Player) source;
+					ship.x += ship.movimentVel;
+				}
 			}
 		});
 		
@@ -193,8 +199,10 @@ public class PlayerController implements KeyListener{
 		this.addActionToKey(KeyEvent.VK_UP, 1, new RunEvent(){
 			@Override
 			public void run(Object source) {
-				Player ship = (Player) source;
-				ship.y -= ship.movimentVel;
+				if (source instanceof Player){
+					Player ship = (Player) source;
+					ship.y -= ship.movimentVel;
+				}
 			}
 		});
 
@@ -202,8 +210,10 @@ public class PlayerController implements KeyListener{
 		this.addActionToKey(KeyEvent.VK_DOWN, 1, new RunEvent(){
 			@Override
 			public void run(Object source) {
-				Player ship = (Player) source;
-				ship.y += ship.movimentVel;
+				if (source instanceof Player){
+					Player ship = (Player) source;
+					ship.y += ship.movimentVel;
+				}
 			}
 		});
 
