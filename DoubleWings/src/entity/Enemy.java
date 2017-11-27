@@ -2,10 +2,11 @@ package entity;
 
 import java.util.ArrayList;
 import Score.ScoreType;
+import behavior.BehaviorExecutor;
 import commands.Command;
 import entity.player.PlayerSpaceship;
 
-public class Enemy extends GameEntity {
+public class Enemy extends GameEntity implements BehaviorExecutor {
 
 	static private String spriteImagePath = "src/assets/img/temp_player.png";
 	private ArrayList<Command> behavior;
@@ -28,14 +29,6 @@ public class Enemy extends GameEntity {
 		this.y = y;
 		this.behavior = behavior;
 	}
-
-	public void executeBehavior() {
-		if (commandCount < this.behavior.size()) {
-			if (this.behavior.get(commandCount).execute(this)) {
-				commandCount += 1;
-			} else {/*donot*/}
-		} else {/*donot*/}
-	}
 	
 	@Override
 	public void update() {
@@ -56,6 +49,14 @@ public class Enemy extends GameEntity {
 		}
 	}
 	
+	public void executeBehavior() {
+		if (commandCount < this.behavior.size()) {
+			if (this.behavior.get(commandCount).execute(this)) {
+				commandCount += 1;
+			} else {/*donot*/}
+		} else {/*donot*/}
+	}
+	
 	public void addBehavior(ArrayList<Command> behavior) {
 		this.behavior = behavior;
 	}
@@ -64,7 +65,7 @@ public class Enemy extends GameEntity {
 		this.commandCount = 0;
 	}
 	
-	public void behave() {
+	public void startBehaving() {
 		this.mustBehave = true;
 	}
 	
