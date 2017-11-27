@@ -17,7 +17,7 @@ public class GameEvolver {
 	
 	public void add(GameEvent event){
 		if (event != null){
-			System.out.println("Adding new event: " + event.name);
+			//System.out.println("Adding new event: " + event.name);
 			events.add(event);
 		}
 	}
@@ -55,7 +55,7 @@ public class GameEvolver {
 				history.add(e);
 				aux.add(e);
 				
-				System.out.println("GameEvent Callback: " + e.name);
+				//System.out.println("GameEvent Callback: " + e.name);
 				e.run();
 			}
 		}

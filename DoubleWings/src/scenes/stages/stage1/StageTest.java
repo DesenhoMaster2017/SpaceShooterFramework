@@ -212,17 +212,17 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
   		this.gameWorld.addEventAfterCurrentTime(this, 200, 1, "Enemy down");
 
-  		this.gameWorld.addEventAfterCurrentTime(this, 400, 2, "Enemy Crazy bastard");
+  		this.gameWorld.addEventAfterCurrentTime(this, 400, 2, "Enemy2");
 
   		this.gameWorld.addEventAfterCurrentTime(this, 250, 1, "Enemy down");
   		this.gameWorld.addEventAfterCurrentTime(this, 300, 1, "Enemy down");
   		this.gameWorld.addEventAfterCurrentTime(this, 400, 1, "Enemy down");
 
-  		this.gameWorld.addEventAfterCurrentTime(this, 50, 2, "Enemy Crazy bastard");
+  		this.gameWorld.addEventAfterCurrentTime(this, 50, 2, "Enemy2");
 
-  		this.gameWorld.addEventAfterCurrentTime(this, 620, 2, "Enemy Crazy bastard");
-  		this.gameWorld.addEventAfterCurrentTime(this, 660, 2, "Enemy Crazy bastard");
-  		this.gameWorld.addEventAfterCurrentTime(this, 690, 2, "Enemy Crazy bastard");
+  		this.gameWorld.addEventAfterCurrentTime(this, 620, 2, "Enemy2");
+  		this.gameWorld.addEventAfterCurrentTime(this, 660, 2, "Enemy2");
+  		this.gameWorld.addEventAfterCurrentTime(this, 690, 2, "Enemy2");
 
   	}
 

@@ -10,8 +10,6 @@ import constants.WindowConstants;
 import entity.player.*;
 
 
-
-
 public class HUD implements GameEntityObserver{
 
 	private float barSizeMax = WindowConstants.WIDTH;
@@ -72,7 +70,7 @@ public class HUD implements GameEntityObserver{
 			this.chancesSimbol.setCurrFrame(playerChances);
 			
 		} else {
-			System.out.println("HUD log: Player chances number is out of range.");
+			//System.out.println("HUD log: Player chances number is out of range.");
 			this.chancesSimbol.setCurrFrame(0);
 		}
 	}
@@ -89,7 +87,7 @@ public class HUD implements GameEntityObserver{
 		if (entity instanceof Shield) {
 			
 			Shield shield = (Shield) entity;
-			System.out.println("HUD log: Shield class identified." + shield.getLife() + " " + shield.maxLife);
+			//System.out.println("HUD log: Shield class identified." + shield.getLife() + " " + shield.maxLife);
 			updateShieldLifeBar(shield);
 			
 		} else if (entity instanceof PlayerController){
