@@ -51,6 +51,8 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		keyboard.addKey(KeyEvent.VK_S, Keyboard.DETECT_EVERY_PRESS);
   		keyboard.addKey(KeyEvent.VK_D, Keyboard.DETECT_EVERY_PRESS);
   		keyboard.addKey(KeyEvent.VK_W, Keyboard.DETECT_EVERY_PRESS);
+  		
+  		gameWorld.add(testEnemy());
 
   		configureEntities();
 
@@ -239,7 +241,6 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
   	}
 
-
   	// Player Scene Delegate
   	@Override
   	public void transitToGameOver() {
@@ -252,5 +253,21 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		GameScene scene = new ClassicContinue();
   		this.game.transitTo(scene);
   	}
+  	
+  	private Enemy testEnemy() {
+		ArrayList<Command> behavior = new ArrayList<Command>();
+		behavior.add(new MoveCommand(CommandType.DOWN));
+		behavior.add(new MoveCommand(CommandType.DOWN));
+		behavior.add(new MoveCommand(CommandType.LEFT));
+		behavior.add(new MoveCommand(CommandType.LEFT));
+		
+		Enemy enemy = new Enemy("src/assets/img/asteroid.png");
+		enemy.x = Math.random() * (WindowConstants.WIDTH - enemy.width*2) + enemy.width;
+  		enemy.y = 0;
+  		enemy.addBehavior(behavior);
+  		enemy.startBehaving();
+  		
+  		return enemy;
+	}
 }
 
