@@ -1,6 +1,6 @@
 package entity;
 
-import entity.player.PlayerSpaceship;
+import entity.player.Player;
 
 public class Bullet extends GameEntity {
 
@@ -19,7 +19,7 @@ public class Bullet extends GameEntity {
 		
 		this.x = owner.x - horizontalCorrection;
 		
-		if (owner.getClass() == PlayerSpaceship.class){
+		if (owner.getClass() == Player.class){
 			this.y = owner.y;
 		}else {
 			this.y = owner.y + owner.height;

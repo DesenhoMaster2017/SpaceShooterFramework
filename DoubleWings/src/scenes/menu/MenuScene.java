@@ -14,15 +14,16 @@ import jplay.Sprite;
 
 // MenuScene 
 public class MenuScene extends GameScene {
+	
 	//GameScene constants
 	private static final int DISTANCE_TITLE_BUTTON = WindowConstants.HEIGHT/24;
 	private static final int DISTANCE_BETWEEN_BUTTONS = WindowConstants.HEIGHT/48;
-	private static GameScene firstLevel;
 	
 	private OptionMenu selectedMenuOption = OptionMenu.Start_Game;//Define initial menu option
+	public GameScene firstLevel;
 	
 	// Sprites on scene
-	private GameImage background;
+	public GameImage background;
 	private Sprite title;
 	private Sprite arrow;
 	private ArrayList<Sprite> buttons = new ArrayList<Sprite>();
@@ -39,7 +40,9 @@ public class MenuScene extends GameScene {
 	
 	protected void viewSetup(){
 		//Define Scene elements
-		background = new GameImage("src/assets/img/menu/background.png");
+		if(background == null){
+			background = new GameImage("src/assets/img/menu/background.png");
+		}
 
 		title = new Sprite("src/assets/img/menu/title.png");
 		title.x = WindowConstants.WIDTH/2 - title.width/2;

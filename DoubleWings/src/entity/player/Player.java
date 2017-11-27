@@ -1,126 +1,119 @@
 package entity.player;
 
-import Score.Score;
-import Score.ScoreType;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.HashMap;
+
 import entity.Bullet;
-import observer.GameEntityObserver;
+import util.*;
+import entity.Enemy;
+import entity.GameEntity;
+import input.Input;
 import util.DelayTimer;
 
-
-
-public class Player {
-
-	private static final int initialChances = 3; // Initially the player will have three lifes
-
-	private boolean canContinue = true;
-	private int chances = initialChances;
-	private PlayerSpaceship spaceship;
-	public PlayerSceneDelegate delegate = null;
-
-	private Score score;
-	private GameEntityObserver observer = null; //Temp solution to the observer
+public class Player extends GameEntity implements DelayDelegate {
 	
-	//Respawn
-	public double initialPositionX = 0;
-	public double initialPositionY = 0;
+	// default sprite file path
+	private static final String spriteImagePath = "src/assets/img/player_lvl1.png"; 
+	private static final int defaultMovimentVel = 4;
 	
-	public Player() {
-		super();
-		this.score = new Score();
-	}
+	private Shield shield;
+	private PlayerController controller;
+	
+	public int shootCooldown = 100;
+	private boolean canShoot = true;
+	private DelayTimer shootCDTimer = new DelayTimer(this, 1);
+	
+	public double movimentVel = defaultMovimentVel; // default value
+	
 
-
-	// HUD observer getter and setter 
-	public GameEntityObserver getObserver() {
-		return this.observer;
-	}
-
-	public void setObserver(GameEntityObserver observer) {
-  		//Adding HUD observer to the shield
-  		spaceship.getShield().setObserver(observer);
-		this.observer = observer;
-	}
-
-	//Chances setters and getters
-	public void setChances(int chances){
-		this.chances = chances;
-		//Notifying HUD to update chances shower
-		if (observer != null) {
-			observer.notifyObserver(this);	
+	public Player(PlayerController controller, double x, double y, boolean adjust) {
+		super(spriteImagePath);
+		this.life = maxLife;
+		this.shield = new Shield(this);
+		this.controller = controller;
+		if (adjust) {
+			// x position fixed for sprite width
+			this.x = x - this.width / 2;	
 		} else {
-			System.out.println("Player log: HUD is null :(");
+			this.x = x;
 		}
-	}
-
-	public int getChances() {
-		return this.chances;
-	}
-
-	//Score setters and getters
-	public Score getScore() {
-		return score;
-	}
-
-	public void increaseScore(ScoreType score) {
-		this.score.increaseScore(score);
-		//Notifying HUD to update score shower
-		if (observer != null) {
-			observer.notifyObserver(this);	
-		} else {
-			System.out.println("Player log: HUD is null :(");
-		}
-	}
-
-	private void resetSpaceship() {
-		this.spaceship.reborn();
-		this.spaceship.x = initialPositionX;
-		this.spaceship.y = initialPositionY;
-	}
-
-	/**
-	 * Lose one life. Handle losing life and game over scenarios. 
-	 * 
-	 * */
-	public void loseLife() {
-		//System.out.println("entered here in loseLife ");
-		setChances(this.chances - 1);
-		//System.out.println("LOST A LIIIIIIIIIFE");
-		System.out.println("lifes on player: " + this.chances);
+		this.y = y;
 		
-		if (this.chances < 0) {
-			loseGame();
-		} else {
-			resetSpaceship();
+		controller.entity = this;
+	}
+
+	@Override
+	public void didContact(GameEntity entity){
+		if (entity.getClass() == Shield.class){
+			
+		} else if (entity.getClass() == Enemy.class) {
+			
+			entity.receiveDamage(100); // test purposes
+			
+			if (shield.getLife() <= 0) { // security check to avoid double dying bug
+				this.receiveDamage(20); // test purposes	
+			}
+			
+		}else {
+			
 		}
 	}
-
-	public void resetLife() {
-		setChances(initialChances);
-		resetSpaceship();
-		System.out.println("Player log: life reset to: " + this.chances);
+	
+	@Override
+	public void update(){
+		super.update();
+		controller.update();
 	}
+	
 
-	public void loseGame() {
-		if (this.canContinue) {
-			useContinue();
-		} else {
-			this.delegate.transitToGameOver();
-		}
+	public Shield getShield() {
+		return this.shield;
 	}
-
-	public void useContinue() {
-		this.canContinue = false;
-		resetLife();
-		this.delegate.transitToContinue();
+	
+	public PlayerController getPlayerController() {
+		return this.controller;
 	}
-
-	public PlayerSpaceship getSpaceship() {
+	
+	@Override
+	public void reborn(){
+		super.reborn();
+		this.shield.reborn();
+	}
+	
+	@Override
+	public void setLife(int newlife){
+		this.life = newlife;
 		
-		if (spaceship == null){
-			spaceship = new PlayerSpaceship(this, this.initialPositionY, this.initialPositionY, true);
+		if (this.life < 0){
+			this.life = 0;
+		}
+	}
+	
+	@Override
+	public boolean isDead(){
+		return false;
+	}
+	
+	public void fireBullet(){
+		
+		if (canShoot){
+			canShoot = false;
+			this.shootCDTimer.schedule(this.shootCooldown);
+			
+			//System.out.println("Fire Bullet!");
+			Bullet bullet = new Bullet();
+			bullet.fireBy(this, -10);
+			this.addToGameWorld(bullet);
 		}
 		
-		return spaceship;
+	}
+
+	@Override
+	public void delayEnded(DelayTimer timer) {
+		if (timer.getType() == 1){
+			this.canShoot = true;
+		}
 	}
 
 }

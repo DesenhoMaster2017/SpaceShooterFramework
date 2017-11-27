@@ -127,7 +127,7 @@ public class World {
 			boolean didRemove = objs.remove(deadObj);
 			
 			if (didRemove == true){
-				System.out.println("Entity removed from the world");
+				//System.out.println("Entity removed from the world");
 			}else{
 				System.out.println("Error removing entity");
 			}

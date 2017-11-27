@@ -24,7 +24,7 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
 	private World gameWorld;
 	private HUD hud;
-	private Player player = new Player();
+	private PlayerController playerControl;
 	private ArrayList<Command> commands;
 	private Command currentCommand = null;
 	private int commandCount = 0;
@@ -40,20 +40,10 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		gameWorld.addPool(new EnemyPool());
   		gameWorld.addPool(new BulletPool());
   		
-
-  		//Configure up and down keys
-  		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_EVERY_PRESS);
-  		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_EVERY_PRESS);
-  		keyboard.setBehavior(Keyboard.SPACE_KEY, Keyboard.DETECT_EVERY_PRESS);
-
-  		//Second Player configuration
-  		keyboard.addKey(KeyEvent.VK_A, Keyboard.DETECT_EVERY_PRESS);
-  		keyboard.addKey(KeyEvent.VK_S, Keyboard.DETECT_EVERY_PRESS);
-  		keyboard.addKey(KeyEvent.VK_D, Keyboard.DETECT_EVERY_PRESS);
-  		keyboard.addKey(KeyEvent.VK_W, Keyboard.DETECT_EVERY_PRESS);
-  		
   		gameWorld.add(testEnemy());
 
+  		playerControl = new PlayerController();
+  		
   		configureEntities();
 
   		//Development purposes
@@ -70,18 +60,10 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		parallax.add("src/assets/img/background_layer_0.png");
   		parallax.add("src/assets/img/background_layer_1.png");
   		parallax.add("src/assets/img/background_layer_2.png");
-//  		parallax.add("src/assets/img/universe2.jpg");
-//  		parallax.add("src/assets/img/universe3.jpg");
-//  		//Since universe4.jpg was the last to be added to the list, it will be the main layer (mainLayer).
-//  		parallax.add("src/assets/img/universe4.jpg");  
 
 		parallax.getLayer(0).setVelY(0.5);
   		parallax.getLayer(1).setVelY(4.5);
   		parallax.getLayer(2).setVelY(5);
-//  		parallax.getLayer(2).setVelY(2);
-//  		parallax.getLayer(3).setVelY(5);
-//  		parallax.getLayer(4).setVelY(10);
-  		
   	}
 
   	private void creatingCommands(){
@@ -101,13 +83,13 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		hud = new HUD();
   		
   		//Creating player sprite on the center-bottom of the screen
-  		player.initialPositionX = WindowConstants.WIDTH/2;
-  		player.initialPositionY = WindowConstants.HEIGHT/2;
+  		playerControl.initialPositionX = WindowConstants.WIDTH/2;
+  		playerControl.initialPositionY = WindowConstants.HEIGHT/2;
   		
   		createSpaceShip();
   		
-  		player.setObserver(hud);
-  		player.delegate = this;
+  		playerControl.setObserver(hud);
+  		playerControl.delegate = this;
 
   		createAsteroid(2.0);
   		createAsteroid(4.0);
@@ -117,7 +99,8 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
   	public void createSpaceShip() {
   		//Creating player sprite
-  		PlayerSpaceship spaceship = player.getSpaceship();
+  		Player spaceship = new Player(this.playerControl, 0, 0, true);
+		
 
   		gameWorld.add(spaceship);
   		gameWorld.add(spaceship.getShield());

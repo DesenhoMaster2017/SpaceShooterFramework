@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import Score.ScoreType;
 import behavior.BehaviorExecutor;
 import commands.Command;
-import entity.player.PlayerSpaceship;
+import entity.player.Player;
 
 public class Enemy extends GameEntity implements BehaviorExecutor {
 
@@ -44,8 +44,8 @@ public class Enemy extends GameEntity implements BehaviorExecutor {
 			entity.receiveDamage(100); // test purposes
 			this.receiveDamage(20); // test purposes
 			Bullet bullet = (Bullet) entity;
-			PlayerSpaceship spaceship = (PlayerSpaceship) bullet.owner;
-			spaceship.getPlayer().increaseScore(ScoreType.LOW);
+			Player spaceship = (Player) bullet.owner;
+			spaceship.getPlayerController().increaseScore(ScoreType.LOW);
 		}
 	}
 	
