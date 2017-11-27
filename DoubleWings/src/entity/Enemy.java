@@ -30,8 +30,18 @@ public class Enemy extends GameEntity implements BehaviorExecutor {
 		this.behavior = behavior;
 	}
 	
+	int blank = 3;
+	
 	@Override
 	public void update() {
+		
+		if(blank < 3){
+			blank += 1;
+			if (blank >= 3){
+				this.loadImage("src/assets/img/asteroid.png"); // back to normal
+			}
+		}
+		
 		super.update();
 		if (mustBehave) {
 			executeBehavior();
@@ -41,11 +51,19 @@ public class Enemy extends GameEntity implements BehaviorExecutor {
 	@Override
 	public void didContact(GameEntity entity){
 		if (entity.getClass() == Bullet.class) {
-			entity.receiveDamage(100); // test purposes
-			this.receiveDamage(20); // test purposes
+			entity.receiveDamage(10);
+			this.receiveDamage(8);
 			Bullet bullet = (Bullet) entity;
 			Player spaceship = (Player) bullet.owner;
-			spaceship.getPlayerController().increaseScore(ScoreType.LOW);
+			
+			//Load blank
+			this.loadImage("src/assets/img/asteroid_blank.png");
+			blank = 0;
+			
+			if(this.getLife() <= 0){
+				spaceship.getPlayerController().increaseScore(ScoreType.LOW);
+			}
+			
 		}
 	}
 	

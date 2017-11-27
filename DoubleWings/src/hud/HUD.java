@@ -92,7 +92,7 @@ public class HUD implements GameEntityObserver{
 			System.out.println("HUD log: Shield class identified." + shield.getLife() + " " + shield.maxLife);
 			updateShieldLifeBar(shield);
 			
-		} else if (entity instanceof Player){
+		} else if (entity instanceof PlayerController){
 			//System.out.println("HUD log: Player class identified.");
 			PlayerController player = (PlayerController) entity;
 			updateChances(player.getChances());

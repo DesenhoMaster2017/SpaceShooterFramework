@@ -98,9 +98,11 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   	}
 
   	public void createSpaceShip() {
-  		//Creating player sprite
-  		Player spaceship = new Player(this.playerControl, 0, 0, true);
-		
+  		
+  		//Creating player Entity
+  		Player spaceship = new Player(this.playerControl, 
+  				playerControl.initialPositionX, 
+  				playerControl.initialPositionY, true);
 
   		gameWorld.add(spaceship);
   		gameWorld.add(spaceship.getShield());
@@ -109,7 +111,7 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   	public void createAsteroid(double velY) {
   		Enemy asteroid = (Enemy) this.gameWorld.createEntity(Enemy.class);
   		asteroid.loadImage("src/assets/img/asteroid.png");
-  		asteroid.setLife(10);
+  		asteroid.setLife(50);
   		asteroid.x = Math.random() * (WindowConstants.WIDTH - asteroid.width*2) + asteroid.width;
   		asteroid.y = -200;
   		asteroid.vely = velY;

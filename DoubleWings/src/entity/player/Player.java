@@ -1,26 +1,21 @@
 package entity.player;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.HashMap;
-
 import entity.Bullet;
 import util.*;
 import entity.Enemy;
 import entity.GameEntity;
-import input.Input;
 import util.DelayTimer;
 
 public class Player extends GameEntity implements DelayDelegate {
 	
 	// default sprite file path
-	private static final String spriteImagePath = "src/assets/img/player_lvl1.png"; 
-	private static final int defaultMovimentVel = 4;
+	private static final String spriteImagePath = "src/assets/img/player_lvl1.png";
+	private static final int defaultMovimentVel = 7;
 	
 	private Shield shield;
 	private PlayerController controller;
 	
-	public int shootCooldown = 100;
+	public int shootCooldown = 180;
 	private boolean canShoot = true;
 	private DelayTimer shootCDTimer = new DelayTimer(this, 1);
 	
@@ -30,7 +25,11 @@ public class Player extends GameEntity implements DelayDelegate {
 	public Player(PlayerController controller, double x, double y, boolean adjust) {
 		super(spriteImagePath);
 		this.life = maxLife;
+		
 		this.shield = new Shield(this);
+		this.shield.maxLife = 30;
+		this.shield.setLife(30);
+		
 		this.controller = controller;
 		if (adjust) {
 			// x position fixed for sprite width
@@ -49,10 +48,10 @@ public class Player extends GameEntity implements DelayDelegate {
 			
 		} else if (entity.getClass() == Enemy.class) {
 			
-			entity.receiveDamage(100); // test purposes
+			entity.receiveDamage(100); 
 			
 			if (shield.getLife() <= 0) { // security check to avoid double dying bug
-				this.receiveDamage(20); // test purposes	
+				this.receiveDamage(5);	
 			}
 			
 		}else {

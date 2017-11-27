@@ -67,8 +67,11 @@ public class PlayerController implements KeyListener{
 
 	public void setObserver(GameEntityObserver observer) {
   		//Adding HUD observer to the shield
-		Player pl = (Player) entity;
-  		pl.getShield().setObserver(observer);
+		if (entity instanceof Player){
+			Player pl = (Player) entity;
+			pl.getShield().setObserver(observer);
+		}
+		
 		this.observer = observer;
 	}
 
@@ -160,7 +163,7 @@ public class PlayerController implements KeyListener{
 	public void setupDefaultAction(){
 
 		//shootKey
-		this.addActionToKey(KeyEvent.VK_UP, 1, new RunEvent(){
+		this.addActionToKey(KeyEvent.VK_SPACE, 1, new RunEvent(){
 			@Override
 			public void run(Object source) {
 				Player ship = (Player) source;
@@ -184,7 +187,25 @@ public class PlayerController implements KeyListener{
 				Player ship = (Player) source;
 				ship.x += ship.movimentVel;
 			}
-		});				
+		});
+		
+		//move right
+		this.addActionToKey(KeyEvent.VK_UP, 1, new RunEvent(){
+			@Override
+			public void run(Object source) {
+				Player ship = (Player) source;
+				ship.y -= ship.movimentVel;
+			}
+		});
+
+		//move right
+		this.addActionToKey(KeyEvent.VK_DOWN, 1, new RunEvent(){
+			@Override
+			public void run(Object source) {
+				Player ship = (Player) source;
+				ship.y += ship.movimentVel;
+			}
+		});
 
 	}
 	

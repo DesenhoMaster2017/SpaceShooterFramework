@@ -26,6 +26,8 @@ public class Shield extends GameEntity {
 		this.x = player.x;
 		this.y = player.y;
 	}
+	
+	private float recovery = 0.0f;
 
 	//Method to update the shield according the player
 	public void update() {
@@ -36,6 +38,16 @@ public class Shield extends GameEntity {
 			this.x = -500;
 			this.y = -500;
 			return;
+		}
+		
+		if (this.life < this.maxLife && !this.isDead()){
+			
+			if(recovery >= 1){
+				this.setLife(this.life + 1);
+				recovery = 0;
+			}
+			
+			recovery += 0.01;
 		}
 		
 		super.update();
