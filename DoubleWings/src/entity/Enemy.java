@@ -1,33 +1,48 @@
 package entity;
 
+import java.util.ArrayList;
 import Score.ScoreType;
 import commands.Command;
-import entity.player.Player;
 import entity.player.PlayerSpaceship;
 
 public class Enemy extends GameEntity {
 
 	static private String spriteImagePath = "src/assets/img/temp_player.png";
+	private ArrayList<Command> behavior;
 	private int commandCount = 0;
+	private boolean mustBehave = false;
+	
+	public Enemy(String fileName) {
+		super(fileName);
+	}
 
 	public Enemy(int x, int y) {
 		super(Enemy.spriteImagePath);
 		this.x = x;
 		this.y = y;
 	}
-	
-	public void executeBehavior(Command[] commands) {
-		if (commandCount < commands.length) {
-			if (commands[commandCount].execute(this)) {
+
+	public Enemy(int x, int y, ArrayList<Command> behavior) {
+		super(Enemy.spriteImagePath);
+		this.x = x;
+		this.y = y;
+		this.behavior = behavior;
+	}
+
+	public void executeBehavior() {
+		if (commandCount < this.behavior.size()) {
+			if (this.behavior.get(commandCount).execute(this)) {
 				commandCount += 1;
 			} else {/*donot*/}
-		System.out.println("x: " + this.x + " y: " + this.y);
 		} else {/*donot*/}
 	}
 	
-	public Enemy(String fileName) {
-		super(fileName);
-		// TODO Auto-generated constructor stub
+	@Override
+	public void update() {
+		super.update();
+		if (mustBehave) {
+			executeBehavior();
+		} else { /*do nothing*/ }
 	}
 
 	@Override
@@ -40,4 +55,21 @@ public class Enemy extends GameEntity {
 			spaceship.getPlayer().increaseScore(ScoreType.LOW);
 		}
 	}
+	
+	public void addBehavior(ArrayList<Command> behavior) {
+		this.behavior = behavior;
+	}
+	
+	public void resetBehavior() {
+		this.commandCount = 0;
+	}
+	
+	public void behave() {
+		this.mustBehave = true;
+	}
+	
+	public void stopBehaving() {
+		this.mustBehave = false;
+	}
+	
 }
