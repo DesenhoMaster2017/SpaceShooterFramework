@@ -163,7 +163,7 @@ public class PlayerController implements KeyListener{
 	public void setupDefaultAction(){
 
 		//shootKey
-		this.addActionToKey(KeyEvent.VK_SPACE, 1, new RunEvent(){
+		this.addActionToKey(KeyEvent.VK_SPACE, 0, new RunEvent(){
 			@Override
 			public void run(Object source) {
 				if (source instanceof Player){
@@ -226,25 +226,47 @@ public class PlayerController implements KeyListener{
 		// Deal pressed manually
 		for(int key : this.inputStates.keySet()){
 			int state = this.inputStates.get(key);
+			
+			if (state == 0){
+				inputStates.put(key, 1);
+				InputKey input = new InputKey(key, 0); // Creation can over heat memory
+				RunEvent l = this.listeners.get(input.hashCode());
+				if(l != null){
+					l.run(this.entity);
+				}
+				
+				System.out.println("0: " + state);
+			}
+			
 			if (state == 1){
 				InputKey input = new InputKey(key, 1); // Creation can over heat memory
 				RunEvent l = this.listeners.get(input.hashCode());
 				if(l != null){
 					l.run(this.entity);
 				}
+				
+				System.out.println("1: " + state);
 			}
+			
 		}
 
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		this.handleInputEvent(new InputKey(e.getKeyCode(), 0));
+		// Just for keyboard typing...
+		// no usefull by now
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		inputStates.put(e.getKeyCode(), 1);
+		
+		Integer st = this.inputStates.get(e.getKeyCode() );
+		if(st == null){
+			inputStates.put(e.getKeyCode(), 0);
+		}
+		
+		
 		//this.handleInputEvent(new InputKey(e.getKeyCode(), 1));
 
 		// pressed State is handle manually
@@ -253,7 +275,7 @@ public class PlayerController implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		inputStates.put(e.getKeyCode(), 2);
+		inputStates.remove(e.getKeyCode());
 		this.handleInputEvent(new InputKey(e.getKeyCode(), 2));
 	}
 
@@ -261,12 +283,11 @@ public class PlayerController implements KeyListener{
 	private HashMap<Integer, Integer> inputStates = new HashMap<Integer, Integer>();
 	private HashMap<Integer, RunEvent> listeners = new HashMap<Integer, RunEvent>();
 
-	//Type:   0 = type,  1 = press, 2 = release 
+	//Type:   0 = type,  1 = press, 2 = release
 	//Key: equals KeyEvent keyCode
 	public void addActionToKey(int key, int type, RunEvent e){
 
 		InputKey input = new InputKey(key, type);
-
 		listeners.put(input.hashCode(), e);
 		//System.out.println("new " + input.hashCode());
 	}
@@ -282,5 +303,6 @@ public class PlayerController implements KeyListener{
 			//System.out.println("Event action not found");
 		}
 	}
+	
 
 }

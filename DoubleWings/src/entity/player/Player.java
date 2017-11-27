@@ -9,21 +9,22 @@ import util.DelayTimer;
 public class Player extends GameEntity implements DelayDelegate {
 	
 	// default sprite file path
-	private static final String spriteImagePath = "src/assets/img/player_lvl1.png";
 	private static final int defaultMovimentVel = 7;
 	
 	private Shield shield;
 	private PlayerController controller;
+	
+	public String spriteImagePath = "src/assets/img/player_lvl1.png";
 	
 	public int shootCooldown = 180;
 	private boolean canShoot = true;
 	private DelayTimer shootCDTimer = new DelayTimer(this, 1);
 	
 	public double movimentVel = defaultMovimentVel; // default value
-	
 
 	public Player(PlayerController controller, double x, double y, boolean adjust) {
-		super(spriteImagePath);
+		super("");
+		this.loadImage(spriteImagePath);
 		this.life = maxLife;
 		
 		this.shield = new Shield(this);
