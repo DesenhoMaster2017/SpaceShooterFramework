@@ -2,6 +2,8 @@ package entity.pool;
 
 import java.util.ArrayList;
 
+import entity.Bullet;
+
 public abstract class ObjectPool<Type> {
 
 	private ArrayList<Type> objects = new ArrayList<Type>();
@@ -11,7 +13,6 @@ public abstract class ObjectPool<Type> {
 		Type obj;
 		
 		if (objects.isEmpty()){
-			//placeholder
 			obj = create();
 		}else{
 			int last = objects.size() -1;
@@ -22,6 +23,8 @@ public abstract class ObjectPool<Type> {
 	}
 	
 	protected abstract Type create();
+	public abstract Boolean shouldRecycle(Type obj);
+	public abstract Class recyclingClass();
 	
 	public void acquire(Type obj){
 		if (objects.contains(obj) == false){

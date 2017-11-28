@@ -1,21 +1,16 @@
-package scenes.stages.stage1;
+package scenes.stages;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import jplay.GameImage;
-import jplay.Keyboard;
 import jplay.Parallax;
 import game.World;
 import hud.HUD;
 import entity.Enemy;
 import entity.player.*;
+import entity.pool.*;
 import commands.*;
 import constants.WindowConstants;
-import scenes.ClassicContinue;
-import scenes.GameOver;
-import scenes.GameScene;
-import game.evolver.GameEvent;
-import game.evolver.GameEventCallback;
+import scenes.*;
+import game.evolver.*;
 
 
 
@@ -23,7 +18,7 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
 	private World gameWorld;
 	private HUD hud;
-	private Player player = new Player();
+	private PlayerController playerControl;
 	private ArrayList<Command> commands;
 	private Command currentCommand = null;
 	private int commandCount = 0;
@@ -35,19 +30,14 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   	public void initialSetup(){
 
   		gameWorld = new World();
-  		gameWorld.keyboard = this.keyboard;
+  		
+  		gameWorld.addPool(new EnemyPool());
+  		gameWorld.addPool(new BulletPool());
+  		
+  		gameWorld.add(testEnemy());
 
-  		//Configure up and down keys
-  		keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_EVERY_PRESS);
-  		keyboard.setBehavior(Keyboard.UP_KEY, Keyboard.DETECT_EVERY_PRESS);
-  		keyboard.setBehavior(Keyboard.SPACE_KEY, Keyboard.DETECT_EVERY_PRESS);
-
-  		//Second Player configuration
-  		keyboard.addKey(KeyEvent.VK_A, Keyboard.DETECT_EVERY_PRESS);
-  		keyboard.addKey(KeyEvent.VK_S, Keyboard.DETECT_EVERY_PRESS);
-  		keyboard.addKey(KeyEvent.VK_D, Keyboard.DETECT_EVERY_PRESS);
-  		keyboard.addKey(KeyEvent.VK_W, Keyboard.DETECT_EVERY_PRESS);
-
+  		playerControl = new PlayerController();
+  		
   		configureEntities();
 
   		//Development purposes
@@ -64,18 +54,10 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		parallax.add("src/assets/img/background_layer_0.png");
   		parallax.add("src/assets/img/background_layer_1.png");
   		parallax.add("src/assets/img/background_layer_2.png");
-//  		parallax.add("src/assets/img/universe2.jpg");
-//  		parallax.add("src/assets/img/universe3.jpg");
-//  		//Since universe4.jpg was the last to be added to the list, it will be the main layer (mainLayer).
-//  		parallax.add("src/assets/img/universe4.jpg");  
 
 		parallax.getLayer(0).setVelY(0.5);
   		parallax.getLayer(1).setVelY(4.5);
   		parallax.getLayer(2).setVelY(5);
-//  		parallax.getLayer(2).setVelY(2);
-//  		parallax.getLayer(3).setVelY(5);
-//  		parallax.getLayer(4).setVelY(10);
-  		
   	}
 
   	private void creatingCommands(){
@@ -95,13 +77,13 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		hud = new HUD();
   		
   		//Creating player sprite on the center-bottom of the screen
-  		player.initialPositionX = WindowConstants.WIDTH/2;
-  		player.initialPositionY = WindowConstants.HEIGHT/2;
+  		playerControl.initialPositionX = WindowConstants.WIDTH/2;
+  		playerControl.initialPositionY = WindowConstants.HEIGHT/2;
   		
   		createSpaceShip();
   		
-  		player.setObserver(hud);
-  		player.delegate = this;
+  		playerControl.setObserver(hud);
+  		playerControl.delegate = this;
 
   		createAsteroid(2.0);
   		createAsteroid(4.0);
@@ -110,24 +92,20 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   	}
 
   	public void createSpaceShip() {
-  		//Creating player sprite
-  		PlayerSpaceship spaceship = player.getSpaceship();
   		
-  		spaceship.gameWorld = this.gameWorld;
-  		spaceship.setKeySet(Keyboard.UP_KEY, 
-  				Keyboard.DOWN_KEY, 
-  				Keyboard.RIGHT_KEY, 
-  				Keyboard.LEFT_KEY, 
-  				Keyboard.SPACE_KEY);
+  		//Creating player Entity
+  		Player spaceship = new Player(this.playerControl, 
+  				playerControl.initialPositionX, 
+  				playerControl.initialPositionY, true);
 
   		gameWorld.add(spaceship);
   		gameWorld.add(spaceship.getShield());
   	}
 
   	public void createAsteroid(double velY) {
-  		Enemy asteroid = this.gameWorld.createEnemy();
+  		Enemy asteroid = (Enemy) this.gameWorld.createEntity(Enemy.class);
   		asteroid.loadImage("src/assets/img/asteroid.png");
-  		asteroid.setLife(10);
+  		asteroid.setLife(50);
   		asteroid.x = Math.random() * (WindowConstants.WIDTH - asteroid.width*2) + asteroid.width;
   		asteroid.y = -200;
   		asteroid.vely = velY;
@@ -151,6 +129,7 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
   		gameWorld.update(); // Updates and draw all entities added in game world
   		hud.draw(); // Draw all HUD elements
+  		playerControl.update(); // Update input checking
   		
   		executeAsteroidCommand();
   	}
@@ -228,20 +207,19 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
 
   		this.gameWorld.addEventAfterCurrentTime(this, 200, 1, "Enemy down");
 
-  		this.gameWorld.addEventAfterCurrentTime(this, 400, 2, "Enemy Crazy bastard");
+  		this.gameWorld.addEventAfterCurrentTime(this, 400, 2, "Enemy2");
 
   		this.gameWorld.addEventAfterCurrentTime(this, 250, 1, "Enemy down");
   		this.gameWorld.addEventAfterCurrentTime(this, 300, 1, "Enemy down");
   		this.gameWorld.addEventAfterCurrentTime(this, 400, 1, "Enemy down");
 
-  		this.gameWorld.addEventAfterCurrentTime(this, 50, 2, "Enemy Crazy bastard");
+  		this.gameWorld.addEventAfterCurrentTime(this, 50, 2, "Enemy2");
 
-  		this.gameWorld.addEventAfterCurrentTime(this, 620, 2, "Enemy Crazy bastard");
-  		this.gameWorld.addEventAfterCurrentTime(this, 660, 2, "Enemy Crazy bastard");
-  		this.gameWorld.addEventAfterCurrentTime(this, 690, 2, "Enemy Crazy bastard");
+  		this.gameWorld.addEventAfterCurrentTime(this, 620, 2, "Enemy2");
+  		this.gameWorld.addEventAfterCurrentTime(this, 660, 2, "Enemy2");
+  		this.gameWorld.addEventAfterCurrentTime(this, 690, 2, "Enemy2");
 
   	}
-
 
   	// Player Scene Delegate
   	@Override
@@ -255,5 +233,21 @@ public class StageTest extends GameScene implements GameEventCallback, PlayerSce
   		GameScene scene = new ClassicContinue();
   		this.game.transitTo(scene);
   	}
+  	
+  	private Enemy testEnemy() {
+		ArrayList<Command> behavior = new ArrayList<Command>();
+		behavior.add(new MoveCommand(CommandType.DOWN));
+		behavior.add(new MoveCommand(CommandType.DOWN));
+		behavior.add(new MoveCommand(CommandType.LEFT));
+		behavior.add(new MoveCommand(CommandType.LEFT));
+		
+		Enemy enemy = new Enemy("src/assets/img/asteroid.png");
+		enemy.x = Math.random() * (WindowConstants.WIDTH - enemy.width*2) + enemy.width;
+  		enemy.y = 0;
+  		enemy.addBehavior(behavior);
+  		enemy.startBehaving();
+  		
+  		return enemy;
+	}
 }
 
